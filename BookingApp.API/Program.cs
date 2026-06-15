@@ -1,14 +1,12 @@
 using System.Text.Json.Serialization;
 using BookingApp.API.Conventions;
-using BookingApp.Infrastructure.Database;
+using BookingApp.Infrastructure;
 using Microsoft.AspNetCore.Mvc.ApplicationModels;
-using Microsoft.EntityFrameworkCore;
 using Scalar.AspNetCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
-builder.Services.AddDbContext<BookingAppDbContext>(options =>
-    options.UseNpgsql(builder.Configuration.GetConnectionString("BookingApp")));
+builder.Services.RegisterInfrastructure(builder.Configuration);
 
 builder.Services.AddControllers(options =>
         options.Conventions.Add(new RouteTokenTransformerConvention(new KebabCaseParameterTransformer())))
