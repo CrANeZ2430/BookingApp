@@ -1,4 +1,7 @@
-﻿using MediatR;
+﻿using BookingApp.Application.Members.Commands.CreateMember;
+using BookingApp.Application.Members.Queries.GetMemberById;
+using BookingApp.Application.Members.Queries.GetPagedMembers;
+using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
 namespace BookingApp.API.Controllers.Members;
@@ -9,5 +12,36 @@ public class MembersController(
     ISender mediator) 
     : ControllerBase
 {
-    
+    [HttpGet]
+    public async Task<IActionResult> GetMembers(
+        [FromQuery] int page = 0,
+        [FromQuery] int pageSize = 5,
+        CancellationToken ct = default)
+    {
+        var query = new GetMembersQuery(page, pageSize);
+        var members = await mediator.Send(query, ct);
+
+        return Ok(members);
+    }
+
+    [HttpGet("{memberId:guid}")]
+    public async Task<IActionResult> GetMemberById(
+        [FromRoute] Guid memberId,
+        CancellationToken ct = default)
+    {
+        var query = new GetMemberByIdQuery(memberId);
+        var member = await mediator.Send(query, ct);
+
+        return Ok(member);
+    }
+
+    [HttpPost]
+    public async Task<IActionResult> CreateMember(
+        [FromBody] CreateMemberCommand command,
+        CancellationToken ct = default)
+    {
+        var memberId = await mediator.Send(command, ct);
+
+        return CreatedAtAction(nameof(GetMemberById), new { memberId = memberId }, memberId);
+    }
 }
