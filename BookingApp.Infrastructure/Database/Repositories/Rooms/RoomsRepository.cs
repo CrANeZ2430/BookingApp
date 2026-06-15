@@ -6,11 +6,11 @@ namespace BookingApp.Infrastructure.Database.Repositories.Rooms;
 
 public class RoomsRepository(BookingAppDbContext dbContext) : IRoomsRepository
 {
-    public async Task<IReadOnlyCollection<Room>> GetPagedAsync(int page, int pageSize, CancellationToken ct = default)
+    public async Task<IReadOnlyCollection<Room>> GetAsync(int page, int pageSize, CancellationToken ct = default)
     {
         return await dbContext.Rooms
             .AsNoTracking()
-            .Skip((page - 1) * pageSize)
+            .Skip(page * pageSize)
             .Take(pageSize)
             .ToArrayAsync(ct);
     }
@@ -29,10 +29,5 @@ public class RoomsRepository(BookingAppDbContext dbContext) : IRoomsRepository
     public void Remove(Room room)
     {
         dbContext.Remove(room);
-    }
-
-    public async Task<int> SaveChangesAsync(CancellationToken ct = default)
-    {
-        return await dbContext.SaveChangesAsync(ct);
     }
 }

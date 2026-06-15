@@ -1,4 +1,5 @@
-﻿using BookingApp.Core.Domain.Bookings.Models;
+﻿using BookingApp.Core.Abstractions;
+using BookingApp.Core.Domain.Bookings.Models;
 using BookingApp.Core.Domain.Members.Models;
 using BookingApp.Core.Domain.Rooms.Models;
 using BookingApp.Core.Domain.RoomTypes.Models;
@@ -6,7 +7,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace BookingApp.Infrastructure.Database;
 
-public class BookingAppDbContext(DbContextOptions<BookingAppDbContext> options) : DbContext(options)
+public class BookingAppDbContext(DbContextOptions<BookingAppDbContext> options) : DbContext(options), IUnitOfWork
 {
     public DbSet<Member> Members { get; private set; }
     public DbSet<Room> Rooms { get; private set; }

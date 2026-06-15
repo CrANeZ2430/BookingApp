@@ -1,11 +1,13 @@
 using System.Text.Json.Serialization;
 using BookingApp.API.Conventions;
+using BookingApp.Application;
 using BookingApp.Infrastructure;
 using Microsoft.AspNetCore.Mvc.ApplicationModels;
 using Scalar.AspNetCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
+builder.Services.RegisterApplication();
 builder.Services.RegisterInfrastructure(builder.Configuration);
 
 builder.Services.AddControllers(options =>

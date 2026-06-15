@@ -1,7 +1,9 @@
-﻿using BookingApp.Core.Domain.Bookings.Repositories;
+﻿using BookingApp.Core.Abstractions;
+using BookingApp.Core.Domain.Bookings.Repositories;
 using BookingApp.Core.Domain.Members.Repositories;
 using BookingApp.Core.Domain.Rooms.Repositories;
 using BookingApp.Core.Domain.RoomTypes.Repositories;
+using BookingApp.Infrastructure.Abstractions;
 using BookingApp.Infrastructure.Database;
 using BookingApp.Infrastructure.Database.Repositories.Bookings;
 using BookingApp.Infrastructure.Database.Repositories.Members;
@@ -26,6 +28,9 @@ public static class InfrastructureRegistration
         services.AddScoped<IRoomsRepository, RoomsRepository>();
         services.AddScoped<IRoomTypesRepository, RoomTypesRepository>();
         services.AddScoped<IBookingsRepository, BookingsRepository>();
+        services.AddScoped<IUnitOfWork>(sp => sp.GetRequiredService<BookingAppDbContext>());
+
+        services.AddSingleton<IDateTimeProvider, DateTimeProvider>();
 
         return services;
     }

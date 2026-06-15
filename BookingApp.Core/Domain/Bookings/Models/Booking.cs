@@ -23,6 +23,7 @@ public class Booking
         int attendeeCount,
         DateTime startTime,
         DateTime endTime,
+        DateTime createdAt,
         Guid memberId,
         Guid roomId)
     {
@@ -31,7 +32,7 @@ public class Booking
         Status = BookingStatus.Pending;
         StartTime = startTime;
         EndTime = endTime;
-        CreatedAt = DateTime.UtcNow;
+        CreatedAt = createdAt;
         MemberId = memberId;
         RoomId = roomId;
     }
@@ -40,6 +41,7 @@ public class Booking
         int attendeeCount,
         DateTime startTime,
         DateTime endTime,
+        DateTime createdAt,
         Guid memberId,
         Guid roomId)
     {
@@ -53,6 +55,7 @@ public class Booking
             attendeeCount, 
             startTime, 
             endTime, 
+            createdAt,
             memberId, 
             roomId);
     }

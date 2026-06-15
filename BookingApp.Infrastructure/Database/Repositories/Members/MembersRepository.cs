@@ -6,11 +6,11 @@ namespace BookingApp.Infrastructure.Database.Repositories.Members;
 
 public class MembersRepository(BookingAppDbContext dbContext) : IMembersRepository
 {
-    public async Task<IReadOnlyCollection<Member>> GetPagedAsync(int page, int pageSize, CancellationToken ct = default)
+    public async Task<IReadOnlyCollection<Member>> GetAsync(int page, int pageSize, CancellationToken ct = default)
     {
         return await dbContext.Members
             .AsNoTracking()
-            .Skip((page - 1) * pageSize)
+            .Skip(page * pageSize)
             .Take(pageSize)
             .ToArrayAsync(ct);
     }
@@ -29,10 +29,5 @@ public class MembersRepository(BookingAppDbContext dbContext) : IMembersReposito
     public void Remove(Member member)
     {
         dbContext.Members.Remove(member);
-    }
-
-    public async Task<int> SaveChangesAsync(CancellationToken ct = default)
-    {
-        return await dbContext.SaveChangesAsync(ct);
     }
 }

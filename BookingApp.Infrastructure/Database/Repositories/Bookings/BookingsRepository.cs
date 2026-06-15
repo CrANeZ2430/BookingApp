@@ -6,11 +6,11 @@ namespace BookingApp.Infrastructure.Database.Repositories.Bookings;
 
 public class BookingsRepository(BookingAppDbContext dbContext) : IBookingsRepository
 {
-    public async Task<IReadOnlyCollection<Booking>> GetPagedAsync(int page, int pageSize, CancellationToken ct = default)
+    public async Task<IReadOnlyCollection<Booking>> GetAsync(int page, int pageSize, CancellationToken ct = default)
     {
         return await dbContext.Bookings
             .AsNoTracking()
-            .Skip((page - 1) * pageSize)
+            .Skip(page * pageSize)
             .Take(pageSize)
             .ToArrayAsync(ct);
     }
@@ -29,11 +29,6 @@ public class BookingsRepository(BookingAppDbContext dbContext) : IBookingsReposi
     public void Remove(Booking booking)
     {
         dbContext.Bookings.Remove(booking);
-    }
-
-    public async Task<int> SaveChangesAsync(CancellationToken ct = default)
-    {
-        return await dbContext.SaveChangesAsync(ct);
     }
 
     public async Task<bool> HasOverlappingAsync(Guid roomId, DateTime startTime, DateTime endTime, CancellationToken ct = default)
