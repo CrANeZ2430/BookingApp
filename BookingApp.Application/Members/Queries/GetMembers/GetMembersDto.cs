@@ -1,6 +1,6 @@
 ﻿using BookingApp.Core.Domain.Members.Models;
 
-namespace BookingApp.Application.Members.Queries.GetPagedMembers;
+namespace BookingApp.Application.Members.Queries.GetMembers;
 
 public record GetMembersDto(
     string FirstName,

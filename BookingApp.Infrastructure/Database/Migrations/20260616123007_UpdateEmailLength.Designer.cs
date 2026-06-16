@@ -3,6 +3,7 @@ using System;
 using BookingApp.Infrastructure.Database;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
@@ -11,9 +12,11 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace BookingApp.Infrastructure.Database.Migrations
 {
     [DbContext(typeof(BookingAppDbContext))]
-    partial class BookingAppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20260616123007_UpdateEmailLength")]
+    partial class UpdateEmailLength
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

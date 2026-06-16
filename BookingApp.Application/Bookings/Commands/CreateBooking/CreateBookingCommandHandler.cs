@@ -19,10 +19,15 @@ public class CreateBookingCommandHandler(
         CreateBookingCommand request, 
         CancellationToken cancellationToken = default)
     {
+        var room = await roomsRepository.GetByIdAsync(request.RoomId, cancellationToken);
         if ((await membersRepository.GetByIdAsync(request.MemberId, cancellationToken)) is null)
             throw new ArgumentException("Given member was not found.");
-        if ((await roomsRepository.GetByIdAsync(request.RoomId, cancellationToken)) is null)
+        if (room is null)
             throw new ArgumentException("Given room was not found.");
+        if (request.AttendeeCount > room.Capacity)
+            throw new ArgumentOutOfRangeException(
+                $"{nameof(room.Capacity)}, {nameof(request.AttendeeCount)}", 
+                $"The room capacity is {room.Capacity}, but you requested {request.AttendeeCount} attendees.");
         if (await bookingsRepository.HasOverlappingAsync(request.RoomId, request.StartTime, request.EndTime,
                 cancellationToken))
             throw new ArgumentOutOfRangeException(

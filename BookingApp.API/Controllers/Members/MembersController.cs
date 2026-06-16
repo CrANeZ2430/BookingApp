@@ -1,6 +1,6 @@
 ﻿using BookingApp.Application.Members.Commands.CreateMember;
 using BookingApp.Application.Members.Queries.GetMemberById;
-using BookingApp.Application.Members.Queries.GetPagedMembers;
+using BookingApp.Application.Members.Queries.GetMembers;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 

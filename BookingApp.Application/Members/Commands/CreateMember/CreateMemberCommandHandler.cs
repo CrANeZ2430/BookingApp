@@ -1,6 +1,7 @@
 ﻿using BookingApp.Core.Abstractions;
 using BookingApp.Core.Domain.Members.Models;
 using BookingApp.Core.Domain.Members.Repositories;
+using FluentValidation;
 using MediatR;
 
 namespace BookingApp.Application.Members.Commands.CreateMember;

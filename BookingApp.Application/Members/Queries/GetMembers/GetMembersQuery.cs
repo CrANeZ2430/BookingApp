@@ -1,6 +1,6 @@
 ﻿using MediatR;
 
-namespace BookingApp.Application.Members.Queries.GetPagedMembers;
+namespace BookingApp.Application.Members.Queries.GetMembers;
 
 public record GetMembersQuery(
     int Page,

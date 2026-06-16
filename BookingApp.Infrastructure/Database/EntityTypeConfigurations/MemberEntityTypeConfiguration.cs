@@ -28,7 +28,7 @@ public class MemberEntityTypeConfiguration : IEntityTypeConfiguration<Member>
             .IsRequired();
         
         builder.Property(m => m.Email)
-            .HasMaxLength(254)
+            .HasMaxLength(256)
             .IsRequired();
         
         builder.Property(m => m.PhoneNumber)

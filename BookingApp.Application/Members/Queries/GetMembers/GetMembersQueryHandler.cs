@@ -1,7 +1,7 @@
 ﻿using BookingApp.Core.Domain.Members.Repositories;
 using MediatR;
 
-namespace BookingApp.Application.Members.Queries.GetPagedMembers;
+namespace BookingApp.Application.Members.Queries.GetMembers;
 
 public class GetMembersQueryHandler(
     IMembersRepository membersRepository) 
@@ -11,11 +11,6 @@ public class GetMembersQueryHandler(
         GetMembersQuery request, 
         CancellationToken cancellationToken = default)
     {
-        if (request.Page < 0)
-            throw new ArgumentOutOfRangeException(nameof(request.Page), "Page cannot be less then 0.");
-        if (request.PageSize <= 0)
-            throw new ArgumentOutOfRangeException(nameof(request.PageSize), "Page size cannit be lass than 0.");
-        
         var members = await membersRepository
             .GetAsync(request.Page, request.PageSize, cancellationToken);
         
