@@ -1,4 +1,12 @@
 ﻿# Todo:
-- [x] Set up MediatR validation pipeline
-- [ ] Implement Global Exception Handling Middleware
-- [ ] Add Room Booking business logic
+- [x] Set up Entity Framework core and migrations
+- [x] Set up MediatR orchestration
+- [x] Add validation behavior pipeline
+- [x] Implement Global Exception Handling Middleware
+- [ ] Add Logging, Performance-Logging behaviors
+- [ ] Implement Authentication/Authorization
+- [ ] Add Dapper for complex queries
+- [ ] Set up Aggregate Root Base and Domain Events
+- [ ] Set up docker compose orchestration
+- [ ] Add Unit tests
+- [ ] Add Integration tests
