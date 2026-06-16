@@ -1,5 +1,4 @@
-﻿using BookingApp.Core.Domain.Bookings.Models;
-using MediatR;
+﻿using MediatR;
 
 namespace BookingApp.Application.Bookings.Commands.CreateBooking;
 

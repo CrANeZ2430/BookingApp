@@ -1,5 +1,6 @@
 ﻿using BookingApp.Core.Domain.Members.Models;
 using BookingApp.Core.Domain.Rooms.Models;
+using BookingApp.Core.Exceptions;
 
 namespace BookingApp.Core.Domain.Bookings.Models;
 
@@ -46,10 +47,10 @@ public class Booking
         Guid roomId)
     {
         if (attendeeCount <= 0)
-            throw new ArgumentOutOfRangeException(nameof(attendeeCount), "Room capacity must be greater than zero.");
+            throw new BadRequestException("Room attendees count cannot be 0.");
         
         if (startTime >= endTime)
-            throw new ArgumentException("Start time must be before end time.");
+            throw new BadRequestException("Start time must be before end time.");
         
         return new Booking(
             attendeeCount, 
@@ -67,10 +68,10 @@ public class Booking
         Guid roomId)
     {
         if (attendeeCount <= 0)
-            throw new ArgumentOutOfRangeException(nameof(attendeeCount), "Room capacity must be greater than zero.");
+            throw new BadRequestException("Room attendees count cannot be 0.");
         
         if (startTime >= endTime)
-            throw new ArgumentException("Start time must be before end time.");
+            throw new BadRequestException("Start time must be before end time.");
         
         AttendeeCount = attendeeCount;
         StartTime = startTime;
@@ -81,7 +82,7 @@ public class Booking
     public void Confirm()
     {
         if (Status != BookingStatus.Pending)
-            throw new InvalidOperationException("Only pending bookings can be confirmed.");
+            throw new BadRequestException("Only pending bookings can be confirmed.");
         
         Status = BookingStatus.Confirmed;
     }

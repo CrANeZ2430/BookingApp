@@ -1,5 +1,6 @@
 ﻿using BookingApp.Core.Domain.Bookings.Models;
 using BookingApp.Core.Domain.RoomTypes.Models;
+using BookingApp.Core.Exceptions;
 
 namespace BookingApp.Core.Domain.Rooms.Models;
 
@@ -46,13 +47,13 @@ public class Room
         Guid roomTypeId)
     {
         if (string.IsNullOrWhiteSpace(name))
-            throw new ArgumentException("Room name cannot be empty.", nameof(name));
+            throw new BadRequestException("Room name cannot be empty.");
 
         if (capacity <= 0)
-            throw new ArgumentOutOfRangeException(nameof(capacity), "Room capacity must be greater than zero.");
+            throw new BadRequestException("Room capacity must be greater than zero.");
         
         if (floor < 0)
-            throw new ArgumentOutOfRangeException(nameof(floor), "Floor cannot be negative.");
+            throw new BadRequestException("Floor cannot be negative.");
         
         return new Room(
             name,
@@ -72,13 +73,13 @@ public class Room
         Guid roomTypeId)
     {
         if (string.IsNullOrWhiteSpace(name))
-            throw new ArgumentException("Room name cannot be empty.", nameof(name));
+            throw new BadRequestException("Room name cannot be empty.");
 
         if (capacity <= 0)
-            throw new ArgumentOutOfRangeException(nameof(capacity), "Room capacity must be greater than zero.");
+            throw new BadRequestException("Room capacity must be greater than zero.");
         
         if (floor < 0)
-            throw new ArgumentOutOfRangeException(nameof(floor), "Floor cannot be negative.");
+            throw new BadRequestException("Floor cannot be negative.");
         
         Name = name;
         Floor = floor;
@@ -91,7 +92,7 @@ public class Room
     public void CloseForMaintenance()
     {
         if (!IsOperational)
-            throw new InvalidOperationException("Room is already closed for maintenance.");
+            throw new BadRequestException("Room is already closed for maintenance.");
 
         IsOperational = false;
     }
@@ -99,7 +100,7 @@ public class Room
     public void OpenForUse()
     {
         if (IsOperational)
-            throw new InvalidOperationException("Room is already open and operational.");
+            throw new BadRequestException("Room is already open and operational.");
 
         IsOperational = true;
     }

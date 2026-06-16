@@ -18,5 +18,5 @@
     <ItemGroup>
       <ProjectReference Include="..\BookingApp.Core\BookingApp.Core.csproj" />
     </ItemGroup>
-
+    
 </Project>

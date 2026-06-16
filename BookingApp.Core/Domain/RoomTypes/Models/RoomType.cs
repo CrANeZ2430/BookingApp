@@ -1,4 +1,5 @@
 ﻿using BookingApp.Core.Domain.Rooms.Models;
+using BookingApp.Core.Exceptions;
 
 namespace BookingApp.Core.Domain.RoomTypes.Models;
 
@@ -28,7 +29,7 @@ public class RoomType
         string? description)
     {
         if (string.IsNullOrWhiteSpace(name))
-            throw new ArgumentException("Name cannot be empty.", nameof(name));
+            throw new BadRequestException("Name cannot be empty.");
         
         return new RoomType(
             name,
@@ -40,7 +41,7 @@ public class RoomType
         string? description)
     {
         if (string.IsNullOrWhiteSpace(name))
-            throw new ArgumentException("Name cannot be empty.", nameof(name));
+            throw new BadRequestException("Name cannot be empty.");
         
         Name = name;
         Description = description;

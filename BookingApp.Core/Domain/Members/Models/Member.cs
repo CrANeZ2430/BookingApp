@@ -1,4 +1,5 @@
 ﻿using BookingApp.Core.Domain.Bookings.Models;
+using BookingApp.Core.Exceptions;
 
 namespace BookingApp.Core.Domain.Members.Models;
 
@@ -40,13 +41,13 @@ public class Member
         string phoneNumber)
     {
         if (string.IsNullOrWhiteSpace(firstName))
-            throw new ArgumentException("First name cannot be empty.", nameof(firstName));
+            throw new BadRequestException("First name is required.");
 
         if (string.IsNullOrWhiteSpace(lastName))
-            throw new ArgumentException("Last name cannot be empty.", nameof(lastName));
+            throw new BadRequestException("Last name is required.");
 
         if (string.IsNullOrWhiteSpace(email) || !email.Contains("@"))
-            throw new ArgumentException("A valid email is required.", nameof(email));
+            throw new BadRequestException("A valid email is required.");
         
         return new Member(
             firstName,
@@ -64,13 +65,13 @@ public class Member
         string phoneNumber)
     {
         if (string.IsNullOrWhiteSpace(firstName))
-            throw new ArgumentException("First name cannot be empty.", nameof(firstName));
+            throw new BadRequestException("First name is required.");
 
         if (string.IsNullOrWhiteSpace(lastName))
-            throw new ArgumentException("Last name cannot be empty.", nameof(lastName));
+            throw new BadRequestException("Last name is required.");
 
         if (string.IsNullOrWhiteSpace(email) || !email.Contains("@"))
-            throw new ArgumentException("A valid email is required.", nameof(email));
+            throw new BadRequestException("A valid email is required.");
         
         FirstName = firstName;
         LastName = lastName;

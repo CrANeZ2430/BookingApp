@@ -1,5 +1,6 @@
 using System.Text.Json.Serialization;
 using BookingApp.API.Conventions;
+using BookingApp.API.ExceptionHandling;
 using BookingApp.Application;
 using BookingApp.Infrastructure;
 using Microsoft.AspNetCore.Mvc.ApplicationModels;
@@ -9,6 +10,10 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.RegisterApplication();
 builder.Services.RegisterInfrastructure(builder.Configuration);
+
+builder.Services.AddSingleton<IExceptionMapper, ExceptionMapper>();
+builder.Services.AddExceptionHandler<ExceptionHandler>();
+builder.Services.AddProblemDetails();
 
 builder.Services.AddControllers(options =>
         options.Conventions.Add(new RouteTokenTransformerConvention(new KebabCaseParameterTransformer())))
@@ -31,6 +36,8 @@ if (app.Environment.IsDevelopment())
             .WithDefaultHttpClient(ScalarTarget.CSharp, ScalarClient.HttpClient);
     });
 }
+
+app.UseExceptionHandler();
 
 app.UseHttpsRedirection();
 

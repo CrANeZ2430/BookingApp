@@ -1,5 +1,5 @@
-﻿using BookingApp.Core.Domain.Rooms.Models;
-using BookingApp.Core.Domain.Rooms.Repositories;
+﻿using BookingApp.Core.Domain.Rooms.Repositories;
+using BookingApp.Core.Domain.Rooms.Models;
 using Microsoft.EntityFrameworkCore;
 
 namespace BookingApp.Infrastructure.Database.Repositories.Rooms;
