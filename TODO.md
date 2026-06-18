@@ -1,12 +1,13 @@
 ﻿# Todo:
 - [x] Set up Entity Framework core and migrations
 - [x] Set up MediatR orchestration
-- [x] Add validation behavior pipeline
-- [x] Implement Global Exception Handling Middleware
-- [ ] Add Logging, Performance-Logging behaviors
+- [x] Add Validation behavior pipeline
+- [x] Implement global Exception Handling middleware
+- [x] Add Performance-Logging behaviors
 - [ ] Implement Authentication/Authorization
 - [ ] Add Dapper for complex queries
 - [ ] Set up Aggregate Root Base and Domain Events
-- [ ] Set up docker compose orchestration
+- [ ] Set up Docker Compose orchestration
 - [ ] Add Unit tests
 - [ ] Add Integration tests
+- [ ] Add React frontend
