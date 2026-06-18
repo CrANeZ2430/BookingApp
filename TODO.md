@@ -3,8 +3,8 @@
 - [x] Set up MediatR orchestration
 - [x] Add Validation behavior pipeline
 - [x] Implement global Exception Handling middleware
-- [x] Add Performance-Logging behaviors
-- [ ] Implement Authentication/Authorization
+- [x] Add Performance-Logging behavior
+- [ ] Implement role based Authentication/Authorization
 - [ ] Add Dapper for complex queries
 - [ ] Set up Aggregate Root Base and Domain Events
 - [ ] Set up Docker Compose orchestration
