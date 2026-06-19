@@ -2,6 +2,7 @@
 using BookingApp.Application.Members.Queries.GetMemberById;
 using BookingApp.Application.Members.Queries.GetMembers;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace BookingApp.API.Controllers.Members;
@@ -13,6 +14,7 @@ public class MembersController(
     : ControllerBase
 {
     [HttpGet]
+    [Authorize]
     public async Task<IActionResult> GetMembers(
         [FromQuery] int page = 0,
         [FromQuery] int pageSize = 5,
@@ -25,6 +27,7 @@ public class MembersController(
     }
 
     [HttpGet("{memberId:guid}")]
+    [Authorize]
     public async Task<IActionResult> GetMemberById(
         [FromRoute] Guid memberId,
         CancellationToken ct = default)
@@ -36,6 +39,7 @@ public class MembersController(
     }
 
     [HttpPost]
+    [Authorize]
     public async Task<IActionResult> CreateMember(
         [FromBody] CreateMemberCommand command,
         CancellationToken ct = default)

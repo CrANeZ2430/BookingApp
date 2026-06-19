@@ -31,6 +31,8 @@ public class ExceptionHandler(
         catch (Exception e)
         {
             logger.LogError(e, "Failed to write problem details response.");
+
+            return false;
         }
 
         return true;

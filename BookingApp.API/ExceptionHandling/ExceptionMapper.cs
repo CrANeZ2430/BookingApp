@@ -1,7 +1,5 @@
-﻿using BookingApp.API.ExceptionHandling.Exceptions;
-using BookingApp.Core.Exceptions;
+﻿using BookingApp.Core.Exceptions;
 using FluentValidation;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
 namespace BookingApp.API.ExceptionHandling;
@@ -12,6 +10,7 @@ public class ExceptionMapper : IExceptionMapper
     {
         int statusCode;
         string title;
+        string type;
         var errors = new Dictionary<string, string[]>();
 
         switch (exception)
@@ -19,6 +18,7 @@ public class ExceptionMapper : IExceptionMapper
             case ValidationException e:
                 statusCode = 400;
                 title = "Validation failed.";
+                type = "https://datatracker.ietf.org/doc/html/rfc9110#section-15.5.1";
                 errors = e.Errors
                     .GroupBy(e => e.PropertyName)
                     .ToDictionary(
@@ -29,27 +29,25 @@ public class ExceptionMapper : IExceptionMapper
             case BadRequestException:
                 statusCode = StatusCodes.Status400BadRequest;
                 title = "Error caused by request";
-                break;
-
-            case UnauthorizedException:
-                statusCode = StatusCodes.Status401Unauthorized;
-                title = "Unauthorized access";
+                type = "https://datatracker.ietf.org/doc/html/rfc9110#section-15.5.1";
                 break;
 
             case NotFoundException:
                 statusCode = StatusCodes.Status404NotFound;
                 title = "Resource cannot be found";
+                type = "https://datatracker.ietf.org/doc/html/rfc9110#section-15.5.5";
                 break;
 
             default:
                 statusCode = StatusCodes.Status500InternalServerError;
                 title = "Internal server problem";
+                type = "https://datatracker.ietf.org/doc/html/rfc9110#section-15.6.1";
                 break;
         }
 
         var problemDetails = new ProblemDetails()
         {
-            Type = exception.GetType().Name,
+            Type = type,
             Status = statusCode,
             Title = title
         };
