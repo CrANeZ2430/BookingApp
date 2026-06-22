@@ -1,13 +1,20 @@
 ﻿# Todo:
-- [x] Set up Entity Framework core and migrations
+- [x] Add project's Core Entities
+- [x] Set up Entity Framework Core and Migrations
 - [x] Set up MediatR orchestration
 - [x] Add Validation behavior pipeline
 - [x] Implement global Exception Handling middleware
 - [x] Add Performance-Logging behavior
-- [ ] Implement role based Authentication/Authorization
-- [ ] Add Dapper for complex queries
+- [x] Implement Authentication/Authorization
 - [ ] Set up Aggregate Root Base and Domain Events
+- [ ] Add Dapper for complex queries
+- [ ] Add React frontend
+- -[ ] Set up React project
+- -[ ] Add Member entity management (login)
+- -[ ] Add role base Authorization
+- -[ ] Add RoomType entity management
+- -[ ] Add Room entity management
+- -[ ] Add Bookings entity management
 - [ ] Set up Docker Compose orchestration
 - [ ] Add Unit tests
 - [ ] Add Integration tests
-- [ ] Add React frontend
