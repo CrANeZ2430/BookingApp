@@ -4,6 +4,7 @@ using BookingApp.Core.Abstractions;
 using BookingApp.Core.Domain.Bookings.Repositories;
 using BookingApp.Core.Domain.Members.Repositories;
 using BookingApp.Infrastructure.Abstractions;
+using BookingApp.Infrastructure.Data;
 using BookingApp.Infrastructure.Database;
 using BookingApp.Infrastructure.Database.Repositories.Bookings;
 using BookingApp.Infrastructure.Database.Repositories.Members;
@@ -21,14 +22,21 @@ public static class InfrastructureRegistration
         this IServiceCollection services,
         IConfiguration configuration)
     {
-        services.AddDbContext<BookingAppDbContext>(options =>
-            options.UseNpgsql(configuration.GetConnectionString("BookingApp")));
+        services.AddDbContext<BookingAppDbContext>((sp, options) =>
+        {
+            var interceptor = sp.GetRequiredService<PublishDomainEventInterceptor>();
+
+            options.UseNpgsql(configuration.GetConnectionString("BookingApp"))
+                .AddInterceptors(interceptor);
+        });
 
         services.AddScoped<IMembersRepository, MembersRepository>();
         services.AddScoped<IRoomsRepository, RoomsRepository>();
         services.AddScoped<IRoomTypesRepository, RoomTypesRepository>();
         services.AddScoped<IBookingsRepository, BookingsRepository>();
         services.AddScoped<IUnitOfWork>(sp => sp.GetRequiredService<BookingAppDbContext>());
+
+        services.AddScoped<PublishDomainEventInterceptor>();
 
         services.AddSingleton<IDateTimeProvider, DateTimeProvider>();
 

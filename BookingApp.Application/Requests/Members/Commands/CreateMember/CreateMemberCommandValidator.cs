@@ -1,6 +1,6 @@
 ﻿using FluentValidation;
 
-namespace BookingApp.Application.Members.Commands.CreateMember;
+namespace BookingApp.Application.Requests.Members.Commands.CreateMember;
 
 public class CreateMemberCommandValidator : AbstractValidator<CreateMemberCommand>
 {

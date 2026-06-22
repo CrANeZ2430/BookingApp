@@ -1,6 +1,6 @@
 ﻿using FluentValidation;
 
-namespace BookingApp.Application.Members.Queries.GetMembers;
+namespace BookingApp.Application.Requests.Members.Queries.GetMembers;
 
 public class GetMembersValidator : AbstractValidator<GetMembersQuery>
 {

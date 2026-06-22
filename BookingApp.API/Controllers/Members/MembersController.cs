@@ -1,6 +1,6 @@
-﻿using BookingApp.Application.Members.Commands.CreateMember;
-using BookingApp.Application.Members.Queries.GetMemberById;
-using BookingApp.Application.Members.Queries.GetMembers;
+﻿using BookingApp.Application.Requests.Members.Commands.CreateMember;
+using BookingApp.Application.Requests.Members.Queries.GetMemberById;
+using BookingApp.Application.Requests.Members.Queries.GetMembers;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;

@@ -1,6 +1,6 @@
 ﻿using BookingApp.Core.Domain.Members.Models;
 
-namespace BookingApp.Application.Members.Queries.GetMemberById;
+namespace BookingApp.Application.Requests.Members.Queries.GetMemberById;
 
 public record GetMemberByIdDto(
     string FirstName,

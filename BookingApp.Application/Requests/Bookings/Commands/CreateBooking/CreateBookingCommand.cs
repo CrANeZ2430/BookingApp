@@ -1,6 +1,6 @@
 ﻿using MediatR;
 
-namespace BookingApp.Application.Bookings.Commands.CreateBooking;
+namespace BookingApp.Application.Requests.Bookings.Commands.CreateBooking;
 
 public record CreateBookingCommand(
     int AttendeeCount,

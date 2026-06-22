@@ -55,7 +55,7 @@ if (app.Environment.IsDevelopment())
             .AddPreferredSecuritySchemes("Bearer")
             .AddHttpAuthentication("Bearer", http =>
             {
-                http.Token = "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCIsImtpZCI6IjNNS1ktTkV0aVZ2MEFXX1libkYtciJ9.eyJpc3MiOiJodHRwczovL2Rldi1jcm4uZXUuYXV0aDAuY29tLyIsInN1YiI6IlFjcDhXRHZDaEk1bms5V01qaEV3Ym1nRzhxVXBMaXFyQGNsaWVudHMiLCJhdWQiOiJodHRwczovL2xvY2FsaG9zdDo3MDc5IiwiaWF0IjoxNzgxOTY4NDA3LCJleHAiOjE3ODIwNTQ4MDcsImd0eSI6ImNsaWVudC1jcmVkZW50aWFscyIsImF6cCI6IlFjcDhXRHZDaEk1bms5V01qaEV3Ym1nRzhxVXBMaXFyIn0.M1WtAPbCe0QyfL-nyQija4XBsgAAk4bZrC4RXh9iNSghxkDAE9cTeMm47FMql4_pvqbPHXZxFY2KJRKkeuZkgSpxvgh3R_0WzMSoPSEfq36P9TrhRxiH9cqMvkhiJMLRkr3M84STz2_DqEkoyju5mv-OPKJrg4KqzpuwxqFk5D2ZxMsqRQJ5ll56hyxInvmadZuRqMueDSyTolC2o8qJpRQ80WxtKhvqldrK18-4_Xqc0JBn_ovAkLyJYua9vuxuwU-iCIqD9hdTFYcg-OleqjA89DPoD2SuGl2c1B0YXH2IK195rqmcD3yrA4KqrAHES-tNSBDS49oVUfp4QXcqEg";
+                http.Token = "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCIsImtpZCI6IjNNS1ktTkV0aVZ2MEFXX1libkYtciJ9.eyJpc3MiOiJodHRwczovL2Rldi1jcm4uZXUuYXV0aDAuY29tLyIsInN1YiI6IlFjcDhXRHZDaEk1bms5V01qaEV3Ym1nRzhxVXBMaXFyQGNsaWVudHMiLCJhdWQiOiJodHRwczovL2xvY2FsaG9zdDo3MDc5IiwiaWF0IjoxNzgyMTM2ODg2LCJleHAiOjE3ODIyMjMyODYsImd0eSI6ImNsaWVudC1jcmVkZW50aWFscyIsImF6cCI6IlFjcDhXRHZDaEk1bms5V01qaEV3Ym1nRzhxVXBMaXFyIn0.caRJH4fQnGpRhN4sRcWC_uE0v7INVJJWYA-2WS3ECr0rdmZV6-G9gI-IpESayRKGtHuCFOOUKwXbgWfrxE47VD_VJlUaV_yt6mO1Xd5vabky1UVLLdnImJ4rYRLEqeJ0rJECIYI4jYZn6nySQ4N7lRAfhBLALajBtLB3EE5c9HgRfzQ3Zq4unPX6DdHEoYfLpRsiRp-RMeHD8Ccyq6VDwtmlgLQFqH2kuR6kKb1v1IF9ntNwvAmdjP1TRhuKPBZQ__kGOdbOtGkSqQALP08vByD4TCQbRO6-lXIK6XAfIT2osMTv5uJdfbO0c1i8QIIgCqekAjcdgkcQZkpp7JWN_A";
             });
     });
 }

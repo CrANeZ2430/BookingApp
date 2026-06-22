@@ -1,7 +1,7 @@
 ﻿using BookingApp.Core.Domain.Members.Repositories;
 using MediatR;
 
-namespace BookingApp.Application.Members.Queries.GetMembers;
+namespace BookingApp.Application.Requests.Members.Queries.GetMembers;
 
 public class GetMembersQueryHandler(
     IMembersRepository membersRepository) 

@@ -1,6 +1,6 @@
 ﻿using FluentValidation;
 
-namespace BookingApp.Application.Bookings.Commands.CreateBooking;
+namespace BookingApp.Application.Requests.Bookings.Commands.CreateBooking;
 
 public class CreateBookingCommandValidator : AbstractValidator<CreateBookingCommand>
 {

@@ -1,7 +1,7 @@
 ﻿using BookingApp.Core.Domain.Members.Models;
 using MediatR;
 
-namespace BookingApp.Application.Members.Commands.CreateMember;
+namespace BookingApp.Application.Requests.Members.Commands.CreateMember;
 
 public record CreateMemberCommand(
     string FirstName,

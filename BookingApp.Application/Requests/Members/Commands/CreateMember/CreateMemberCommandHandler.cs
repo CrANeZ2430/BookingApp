@@ -1,14 +1,14 @@
 ﻿using BookingApp.Core.Abstractions;
 using BookingApp.Core.Domain.Members.Models;
 using BookingApp.Core.Domain.Members.Repositories;
-using FluentValidation;
 using MediatR;
 
-namespace BookingApp.Application.Members.Commands.CreateMember;
+namespace BookingApp.Application.Requests.Members.Commands.CreateMember;
 
 public class CreateMemberCommandHandler(
     IMembersRepository membersRepository,
-    IUnitOfWork unitOfWork)
+    IUnitOfWork unitOfWork,
+    IDateTimeProvider dateTimeProvider)
     : IRequestHandler<CreateMemberCommand, Guid>
 {
     public async Task<Guid> Handle(
@@ -20,7 +20,8 @@ public class CreateMemberCommandHandler(
             request.LastName,
             request.Role,
             request.Email,
-            request.PhoneNumber);
+            request.PhoneNumber,
+            dateTimeProvider);
 
         await membersRepository.AddAsync(member, cancellationToken);
         await unitOfWork.SaveChangesAsync(cancellationToken);

@@ -1,12 +1,12 @@
-﻿using BookingApp.Core.Domain.Rooms.Repositories;
-using BookingApp.Core.Abstractions;
+﻿using BookingApp.Core.Abstractions;
 using BookingApp.Core.Domain.Bookings.Models;
 using BookingApp.Core.Domain.Bookings.Repositories;
 using BookingApp.Core.Domain.Members.Repositories;
+using BookingApp.Core.Domain.Rooms.Repositories;
 using BookingApp.Core.Exceptions;
 using MediatR;
 
-namespace BookingApp.Application.Bookings.Commands.CreateBooking;
+namespace BookingApp.Application.Requests.Bookings.Commands.CreateBooking;
 
 public class CreateBookingCommandHandler(
     IMembersRepository membersRepository,

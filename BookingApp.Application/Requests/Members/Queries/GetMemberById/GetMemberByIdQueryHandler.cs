@@ -2,7 +2,7 @@
 using BookingApp.Core.Exceptions;
 using MediatR;
 
-namespace BookingApp.Application.Members.Queries.GetMemberById;
+namespace BookingApp.Application.Requests.Members.Queries.GetMemberById;
 
 public class GetMemberByIdQueryHandler(
     IMembersRepository membersRepository)
