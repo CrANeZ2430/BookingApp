@@ -6,7 +6,7 @@
 - [x] Implement global Exception Handling middleware
 - [x] Add Performance-Logging behavior
 - [x] Implement Authentication/Authorization
-- [ ] Set up Aggregate Root Base and Domain Events
+- [x] Set up Aggregate Root Base and Domain Events
 - [ ] Add Dapper for complex queries
 - [ ] Add React frontend
 - -[ ] Set up React project
