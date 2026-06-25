@@ -22,3 +22,8 @@ bld/
 
 ## Visual Studio cache
 .vs/
+
+## Frontend specifics
+BookingApp.UI/node_modules/
+BookingApp.UI/dist/
+BookingApp.UI/*.local
