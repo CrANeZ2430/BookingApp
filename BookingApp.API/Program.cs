@@ -8,6 +8,8 @@ using BookingApp.Infrastructure;
 using Microsoft.AspNetCore.Mvc.ApplicationModels;
 using Scalar.AspNetCore;
 
+var  MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
+
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.RegisterApplication();
@@ -16,6 +18,17 @@ builder.Services.RegisterInfrastructure(builder.Configuration);
 builder.Services.AddSingleton<IExceptionMapper, ExceptionMapper>();
 builder.Services.AddExceptionHandler<ExceptionHandler>();
 builder.Services.AddProblemDetails();
+
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy(name: MyAllowSpecificOrigins,
+        policy  =>
+        {
+            policy.WithOrigins("http://localhost:5173")
+                .AllowAnyMethod()
+                .AllowAnyHeader();;
+        });
+});
 
 builder.Services.AddAuthentication().AddJwtBearer(options =>
 {
@@ -55,12 +68,14 @@ if (app.Environment.IsDevelopment())
             .AddPreferredSecuritySchemes("Bearer")
             .AddHttpAuthentication("Bearer", http =>
             {
-                http.Token = "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCIsImtpZCI6IjNNS1ktTkV0aVZ2MEFXX1libkYtciJ9.eyJpc3MiOiJodHRwczovL2Rldi1jcm4uZXUuYXV0aDAuY29tLyIsInN1YiI6IlFjcDhXRHZDaEk1bms5V01qaEV3Ym1nRzhxVXBMaXFyQGNsaWVudHMiLCJhdWQiOiJodHRwczovL2xvY2FsaG9zdDo3MDc5IiwiaWF0IjoxNzgyMTM2ODg2LCJleHAiOjE3ODIyMjMyODYsImd0eSI6ImNsaWVudC1jcmVkZW50aWFscyIsImF6cCI6IlFjcDhXRHZDaEk1bms5V01qaEV3Ym1nRzhxVXBMaXFyIn0.caRJH4fQnGpRhN4sRcWC_uE0v7INVJJWYA-2WS3ECr0rdmZV6-G9gI-IpESayRKGtHuCFOOUKwXbgWfrxE47VD_VJlUaV_yt6mO1Xd5vabky1UVLLdnImJ4rYRLEqeJ0rJECIYI4jYZn6nySQ4N7lRAfhBLALajBtLB3EE5c9HgRfzQ3Zq4unPX6DdHEoYfLpRsiRp-RMeHD8Ccyq6VDwtmlgLQFqH2kuR6kKb1v1IF9ntNwvAmdjP1TRhuKPBZQ__kGOdbOtGkSqQALP08vByD4TCQbRO6-lXIK6XAfIT2osMTv5uJdfbO0c1i8QIIgCqekAjcdgkcQZkpp7JWN_A";
+                http.Token = "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCIsImtpZCI6IjNNS1ktTkV0aVZ2MEFXX1libkYtciJ9.eyJpc3MiOiJodHRwczovL2Rldi1jcm4uZXUuYXV0aDAuY29tLyIsInN1YiI6IlFjcDhXRHZDaEk1bms5V01qaEV3Ym1nRzhxVXBMaXFyQGNsaWVudHMiLCJhdWQiOiJodHRwczovL2xvY2FsaG9zdDo3MDc5IiwiaWF0IjoxNzgyMzIyMjI2LCJleHAiOjE3ODI0MDg2MjYsImd0eSI6ImNsaWVudC1jcmVkZW50aWFscyIsImF6cCI6IlFjcDhXRHZDaEk1bms5V01qaEV3Ym1nRzhxVXBMaXFyIn0.JdFSl_u0f0i5Hg5trREsnG4FgThsjJ0MrVU157EHWhowcsIh0B53fx5DcbEXKSRc4HpuqxAAMk04pL2QaBAVUUQV0KZ-EBSIZwL90E0HqJTq5vwMks7ULKSTIL7c1Sdr04sgQqpHXyumTzpO60hsBluTlIuxdJAqoU2Wo5LVDdy21VUZh0WsOYesPjYqOG-ufwVID0e5mPxWkG09fIRGvy9uFzsXNHBEqCk1EaDOrrvFtsQQffWbZAZaqjkyQFiNnHEPrcS-cCroJNFqYGqdOPAyR4_WH6aS_Ct5Dw82XXkC_IqV4cq9FjTFae5iwJVNTm91PDZzVbnmgJh7LvEpJg";
             });
     });
 }
 
 app.UseRouting();
+
+app.UseCors(MyAllowSpecificOrigins);
 
 app.UseAuthentication();
 app.UseAuthorization();
