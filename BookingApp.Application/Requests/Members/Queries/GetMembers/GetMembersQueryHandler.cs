@@ -16,6 +16,7 @@ public class GetMembersQueryHandler(
         
         return members.Select(m =>
             new GetMembersDto(
+                m.MemberId,
                 m.FirstName,
                 m.LastName,
                 m.Role,

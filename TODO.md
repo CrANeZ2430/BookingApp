@@ -9,8 +9,8 @@
 - [x] Set up Aggregate Root Base and Domain Events
 - [ ] Add Dapper for complex queries
 - [ ] Add React frontend
-- -[ ] Set up React project
-- -[ ] Add Member entity management (login)
+- -[x] Set up React project
+- -[ ] Add Member entity management
 - -[ ] Add role base Authorization
 - -[ ] Add RoomType entity management
 - -[ ] Add Room entity management

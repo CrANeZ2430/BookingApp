@@ -16,6 +16,7 @@ public class GetMemberByIdQueryHandler(
             throw new NotFoundException("Given member was not found.");
         
         return new GetMemberByIdDto(
+            member.MemberId,
             member.FirstName,
             member.LastName,
             member.Role,
