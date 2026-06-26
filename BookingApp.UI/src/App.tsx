@@ -4,6 +4,7 @@ import Layout from "./layout/Layout";
 import Home from "./router/home/Home";
 import Members from "./router/members/Members";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import NotFound from "./router/error/NotFound";
 
 export default function App() {
 
@@ -11,6 +12,7 @@ export default function App() {
     {
       path: "/",
       element: <Layout />,
+      errorElement: <NotFound />,
       children: [
         {
           path: "/",
