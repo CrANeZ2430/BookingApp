@@ -1,0 +1,36 @@
+@BaseUrl = {{HostHttps}}/members
+@MemberId = e29e5c92-6758-4224-b2bd-f59dc5ad9059
+
+### Get all Members
+GET {{BaseUrl}}
+Accept: application/json
+
+### Get Member by Id
+GET {{BaseUrl}}/{{MemberId}}
+Accept: application/json
+
+### Post new Member
+POST {{BaseUrl}}
+Content-Type: application/json
+
+{
+  "firstName": "Dean",
+  "lastName": "Winchester",
+  "role": "Customer",
+  "email": "d.winchester@gmail.com",
+  "phoneNumber": "+11234567890"
+}
+
+### Update Member
+PUT {{BaseUrl}}/{{MemberId}}
+Content-Type: application/json
+
+{
+  "firstName": "Dean",
+  "lastName": "Winchester",
+  "email": "d.winchester@gmail.com",
+  "phoneNumber": "+11234567890"
+}
+
+### Delete Member
+DELETE {{BaseUrl}}/{{MemberId}}
