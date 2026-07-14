@@ -1,5 +1,6 @@
 ﻿using BookingApp.Application.Requests.Members.Commands.CreateMember;
 using BookingApp.Application.Requests.Members.Commands.DeleteMember;
+using BookingApp.Application.Requests.Members.Commands.UpdateMember;
 using BookingApp.Application.Requests.Members.Queries.GetMemberById;
 using BookingApp.Application.Requests.Members.Queries.GetMembers;
 using MediatR;
@@ -50,6 +51,20 @@ public class MembersController(
         return CreatedAtAction(nameof(GetMemberById), new { memberId = memberId }, memberId);
     }
 
+    [HttpPut("{memberId:guid}")]
+    [Authorize]
+    public async Task<IActionResult> UpdateMember(
+        [FromRoute] Guid memberId,
+        [FromBody] UpdateMemberDto dto,
+        CancellationToken ct = default)
+    {
+        var request = new UpdateMemberCommand(memberId, dto);
+
+        await mediator.Send(request, ct);
+
+        return NoContent();
+    }
+
     [HttpDelete("{memberId:guid}")]
     [Authorize]
     public async Task<IActionResult> RemoveMember(
@@ -59,6 +74,6 @@ public class MembersController(
         var query = new DeleteMemberCommand(memberId);
         await mediator.Send(query, ct);
 
-        return Ok();
+        return NoContent();
     }
 }
