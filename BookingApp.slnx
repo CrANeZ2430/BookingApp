@@ -1,4 +1,9 @@
 <Solution>
+  <Folder Name="/Solution Items/">
+    <File Path="compose.yaml" />
+    <File Path="Dockerfile" />
+    <File Path=".dockerignore" />
+  </Folder>
   <Folder Name="/src/">
     <Project Path="BookingApp.API/BookingApp.API.csproj" />
     <Project Path="BookingApp.Application/BookingApp.Application.csproj" />
