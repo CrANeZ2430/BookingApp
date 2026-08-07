@@ -1,18 +1,4 @@
 ﻿services:
-  bookingapp.api:
-    container_name: bookingapp.api
-    image: bookingapp.api
-    build:
-      context: .
-      dockerfile: Dockerfile
-    ports:
-      - "8080:8080"
-    environment:
-      ASPNETCORE_ENVIRONMENT: "Development"
-    depends_on:
-      bookingapp.db:
-        condition: service_healthy
-    
   bookingapp.db:
     container_name: bookingapp.db
     image: postgres:18-alpine
@@ -22,14 +8,31 @@
       POSTGRES_DB: "BookingAppDb"
       POSTGRES_USER: "postgres"
       POSTGRES_PASSWORD: "postgres"
-    healthcheck:
-      test: [ "CMD-SHELL", "pg_isready -U postgres -d BookingAppDb" ]
-      interval: 3s
-      timeout: 3s
-      retries: 5
     volumes:
       - bookingapp_db:/var/lib/posgresql
+  
+  bookingapp.migrator:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      target: migrator
+    depends_on:
+      - bookingapp.db
+  
+  bookingapp.api:
+    container_name: bookingapp.api
+    image: bookingapp.api
+    build:
+      context: .
+      dockerfile: Dockerfile
+      target: final
+    ports:
+      - "8080:8080"
+    environment:
+      ASPNETCORE_ENVIRONMENT: "Development"
+    depends_on:
+      bookingapp.migrator:
+        condition: service_completed_successfully
 
 volumes:
   bookingapp_db:
-

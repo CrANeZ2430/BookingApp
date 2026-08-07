@@ -57,9 +57,6 @@ app.UseHttpsRedirection();
 if (app.Environment.IsDevelopment())
 {
     app.MapOpenApi();
-    using var scope = app.Services.CreateScope();
-    var service = scope.ServiceProvider.GetRequiredService<BookingAppDbContext>();
-    service.Database.Migrate();
 }
 
 app.UseRouting();

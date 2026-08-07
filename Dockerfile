@@ -18,3 +18,11 @@ WORKDIR /app
 COPY --from=build /app/publish .
 EXPOSE 8080
 ENTRYPOINT ["dotnet", "BookingApp.API.dll"]
+
+FROM build AS migrator
+
+ENV PATH="${PATH}:/root/.dotnet/tools"
+RUN dotnet tool install --global dotnet-ef
+
+WORKDIR /src/BookingApp.API
+ENTRYPOINT ["dotnet", "ef", "database", "update"]
