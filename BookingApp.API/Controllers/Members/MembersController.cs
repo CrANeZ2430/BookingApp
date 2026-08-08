@@ -15,8 +15,8 @@ public class MembersController(
     ISender mediator) 
     : ControllerBase
 {
-    [HttpGet]
     [Authorize]
+    [HttpGet]
     public async Task<IActionResult> GetMembers(
         [FromQuery] int page = 0,
         [FromQuery] int pageSize = 5,
@@ -28,8 +28,8 @@ public class MembersController(
         return Ok(members);
     }
 
-    [HttpGet("{memberId:guid}")]
     [Authorize]
+    [HttpGet("{memberId:guid}")]
     public async Task<IActionResult> GetMemberById(
         [FromRoute] Guid memberId,
         CancellationToken ct = default)
@@ -40,8 +40,8 @@ public class MembersController(
         return Ok(member);
     }
 
-    [HttpPost]
     [Authorize]
+    [HttpPost]
     public async Task<IActionResult> CreateMember(
         [FromBody] CreateMemberCommand command,
         CancellationToken ct = default)
@@ -51,8 +51,8 @@ public class MembersController(
         return CreatedAtAction(nameof(GetMemberById), new { memberId = memberId }, memberId);
     }
 
-    [HttpPut("{memberId:guid}")]
     [Authorize]
+    [HttpPut("{memberId:guid}")]
     public async Task<IActionResult> UpdateMember(
         [FromRoute] Guid memberId,
         [FromBody] UpdateMemberDto dto,
@@ -65,8 +65,8 @@ public class MembersController(
         return NoContent();
     }
 
-    [HttpDelete("{memberId:guid}")]
     [Authorize]
+    [HttpDelete("{memberId:guid}")]
     public async Task<IActionResult> RemoveMember(
         [FromRoute] Guid memberId,
         CancellationToken ct = default)

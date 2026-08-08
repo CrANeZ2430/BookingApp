@@ -2,10 +2,10 @@ import axios from "axios";
 
 export const api = axios.create(
     {
-        baseURL: "https://localhost:7079/api",
+        baseURL: "http://localhost:8080/api",
         headers: {
             "Content-Type": "application/json",
-            "Authorization": "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCIsImtpZCI6IjNNS1ktTkV0aVZ2MEFXX1libkYtciJ9.eyJpc3MiOiJodHRwczovL2Rldi1jcm4uZXUuYXV0aDAuY29tLyIsInN1YiI6IlFjcDhXRHZDaEk1bms5V01qaEV3Ym1nRzhxVXBMaXFyQGNsaWVudHMiLCJhdWQiOiJodHRwczovL2xvY2FsaG9zdDo3MDc5IiwiaWF0IjoxNzgyNDY4NzY2LCJleHAiOjE3ODI1NTUxNjYsImd0eSI6ImNsaWVudC1jcmVkZW50aWFscyIsImF6cCI6IlFjcDhXRHZDaEk1bms5V01qaEV3Ym1nRzhxVXBMaXFyIn0.KYIgrpp14snzmiiEC_5uL84fGCOH0YiBnVc-9E6HHBUA-O6e3QKcjPfkKyNS4NhvDV5akL93Wvp_mhUcIIh4Q5LImOMo3vkIvbslcgl1PlT23gnj2KZgUjihLhs4ZkPPEXNXkC9KjYNGgkn6A7DxzLI4zJ5MRqahOXLWYq2sRhlQV9zQZbl5SZAW_WWwD1NDBi0ZC6p6YYr-NlPi-NKClnenABdCm_3RvYSeR4ejZlD61qor3ViOvZka4BTXsRMWK9nPnnMkuElznAfkZQ7DVyjrF0_MJfbBRYoLA0JTuLZL84bO4JVgTPcKse0L5WzY1nbzy7-1kED9asACjKVpIg"
+            "Authorization": "Bearer eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCIsImtpZCI6IjNNS1ktTkV0aVZ2MEFXX1libkYtciJ9.eyJpc3MiOiJodHRwczovL2Rldi1jcm4uZXUuYXV0aDAuY29tLyIsInN1YiI6Ikh4V0ZGZFdnOG4xQVZLT05qSGFPZW1MYThyRVU0MHNyQGNsaWVudHMiLCJhdWQiOiJodHRwOi8vbG9jYWxob3N0OjgwODAiLCJpYXQiOjE3ODYxOTM1ODEsImV4cCI6MTc4NjI3OTk4MSwiZ3R5IjoiY2xpZW50LWNyZWRlbnRpYWxzIiwiYXpwIjoiSHhXRkZkV2c4bjFBVktPTmpIYU9lbUxhOHJFVTQwc3IifQ.GjAAK26ihrJCaOvDxfArbnEqQkp4wVLyxa_sp1BvRI0f_6pu_cZx9Kf8npos5oKKH7DOYfp-lGntFwbz7yzXDNhzhv4b7diNYVw45K2ywIt5pLqkhVisQiHTNnIKd8-efIFhugYtO3NqftlpobjFod9FFOr10iFUSwh8RnLRbNs6FrRnJO3_U1NXNdgW8mngKVaTLKRQI1sFLZ4AASA2cr-ANRMRNhzT06CJPN08I0eIX6n_bcFtuw3163zFzenkr30eX_O6ktwmiNG5N5YP2vk1RL6FT4tgCp3qAzo7zFb61XmJxs39Zg0A-LSMvYMVZQHk1-gp-nk0IgEFM7tQgg"
         }
     }
 );
