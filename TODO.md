@@ -14,7 +14,7 @@
 - [x] Add Validation behavior pipeline
 - [x] Add Performance-Logging behavior
 - [x] Implement global Exception Handling middleware
-- [ ] Add Database Seeding (Seed Data for Rooms & RoomTypes)
+- [x] Add Database Seeding (Seed Data for Rooms & RoomTypes)
 - [ ] Polish API Endpoint response contracts & status codes
 
 ### React Frontend (Core Booking Loop)

@@ -3,7 +3,8 @@
 [Flags]
 public enum Equipment
 {
-    Projector = 0,
+    None = 0,
+    Projector = 1 << 0,
     Monitor = 1 << 1,
     WhiteBoard = 1 << 2
 }

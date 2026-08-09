@@ -3,6 +3,7 @@ using BookingApp.Core.Domain.Bookings.Models;
 using BookingApp.Core.Domain.Members.Models;
 using BookingApp.Core.Domain.Rooms.Models;
 using BookingApp.Core.Domain.RoomTypes.Models;
+using BookingApp.Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
 
 namespace BookingApp.Infrastructure.Database;
@@ -24,6 +25,7 @@ public class BookingAppDbContext(DbContextOptions<BookingAppDbContext> options) 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
         optionsBuilder.LogTo(Console.WriteLine);
+        optionsBuilder.AddSeedingData();
         base.OnConfiguring(optionsBuilder);
     }
 }
