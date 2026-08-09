@@ -7,27 +7,27 @@ public class UpdateMemberCommandValidator : AbstractValidator<UpdateMemberComman
 {
     public UpdateMemberCommandValidator()
     {
-        RuleFor(dmc => dmc.MemberId)
+        RuleFor(x => x.MemberId)
             .NotEmpty()
             .WithMessage("Member ID is required.");
         
-        RuleFor(umc => umc.Dto.FirstName)
+        RuleFor(x => x.Dto.FirstName)
             .NotEmpty()
             .WithMessage("First name is required.")
             .MaximumLength(100)
             .WithMessage("First name length cannot exceed 100 characters.");
         
-        RuleFor(umc => umc.Dto.LastName)
+        RuleFor(x => x.Dto.LastName)
             .NotEmpty()
             .WithMessage("Last name is required.")
             .MaximumLength(100)
             .WithMessage("Last name length cannot exceed 100 characters.");
 
-        RuleFor(umc => umc.Dto.Role)
+        RuleFor(x => x.Dto.Role)
             .IsInEnum()
             .WithMessage("The specified role is invalid.");
 
-        RuleFor(umc => umc.Dto.Email)
+        RuleFor(x => x.Dto.Email)
             .NotEmpty()
             .WithMessage("Email is required.")
             .MaximumLength(256)
@@ -35,7 +35,7 @@ public class UpdateMemberCommandValidator : AbstractValidator<UpdateMemberComman
             .EmailAddress()
             .WithMessage("A valid email address is required.");
 
-        RuleFor(umc=> umc.Dto.PhoneNumber)
+        RuleFor(x=> x.Dto.PhoneNumber)
             .NotEmpty()
             .WithMessage("Phone number is required.")
             .MaximumLength(15)

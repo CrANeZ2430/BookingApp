@@ -10,7 +10,9 @@ public class GetMemberByIdQueryHandler(
 {
     public async Task<GetMemberByIdDto?> Handle(GetMemberByIdQuery request, CancellationToken cancellationToken)
     {
-        var member = await membersRepository.GetByIdAsync(request.MemberId, cancellationToken);
+        var member = await membersRepository.GetByIdAsync(
+            request.MemberId, 
+            cancellationToken);
 
         if (member is null)
             throw new NotFoundException("Given member was not found.");

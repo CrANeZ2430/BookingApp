@@ -1,20 +1,43 @@
-﻿# Todo:
+﻿# BookingApp Roadmap:
+
+## v1 — Core Production Release (Current Focus)
+
+### Architecture & Core Backend
 - [x] Add project's Core Entities
 - [x] Set up Entity Framework Core and Migrations
 - [x] Set up MediatR orchestration
+- [x] Add Aggregate Root Base and Domain Events (complex integration deferred to v2)
+- [x] Implement JWT Authentication/Authorization
+- [x] Set up Docker Compose orchestration (API)
+
+### API Quality & Middleware Pipeline
 - [x] Add Validation behavior pipeline
-- [x] Implement global Exception Handling middleware
 - [x] Add Performance-Logging behavior
-- [x] Implement Authentication/Authorization
-- [x] Set up Aggregate Root Base and Domain Events
-- [ ] Add Dapper for complex queries
-- [ ] Add React frontend
-- -[x] Set up React project
-- -[ ] Add Member entity management
-- -[ ] Add role base Authorization
-- -[ ] Add RoomType entity management
-- -[ ] Add Room entity management
-- -[ ] Add Bookings entity management
-- [ ] Set up Docker Compose orchestration
-- [ ] Add Unit tests
-- [ ] Add Integration tests
+- [x] Implement global Exception Handling middleware
+- [ ] Add Database Seeding (Seed Data for Rooms & RoomTypes)
+- [ ] Polish API Endpoint response contracts & status codes
+
+### React Frontend (Core Booking Loop)
+- [x] Set up React project (`BookingApp.UI`)
+- [ ] Implement Member entity management (Basic Profile / Selection UI)
+- [ ] Implement Room & RoomType display (Search & List view)
+- [ ] Implement Booking creation UI & Form State
+- [ ] Add Basic Loading & Error UI Feedback
+
+---
+
+## v2 — Post-Deployment & Enhancements
+
+### Security & Advanced Auth
+- [ ] Add Role-Based Authorization (RBAC UI Integration)
+- [ ] Integrate React Auth Context / Refresh Token handling
+- [ ] Implement Https into project
+
+### Advanced API Polishing
+- [ ] Integration of Domain Events
+
+### Testing & Infrastructure
+- [ ] Add Unit Tests (xUnit for CQRS Handlers & Domain Rules)
+- [ ] Add Integration Tests (Testcontainers for PostgreSQL & EF Core)
+- [ ] Set up Docker Compose orchestration (UI Containerization)
+- [ ] GitHub Actions CI/CD Pipeline

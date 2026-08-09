@@ -48,7 +48,10 @@ public class MembersController(
     {
         var memberId = await mediator.Send(command, ct);
 
-        return CreatedAtAction(nameof(GetMemberById), new { memberId = memberId }, memberId);
+        return CreatedAtAction(
+            nameof(GetMemberById), 
+            new { memberId = memberId }, 
+            memberId);
     }
 
     [Authorize]
@@ -58,21 +61,21 @@ public class MembersController(
         [FromBody] UpdateMemberDto dto,
         CancellationToken ct = default)
     {
-        var request = new UpdateMemberCommand(memberId, dto);
+        var command = new UpdateMemberCommand(memberId, dto);
 
-        await mediator.Send(request, ct);
+        await mediator.Send(command, ct);
 
         return NoContent();
     }
 
     [Authorize]
     [HttpDelete("{memberId:guid}")]
-    public async Task<IActionResult> RemoveMember(
+    public async Task<IActionResult> DeleteMember(
         [FromRoute] Guid memberId,
         CancellationToken ct = default)
     {
-        var query = new DeleteMemberCommand(memberId);
-        await mediator.Send(query, ct);
+        var command = new DeleteMemberCommand(memberId);
+        await mediator.Send(command, ct);
 
         return NoContent();
     }

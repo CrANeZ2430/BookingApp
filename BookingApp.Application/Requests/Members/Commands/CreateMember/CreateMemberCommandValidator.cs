@@ -6,23 +6,23 @@ public class CreateMemberCommandValidator : AbstractValidator<CreateMemberComman
 {
     public CreateMemberCommandValidator()
     {
-        RuleFor(cmc => cmc.FirstName)
+        RuleFor(x => x.FirstName)
             .NotEmpty()
             .WithMessage("First name is required.")
             .MaximumLength(100)
             .WithMessage("First name length cannot exceed 100 characters.");
         
-        RuleFor(cmc => cmc.LastName)
+        RuleFor(x => x.LastName)
             .NotEmpty()
             .WithMessage("Last name is required.")
             .MaximumLength(100)
             .WithMessage("Last name length cannot exceed 100 characters.");
 
-        RuleFor(cmc => cmc.Role)
+        RuleFor(x => x.Role)
             .IsInEnum()
             .WithMessage("The specified role is invalid.");
 
-        RuleFor(cmc => cmc.Email)
+        RuleFor(x => x.Email)
             .NotEmpty()
             .WithMessage("Email is required.")
             .MaximumLength(256)
@@ -30,7 +30,7 @@ public class CreateMemberCommandValidator : AbstractValidator<CreateMemberComman
             .EmailAddress()
             .WithMessage("A valid email address is required.");
 
-        RuleFor(cmc=> cmc.PhoneNumber)
+        RuleFor(x=> x.PhoneNumber)
             .NotEmpty()
             .WithMessage("Phone number is required.")
             .MaximumLength(15)

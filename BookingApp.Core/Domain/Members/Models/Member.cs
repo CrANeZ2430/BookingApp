@@ -7,7 +7,7 @@ using BookingApp.Core.Exceptions;
 
 namespace BookingApp.Core.Domain.Members.Models;
 
-public class Member : AggregateRoot
+public class Member //: AggregateRoot
 {
     private readonly List<Booking> _bookings = new();
     
@@ -64,7 +64,7 @@ public class Member : AggregateRoot
             email,
             phoneNumber);
         
-        member.RaiseDomainEvent(new CreateMemberEvent(dateTimeProvider.GetCurrentDateTime(), member.MemberId));
+        //member.RaiseDomainEvent(new CreateMemberEvent(dateTimeProvider.GetCurrentDateTime(), member.MemberId));
 
         return member;
     }

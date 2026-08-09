@@ -6,7 +6,7 @@ public class DeleteMemberValidator : AbstractValidator<DeleteMemberCommand>
 {
     public DeleteMemberValidator()
     {
-        RuleFor(dmc => dmc.MemberId)
+        RuleFor(x => x.MemberId)
             .NotEmpty()
             .WithMessage("Member ID is required.");
     }

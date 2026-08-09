@@ -6,7 +6,7 @@ public class GetMemberByIdQueryValidator : AbstractValidator<GetMemberByIdQuery>
 {
     public GetMemberByIdQueryValidator()
     {
-        RuleFor(gmbiq => gmbiq.MemberId)
+        RuleFor(x => x.MemberId)
             .NotEmpty()
             .WithMessage("Member ID is required.");
     }

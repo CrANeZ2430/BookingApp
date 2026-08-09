@@ -1,0 +1,43 @@
+@BaseUrl = {{Host}}/bookings
+@BookingId = 51f7b919-872d-406e-9ad1-e0b03c02296d
+@MemberId = 51f7b919-872d-406e-9ad1-e0b03c02296d
+@RoomId = 51f7b919-872d-406e-9ad1-e0b03c02296d
+
+### Get Bookings by Member Id
+GET {{BaseUrl}}?memberId={{MemberId}}
+Accept: application/json
+Authorization: Bearer {{Token}}
+
+### Get Booking by Id
+GET {{BaseUrl}}/{{BookingId}}
+Accept: application/json
+Authorization: Bearer {{Token}}
+
+### Post new Booking
+POST {{BaseUrl}}
+Content-Type: application/json
+Authorization: Bearer {{Token}}
+
+{
+  "attendeeCount": 5,
+  "startTime": "08/09/2026 16:26:17",
+  "endTime": "08/09/2026 16:26:17",
+  "memberId": "{{MemberId}}",
+  "roomId": "{{RoomId}}"
+}
+
+### Update new Booking
+PUT {{BaseUrl}}/{{BookingId}}
+Content-Type: application/json
+Authorization: Bearer {{Token}}
+
+{
+  "attendeeCount": 5,
+  "startTime": "08/09/2026 16:26:17",
+  "endTime": "08/09/2026 16:26:17",
+  "roomId": "{{RoomId}}"
+}
+
+### Delete Member
+DELETE {{BaseUrl}}/{{BookingId}}
+Authorization: Bearer {{Token}}

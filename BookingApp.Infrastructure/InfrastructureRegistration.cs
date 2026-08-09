@@ -24,10 +24,10 @@ public static class InfrastructureRegistration
     {
         services.AddDbContext<BookingAppDbContext>((sp, options) =>
         {
-            var interceptor = sp.GetRequiredService<PublishDomainEventInterceptor>();
+            //var interceptor = sp.GetRequiredService<PublishDomainEventInterceptor>();
 
-            options.UseNpgsql(configuration.GetConnectionString("BookingApp"))
-                .AddInterceptors(interceptor);
+            options.UseNpgsql(configuration.GetConnectionString("BookingApp"));
+            //.AddInterceptors(interceptor);
         });
 
         services.AddScoped<IMembersRepository, MembersRepository>();
@@ -36,7 +36,7 @@ public static class InfrastructureRegistration
         services.AddScoped<IBookingsRepository, BookingsRepository>();
         services.AddScoped<IUnitOfWork>(sp => sp.GetRequiredService<BookingAppDbContext>());
 
-        services.AddScoped<PublishDomainEventInterceptor>();
+        //services.AddScoped<PublishDomainEventInterceptor>();
 
         services.AddSingleton<IDateTimeProvider, DateTimeProvider>();
 

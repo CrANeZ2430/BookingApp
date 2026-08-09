@@ -1,10 +1,10 @@
-﻿using FluentValidation;
+using FluentValidation;
 
-namespace BookingApp.Application.Requests.Members.Queries.GetMembers;
+namespace BookingApp.Application.Requests.Bookings.Queries.GetBookingsByMemberId;
 
-public class GetMembersValidator : AbstractValidator<GetMembersQuery>
+public class GetBookingsByMemberIdValidator : AbstractValidator<GetBookingsByMemberIdQuery>
 {
-    public GetMembersValidator()
+    public GetBookingsByMemberIdValidator()
     {
         RuleFor(x => x.Page)
             .GreaterThanOrEqualTo(0)
@@ -15,5 +15,9 @@ public class GetMembersValidator : AbstractValidator<GetMembersQuery>
             .WithMessage("Page size cannot be less than 1.")
             .LessThanOrEqualTo(100)
             .WithMessage("Page size cannot exceed 100 items.");
+        
+        RuleFor(x => x.MemberId)
+            .NotEmpty()
+            .WithMessage("Member ID is required.");
     }
 }
