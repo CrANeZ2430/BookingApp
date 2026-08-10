@@ -6,27 +6,40 @@ namespace BookingApp.Infrastructure.Database.Repositories.RoomTypes;
 
 public class RoomTypesRepository(BookingAppDbContext dbContext) : IRoomTypesRepository
 {
-    public async Task<IReadOnlyCollection<RoomType>> GetAsync(int page, int pageSize, CancellationToken ct = default)
+    public async Task<(IReadOnlyCollection<RoomType> Items, int TotalCount)> GetAsync(
+        int page, 
+        int pageSize, 
+        CancellationToken ct = default)
     {
-        return await dbContext.RoomTypes
-            .AsNoTracking()
+        var query = dbContext.RoomTypes.AsNoTracking();
+
+        var totalCount = await query.CountAsync(ct);
+        
+        var roomTypes = await query
             .Skip(page * pageSize)
             .Take(pageSize)
             .ToArrayAsync(ct);
+
+        return (roomTypes, totalCount);
     }
 
-    public async Task<RoomType?> GetByIdAsync(Guid roomTypeId, CancellationToken ct = default)
+    public async Task<RoomType?> GetByIdAsync(
+        Guid roomTypeId, 
+        CancellationToken ct = default)
     {
         return await dbContext.RoomTypes
             .FirstOrDefaultAsync(rt => rt.RoomTypeId == roomTypeId, ct);
     }
 
-    public async Task AddAsync(RoomType roomType, CancellationToken ct = default)
+    public async Task AddAsync(
+        RoomType roomType, 
+        CancellationToken ct = default)
     {
         await dbContext.RoomTypes.AddAsync(roomType, ct);
     }
 
-    public void Remove(RoomType roomType)
+    public void Remove(
+        RoomType roomType)
     {
         dbContext.RoomTypes.Remove(roomType);
     }

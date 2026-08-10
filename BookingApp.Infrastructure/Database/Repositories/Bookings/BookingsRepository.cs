@@ -6,30 +6,24 @@ namespace BookingApp.Infrastructure.Database.Repositories.Bookings;
 
 public class BookingsRepository(BookingAppDbContext dbContext) : IBookingsRepository
 {
-    public async Task<IReadOnlyCollection<Booking>> GetAsync(
-        int page, 
-        int pageSize, 
-        CancellationToken ct = default)
-    {
-        return await dbContext.Bookings
-            .AsNoTracking()
-            .Skip(page * pageSize)
-            .Take(pageSize)
-            .ToArrayAsync(ct);
-    }
-
-    public async Task<IReadOnlyCollection<Booking>> GetByMemberIdAsync(
+    public async Task<(IReadOnlyCollection<Booking> Items, int TotalCount)> GetByMemberIdAsync(
         int page, 
         int pageSize, 
         Guid memberId,
         CancellationToken ct = default)
     {
-        return await dbContext.Bookings
+        var query = dbContext.Bookings
             .AsNoTracking()
-            .Where(b => b.MemberId == memberId)
+            .Where(b => b.MemberId == memberId);
+
+        var totalCount = await query.CountAsync(ct);
+        
+        var bookings = await query
             .Skip(page * pageSize)
             .Take(pageSize)
             .ToArrayAsync(ct);
+
+        return (bookings, totalCount);
     }
 
     public async Task<Booking?> GetByIdAsync(
@@ -57,12 +51,15 @@ public class BookingsRepository(BookingAppDbContext dbContext) : IBookingsReposi
         Guid roomId, 
         DateTime startTime, 
         DateTime endTime, 
-        CancellationToken ct = default)
+        CancellationToken ct = default,
+        Guid? bookingId = null)
     {
         return await dbContext.Bookings
             .AsNoTracking()
-            .AnyAsync(b => b.RoomId == roomId &&
-                           b.StartTime < endTime &&
-                           b.EndTime > startTime, ct);
+            .AnyAsync(b =>
+                (bookingId == null || b.BookingId != bookingId) &&
+                b.RoomId == roomId &&
+                b.StartTime < endTime &&
+                b.EndTime > startTime, ct);
     }
 }

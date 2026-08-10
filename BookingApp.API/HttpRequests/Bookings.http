@@ -1,7 +1,7 @@
 @BaseUrl = {{Host}}/bookings
-@BookingId = 51f7b919-872d-406e-9ad1-e0b03c02296d
-@MemberId = 51f7b919-872d-406e-9ad1-e0b03c02296d
-@RoomId = 51f7b919-872d-406e-9ad1-e0b03c02296d
+@BookingId = 409b4c5f-556c-44a8-867c-45aabf0ca83f
+@MemberId = 29bdd5b4-a75f-4ce9-a35f-bf22d6006204
+@RoomId = 585c8407-57fb-4886-ae7c-733191f65132
 
 ### Get Bookings by Member Id
 GET {{BaseUrl}}?memberId={{MemberId}}
@@ -19,9 +19,9 @@ Content-Type: application/json
 Authorization: Bearer {{Token}}
 
 {
-  "attendeeCount": 5,
-  "startTime": "08/09/2026 16:26:17",
-  "endTime": "08/09/2026 16:26:17",
+  "attendeeCount": 1,
+  "startTime": "2026-08-10T20:00:00Z",
+  "endTime": "2026-08-11T19:35:00Z",
   "memberId": "{{MemberId}}",
   "roomId": "{{RoomId}}"
 }
@@ -32,9 +32,9 @@ Content-Type: application/json
 Authorization: Bearer {{Token}}
 
 {
-  "attendeeCount": 5,
-  "startTime": "08/09/2026 16:26:17",
-  "endTime": "08/09/2026 16:26:17",
+  "attendeeCount": 2,
+  "startTime": "2026-08-11T20:14:00Z",
+  "endTime": "2026-08-12T19:35:00Z",
   "roomId": "{{RoomId}}"
 }
 

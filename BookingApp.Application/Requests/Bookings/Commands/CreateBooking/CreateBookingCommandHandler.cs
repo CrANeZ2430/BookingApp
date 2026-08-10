@@ -30,7 +30,10 @@ public class CreateBookingCommandHandler(
         if (request.AttendeeCount > room.Capacity)
             throw new BadRequestException(
                 $"The room capacity is {room.Capacity}, but you requested {request.AttendeeCount} attendees.");
-        if (await bookingsRepository.HasOverlappingAsync(request.RoomId, request.StartTime, request.EndTime,
+        if (await bookingsRepository.HasOverlappingAsync(
+                request.RoomId, 
+                request.StartTime, 
+                request.EndTime,
                 cancellationToken))
             throw new BadRequestException(
                 "Booking time isn't available");

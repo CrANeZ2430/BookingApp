@@ -9,3 +9,4 @@ A .NET Web API backend for managing bookings.
 * Entity Framework Core 📊
 * Fluent Validation ✅
 * Docker 🐳
+* React ⚛️

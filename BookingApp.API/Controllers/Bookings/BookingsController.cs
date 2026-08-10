@@ -1,3 +1,5 @@
+using System.ComponentModel.DataAnnotations;
+using BookingApp.Application.Common;
 using BookingApp.Application.Requests.Bookings.Commands.CreateBooking;
 using BookingApp.Application.Requests.Bookings.Commands.DeleteBooking;
 using BookingApp.Application.Requests.Bookings.Commands.UpdateBooking;
@@ -9,28 +11,37 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace BookingApp.API.Controllers.Bookings;
 
+[Authorize]
 [ApiController]
 [Route("api/[controller]")]
 public class BookingsController(
     ISender mediator) 
     : ControllerBase
 {
-    [Authorize]
     [HttpGet]
+    [ProducesResponseType(typeof(PageResponse<GetBookingsByMemberIdDto>), StatusCodes.Status200OK)]
+    [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status401Unauthorized)]
+    [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status404NotFound)]
+    [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status500InternalServerError)]
     public async Task<IActionResult> GetBookingByMemberId(
-        [FromQuery] Guid memberId,
+        [Required] [FromQuery] Guid memberId,
         [FromQuery] int page = 0,
         [FromQuery] int pageSize = 5,
         CancellationToken ct = default)
     {
         var query = new GetBookingsByMemberIdQuery(memberId, page, pageSize);
-        var bookings = await mediator.Send(query, ct);
+        var response = await mediator.Send(query, ct);
 
-        return Ok(bookings);
+        return Ok(response);
     }
     
-    [Authorize]
     [HttpGet("{bookingId:guid}")]
+    [ProducesResponseType(typeof(GetBookingByIdDto), StatusCodes.Status200OK)]
+    [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status401Unauthorized)]
+    [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status404NotFound)]
+    [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status500InternalServerError)]
     public async Task<IActionResult> GetBookingById(
         [FromRoute] Guid bookingId,
         CancellationToken ct = default)
@@ -41,8 +52,11 @@ public class BookingsController(
         return Ok(booking);
     }
     
-    [Authorize]
     [HttpPost]
+    [ProducesResponseType(typeof(Guid), StatusCodes.Status201Created)]
+    [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status401Unauthorized)]
+    [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status500InternalServerError)]
     public async Task<IActionResult> CreateBooking(
         [FromBody] CreateBookingCommand command,
         CancellationToken ct = default)
@@ -55,8 +69,12 @@ public class BookingsController(
             bookingId);
     }
 
-    [Authorize]
     [HttpPut("{bookingId:guid}")]
+    [ProducesResponseType(StatusCodes.Status204NoContent)]
+    [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status401Unauthorized)]
+    [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status404NotFound)]
+    [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status500InternalServerError)]
     public async Task<IActionResult> UpdateBooking(
         [FromRoute] Guid bookingId,
         [FromBody] UpdateBookingDto dto,
@@ -69,8 +87,12 @@ public class BookingsController(
         return NoContent();
     }
 
-    [Authorize]
-    [HttpDelete]
+    [HttpDelete("{bookingId:guid}")]
+    [ProducesResponseType(StatusCodes.Status204NoContent)]
+    [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status401Unauthorized)]
+    [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status404NotFound)]
+    [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status500InternalServerError)]
     public async Task<IActionResult> DeleteBooking(
         [FromRoute] Guid bookingId,
         CancellationToken ct = default)

@@ -1,3 +1,4 @@
+using BookingApp.Core.Domain.Members.Models;
 using BookingApp.Core.Domain.Rooms.Models;
 using BookingApp.Core.Domain.RoomTypes.Models;
 using Microsoft.EntityFrameworkCore;

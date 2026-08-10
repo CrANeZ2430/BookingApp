@@ -8,12 +8,12 @@
 - [x] Set up MediatR orchestration
 - [x] Add Aggregate Root Base and Domain Events (complex integration deferred to v2)
 - [x] Implement JWT Authentication/Authorization
-- [x] Set up Docker Compose orchestration (API)
+- [x] Set up Docker Compose orchestration (API + DB)
 
 ### API Quality & Middleware Pipeline
 - [x] Add Validation behavior pipeline
-- [x] Add Performance-Logging behavior
 - [x] Implement global Exception Handling middleware
+- [x] Add Performance-Logging behavior
 - [x] Add Database Seeding (Seed Data for Rooms & RoomTypes)
 - [ ] Polish API Endpoint response contracts & status codes
 
@@ -23,6 +23,7 @@
 - [ ] Implement Room & RoomType display (Search & List view)
 - [ ] Implement Booking creation UI & Form State
 - [ ] Add Basic Loading & Error UI Feedback
+- [ ] Set up Docker Compose orchestration (UI)
 
 ---
 

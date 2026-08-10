@@ -1,5 +1,5 @@
 @BaseUrl = {{Host}}/members
-@MemberId = 51f7b919-872d-406e-9ad1-e0b03c02296d
+@MemberId = 29bdd5b4-a75f-4ce9-a35f-bf22d6006204
 
 ### Get all Members
 GET {{BaseUrl}}
@@ -30,9 +30,9 @@ Content-Type: application/json
 Authorization: Bearer {{Token}}
 
 {
-  "firstName": "Dean",
+  "firstName": "Sam",
   "lastName": "Winchester",
-  "email": "d.winchester@gmail.com",
+  "email": "s.winchester@gmail.com",
   "phoneNumber": "+11234567890"
 }
 

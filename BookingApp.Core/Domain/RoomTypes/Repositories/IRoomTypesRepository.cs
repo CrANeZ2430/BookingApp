@@ -4,8 +4,16 @@ namespace BookingApp.Core.Domain.RoomTypes.Repositories;
 
 public interface IRoomTypesRepository
 {
-    Task<IReadOnlyCollection<RoomType>> GetAsync(int page, int pageSize, CancellationToken ct = default);
-    Task<RoomType?> GetByIdAsync(Guid roomTypeId, CancellationToken ct = default);
-    Task AddAsync(RoomType roomType, CancellationToken ct = default);
-    void Remove(RoomType roomType);
+    Task<(IReadOnlyCollection<RoomType> Items, int TotalCount)> GetAsync(
+        int page, 
+        int pageSize, 
+        CancellationToken ct = default);
+    Task<RoomType?> GetByIdAsync(
+        Guid roomTypeId, 
+        CancellationToken ct = default);
+    Task AddAsync(
+        RoomType roomType, 
+        CancellationToken ct = default);
+    void Remove(
+        RoomType roomType);
 }
