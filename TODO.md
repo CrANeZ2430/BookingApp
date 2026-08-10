@@ -15,7 +15,7 @@
 - [x] Implement global Exception Handling middleware
 - [x] Add Performance-Logging behavior
 - [x] Add Database Seeding (Seed Data for Rooms & RoomTypes)
-- [ ] Polish API Endpoint response contracts & status codes
+- [x] Polish API Endpoint response contracts & status codes
 
 ### React Frontend (Core Booking Loop)
 - [x] Set up React project (`BookingApp.UI`)
