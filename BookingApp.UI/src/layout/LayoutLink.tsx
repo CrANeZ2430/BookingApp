@@ -11,7 +11,8 @@ export default function LayoutLink({ contents, navLink }:LayoutLinkProps) {
         <NavLink 
             to={navLink}
             className={({ isActive }) => 
-                `font-medium transition-colors ${isActive ? "text-amber-400" : "text-slate-300 hover:text-white"}`}>
+                `font-medium transition-colors ${isActive ? "text-amber-400" : 
+                "text-slate-300 hover:text-white"}`}>
                 {contents}
         </NavLink>
     );

@@ -2,9 +2,10 @@ import { createBrowserRouter } from "react-router";
 import { RouterProvider } from "react-router/dom";
 import Layout from "./layout/Layout";
 import Home from "./router/home/Home";
-import Members from "./router/members/Members";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import NotFound from "./router/error/NotFound";
+import Rooms from "./router/room/Rooms";
+import RoomTypes from "./router/roomType/RoomTypes";
 
 export default function App() {
 
@@ -18,9 +19,17 @@ export default function App() {
           path: "/",
           element: <Home />
         },
+        // {
+        //   path: "/member",
+        //   element: <Members />
+        // },
         {
-          path: "/members",
-          element: <Members />
+          path: "/rooms",
+          element: <Rooms />
+        },
+        {
+          path: "/room-types",
+          element: <RoomTypes />
         }
       ]
     }

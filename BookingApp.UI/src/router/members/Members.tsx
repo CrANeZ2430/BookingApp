@@ -1,7 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
 import { api } from "../../api/api";
 import MemberCard from "./MemberCard";
-import type Member from "../../types/member";
+import type Member from "../../types/members/member";
 import PagingItem from "./PagingItem";
 import { useState } from "react";
 
@@ -14,7 +14,7 @@ export default function Members() {
         queryKey: ['members', page],
         queryFn: async () => {
             const res = await api.get(`/members?page=${page}&pageSize=${pageSize}`);
-            return res.data;
+            return res.data.data;
             },
         staleTime: 10000,
         refetchOnWindowFocus: false
