@@ -1,0 +1,6 @@
+@BaseUrl = {{Host}}/rooms
+
+### Get all Rooms
+GET {{BaseUrl}}
+Accept: application/json
+Authorization: Bearer {{Token}}

@@ -16,6 +16,7 @@ public class RoomsRepository(BookingAppDbContext dbContext) : IRoomsRepository
         var totalCount = await query.CountAsync(ct);
         
         var rooms = await query
+            .Include(x => x.RoomType)
             .Skip(page * pageSize)
             .Take(pageSize)
             .ToArrayAsync(ct);

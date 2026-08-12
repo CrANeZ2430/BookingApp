@@ -1,5 +1,8 @@
 ﻿FROM mcr.microsoft.com/dotnet/sdk:10.0 AS build
 
+ENV PATH="${PATH}:/root/.dotnet/tools"
+RUN dotnet tool install --global dotnet-ef
+
 WORKDIR /src
 COPY "./BookingApp.API/BookingApp.API.csproj" "./BookingApp.API/"
 COPY "./BookingApp.Application/BookingApp.Application.csproj" "./BookingApp.Application/"
@@ -20,9 +23,6 @@ EXPOSE 8080
 ENTRYPOINT ["dotnet", "BookingApp.API.dll"]
 
 FROM build AS migrator
-
-ENV PATH="${PATH}:/root/.dotnet/tools"
-RUN dotnet tool install --global dotnet-ef
 
 WORKDIR /src/BookingApp.API
 ENTRYPOINT ["dotnet", "ef", "database", "update"]

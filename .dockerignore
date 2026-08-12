@@ -22,7 +22,7 @@
 **/obj
 **/secrets.dev.yaml
 **/values.dev.yaml
-**/*.http
+/BookingApp.API/HttpRequests
 /BookingApp.UI
 LICENSE
 README.md
