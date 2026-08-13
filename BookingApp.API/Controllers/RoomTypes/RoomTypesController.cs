@@ -12,12 +12,17 @@ public class RoomTypesController(
     ISender mediator)
     : ControllerBase
 {
+    [HttpGet]
     public async Task<IActionResult> GetRoomTypes(
-        int page = 0,
-        int pageSize = 5,
+        [FromQuery] int page = 0,
+        [FromQuery] int pageSize = 5,
+        [FromQuery] string? searchTerm = null,
         CancellationToken ct = default)
     {
-        var query = new GetRoomTypesQuery(page, pageSize);
+        var query = new GetRoomTypesQuery(
+            page, 
+            pageSize,
+            searchTerm);
         var response = await mediator.Send(query, ct);
         
         return Ok(response);

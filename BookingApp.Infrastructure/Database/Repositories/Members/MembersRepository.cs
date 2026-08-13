@@ -15,7 +15,10 @@ public class MembersRepository(BookingAppDbContext dbContext) : IMembersReposito
 
         var totalCount = await query.CountAsync(ct);
         
-        var members = await query.Skip(page * pageSize)
+        var members = await query
+            .OrderBy(x => x.LastName)
+            .ThenBy(x => x.FirstName)
+            .Skip(page * pageSize)
             .Take(pageSize)
             .ToArrayAsync(ct);
 

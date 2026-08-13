@@ -5,5 +5,6 @@ namespace BookingApp.Application.Requests.RoomTypes.Queries.GetRoomTypes;
 
 public record GetRoomTypesQuery(
     int Page,
-    int PageSize)
+    int PageSize,
+    string? SearchTerm = null)
     : IRequest<PageResponse<RoomTypeDto>>;

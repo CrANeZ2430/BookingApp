@@ -15,6 +15,10 @@ public class GetRoomsQueryHandler(
         var (rooms, totalCount) = await roomsRepository.GetAsync(
             request.Page, 
             request.PageSize, 
+            new RoomFilterProps(
+                request.SearchTerm,
+                request.MinCapability,
+                request.IsAvailable),
             cancellationToken);
 
         var roomDtos = 
@@ -23,6 +27,7 @@ public class GetRoomsQueryHandler(
                     x.RoomId,
                     x.Name,
                     x.Floor,
+                    x.Capacity,
                     x.IsOperational,
                     new RoomTypeDto(
                         x.RoomType.Name

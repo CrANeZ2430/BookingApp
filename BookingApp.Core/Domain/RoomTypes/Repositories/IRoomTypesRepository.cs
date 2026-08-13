@@ -7,6 +7,7 @@ public interface IRoomTypesRepository
     Task<(IReadOnlyCollection<RoomType> Items, int TotalCount)> GetAsync(
         int page, 
         int pageSize, 
+        RoomTypeFilterProps props,
         CancellationToken ct = default);
     Task<RoomType?> GetByIdAsync(
         Guid roomTypeId, 

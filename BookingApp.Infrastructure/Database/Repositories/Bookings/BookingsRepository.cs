@@ -19,6 +19,7 @@ public class BookingsRepository(BookingAppDbContext dbContext) : IBookingsReposi
         var totalCount = await query.CountAsync(ct);
         
         var bookings = await query
+            .OrderBy(x => x.StartTime)
             .Skip(page * pageSize)
             .Take(pageSize)
             .ToArrayAsync(ct);

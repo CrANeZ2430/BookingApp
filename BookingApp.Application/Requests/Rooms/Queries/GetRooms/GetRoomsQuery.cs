@@ -5,5 +5,8 @@ namespace BookingApp.Application.Requests.Rooms.Queries.GetRooms;
 
 public record GetRoomsQuery(
     int Page,
-    int PageSize)
+    int PageSize,
+    string? SearchTerm = null,
+    int? MinCapability = null,
+    bool? IsAvailable = null)
     : IRequest<PageResponse<RoomDto>>;

@@ -16,6 +16,8 @@ public class GetRoomTypesQueryHandler(
             await roomTypesRepository.GetAsync(
                 request.Page, 
                 request.PageSize, 
+                new RoomTypeFilterProps(
+                    request.SearchTerm),
                 cancellationToken);
 
         var roomTypeDtos = roomTypes.Select(x => 

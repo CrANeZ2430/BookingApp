@@ -9,13 +9,20 @@ public class RoomTypesRepository(BookingAppDbContext dbContext) : IRoomTypesRepo
     public async Task<(IReadOnlyCollection<RoomType> Items, int TotalCount)> GetAsync(
         int page, 
         int pageSize, 
+        RoomTypeFilterProps props,
         CancellationToken ct = default)
     {
         var query = dbContext.RoomTypes.AsNoTracking();
 
         var totalCount = await query.CountAsync(ct);
+
+        var term = props.SearchTerm?.Trim();
         
         var roomTypes = await query
+            .Where(x => 
+                props.SearchTerm == null || 
+                x.Name.Contains(term))
+            .OrderBy(x => x.Name)
             .Skip(page * pageSize)
             .Take(pageSize)
             .ToArrayAsync(ct);

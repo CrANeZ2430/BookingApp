@@ -21,9 +21,17 @@ public class RoomsController(
     public async Task<IActionResult> GetRooms(
         [FromQuery] int page = 0,
         [FromQuery] int pageSize = 5,
+        [FromQuery] string? searchTerm = null,
+        [FromQuery] int? minCapacity = null,
+        [FromQuery] bool? isAvailable = null,
         CancellationToken ct = default)
     {
-        var query = new GetRoomsQuery(page, pageSize);
+        var query = new GetRoomsQuery(
+            page, 
+            pageSize, 
+            searchTerm,
+            minCapacity,
+            isAvailable);
         var response = await mediator.Send(query, ct);
 
         return Ok(response);
