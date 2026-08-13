@@ -12,18 +12,19 @@ public class RoomsRepository(BookingAppDbContext dbContext) : IRoomsRepository
         RoomFilterProps props,
         CancellationToken ct = default)
     {
-        var query = dbContext.Rooms.AsNoTracking();
+        var term = props.SearchTerm?.Trim();
+        
+        var query = dbContext.Rooms
+                .AsNoTracking()
+                .Where(x => 
+                    (props.SearchTerm == null || x.Name.Contains(term)) &&
+                    (props.MinCapacity == null || x.Capacity >= props.MinCapacity) &&
+                    (props.IsAvailable == null || x.IsOperational == props.IsAvailable));
 
         var totalCount = await query.CountAsync(ct);
         
-        var term = props.SearchTerm?.Trim();
-        
         var rooms = await query
             .Include(x => x.RoomType)
-            .Where(x => 
-                (props.SearchTerm == null || x.Name.Contains(term)) &&
-                (props.MinCapacity == null || x.Capacity >= props.MinCapacity) &&
-                (props.IsAvailable == null || x.IsOperational == props.IsAvailable))
             .OrderBy(x => x.Name)
             .Skip(page * pageSize)
             .Take(pageSize)

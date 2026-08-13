@@ -12,16 +12,17 @@ public class RoomTypesRepository(BookingAppDbContext dbContext) : IRoomTypesRepo
         RoomTypeFilterProps props,
         CancellationToken ct = default)
     {
-        var query = dbContext.RoomTypes.AsNoTracking();
-
-        var totalCount = await query.CountAsync(ct);
-
         var term = props.SearchTerm?.Trim();
         
-        var roomTypes = await query
+        var query = dbContext.RoomTypes
+            .AsNoTracking()
             .Where(x => 
                 props.SearchTerm == null || 
-                x.Name.Contains(term))
+                x.Name.Contains(term));
+
+        var totalCount = await query.CountAsync(ct);
+        
+        var roomTypes = await query
             .OrderBy(x => x.Name)
             .Skip(page * pageSize)
             .Take(pageSize)
