@@ -19,8 +19,7 @@
 
 ### React Frontend (Core Booking Loop)
 - [x] Set up React project (`BookingApp.UI`)
-- [ ] Implement Member entity management (Basic Profile / Selection UI)
-- [ ] Implement Room & RoomType display (Search & List view)
+- [x] Implement Room & RoomType display (Search & List view)
 - [ ] Implement Booking creation UI & Form State
 - [ ] Add Basic Loading & Error UI Feedback
 - [ ] Set up Docker Compose orchestration (UI)
@@ -30,6 +29,7 @@
 ## v2 — Post-Deployment & Enhancements
 
 ### Security & Advanced Auth
+- [ ] Implement Member entity management (Basic Profile / Selection UI)
 - [ ] Add Role-Based Authorization (RBAC UI Integration)
 - [ ] Integrate React Auth Context / Refresh Token handling
 - [ ] Implement Https into project

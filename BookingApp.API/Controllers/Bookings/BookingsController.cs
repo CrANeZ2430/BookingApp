@@ -18,14 +18,14 @@ public class BookingsController(
     ISender mediator) 
     : ControllerBase
 {
-    [HttpGet]
+    [HttpGet("/api/members/{memberId:guid}/bookings")]
     [ProducesResponseType(typeof(PageResponse<GetBookingsByMemberIdDto>), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status400BadRequest)]
     [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status401Unauthorized)]
     [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status404NotFound)]
     [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status500InternalServerError)]
     public async Task<IActionResult> GetBookingByMemberId(
-        [Required] [FromQuery] Guid memberId,
+        [FromRoute] Guid memberId,
         [FromQuery] int page = 0,
         [FromQuery] int pageSize = 5,
         CancellationToken ct = default)

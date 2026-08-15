@@ -1,3 +1,4 @@
+using BookingApp.Application.Common;
 using BookingApp.Application.Requests.RoomTypes.Queries.GetRoomTypes;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
@@ -13,6 +14,10 @@ public class RoomTypesController(
     : ControllerBase
 {
     [HttpGet]
+    [ProducesResponseType(typeof(PageResponse<GetRoomTypesDto>), StatusCodes.Status200OK)]
+    [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status401Unauthorized)]
+    [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status500InternalServerError)]
     public async Task<IActionResult> GetRoomTypes(
         [FromQuery] int page = 0,
         [FromQuery] int pageSize = 5,

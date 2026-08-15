@@ -1,10 +1,10 @@
 @BaseUrl = {{Host}}/bookings
 @BookingId = 409b4c5f-556c-44a8-867c-45aabf0ca83f
-@MemberId = 29bdd5b4-a75f-4ce9-a35f-bf22d6006204
+@MemberId = 23d0681e-75de-442f-b2db-9c960d4b24ec
 @RoomId = 585c8407-57fb-4886-ae7c-733191f65132
 
 ### Get Bookings by Member Id
-GET {{BaseUrl}}?memberId={{MemberId}}
+GET {{Host}}/members/{{MemberId}}/bookings
 Accept: application/json
 Authorization: Bearer {{Token}}
 
