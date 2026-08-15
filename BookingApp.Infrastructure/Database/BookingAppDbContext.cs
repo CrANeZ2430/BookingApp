@@ -8,7 +8,9 @@ using Microsoft.EntityFrameworkCore;
 
 namespace BookingApp.Infrastructure.Database;
 
-public class BookingAppDbContext(DbContextOptions<BookingAppDbContext> options) : DbContext(options), IUnitOfWork
+public class BookingAppDbContext(
+    DbContextOptions<BookingAppDbContext> options) 
+    : DbContext(options), IUnitOfWork
 {
     public DbSet<Member> Members { get; private set; }
     public DbSet<Room> Rooms { get; private set; }

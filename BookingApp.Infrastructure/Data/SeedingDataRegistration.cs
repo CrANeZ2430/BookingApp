@@ -1,6 +1,9 @@
+using BookingApp.Core.Abstractions;
+using BookingApp.Core.Domain.Members.Models;
 using BookingApp.Core.Domain.Rooms.Models;
 using BookingApp.Core.Domain.RoomTypes.Models;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Infrastructure;
 
 namespace BookingApp.Infrastructure.Data;
 
@@ -26,6 +29,14 @@ public static class SeedingDataRegistration
                         await context.Set<Room>().AddRangeAsync(rooms, ct);
                         await context.SaveChangesAsync(ct);   
                     }
+
+                    if (!await context.Set<Member>().AnyAsync(ct))
+                    {
+                        var members = CreateMembers(context);
+
+                        await context.Set<Member>().AddRangeAsync(members, ct);
+                        await context.SaveChangesAsync(ct);
+                    }
                 });
 
         optionsBuilder
@@ -46,6 +57,14 @@ public static class SeedingDataRegistration
                     context.Set<Room>().AddRange(rooms);
                     context.SaveChanges();   
                 }
+                
+                if (!context.Set<Member>().Any())
+                {
+                    var members = CreateMembers(context);
+
+                    context.Set<Member>().AddRange(members);
+                    context.SaveChanges();
+                }
             });
 
         return optionsBuilder;
@@ -53,9 +72,9 @@ public static class SeedingDataRegistration
 
     private static RoomType[] CreateRoomTypes()
     {
-        return new[]
-            {
-                RoomType.Create(
+        return
+        [
+            RoomType.Create(
                     "Standard Conference Room", 
                     "Ideal for team syncs, interviews, and small group meetings."),
                 RoomType.Create(
@@ -70,7 +89,7 @@ public static class SeedingDataRegistration
                 RoomType.Create(
                     "Creative Lab",
                     "Flexible workshop space equipped for design sprints, brainstorming, and hardware demo sessions.")
-            };
+        ];
     }
 
     private static async Task<Room[]> CreateRoomsAsync(
@@ -88,9 +107,9 @@ public static class SeedingDataRegistration
         var lab = await context.Set<RoomType>()
             .FirstOrDefaultAsync(x => x.Name == "Creative Lab", ct);
 
-        return new[]
-            {
-                Room.Create(
+        return
+        [
+            Room.Create(
                     "Turing Room 101", 
                     1, 
                     8, 
@@ -167,7 +186,7 @@ public static class SeedingDataRegistration
                     Equipment.WhiteBoard,
                     false,
                     conference.RoomTypeId)
-            };
+        ];
     }
 
     private static Room[] CreateRooms(DbContext context)
@@ -183,9 +202,9 @@ public static class SeedingDataRegistration
         var lab = context.Set<RoomType>()
             .FirstOrDefault(x => x.Name == "Creative Lab");
 
-        return new[]
-            { 
-                Room.Create(
+        return
+        [
+            Room.Create(
                     "Turing Room 101", 
                     1, 
                     8, 
@@ -262,6 +281,22 @@ public static class SeedingDataRegistration
                     Equipment.WhiteBoard,
                     false,
                     conference.RoomTypeId)
-            };
+        ];
+    }
+
+    private static Member[] CreateMembers(DbContext context)
+    {
+        var dateTimeProvider = context.GetService<IDateTimeProvider>();
+        
+        return
+        [
+            Member.Create(
+                "Saul",
+                "Goodman",
+                Roles.Customer,
+                "s.goodman@gmail.com",
+                "+1234567891",
+                dateTimeProvider)
+        ];
     }
 }
