@@ -19,7 +19,7 @@ public class RoomsRepository(BookingAppDbContext dbContext) : IRoomsRepository
                 .Where(x => 
                     (props.SearchTerm == null || x.Name.Contains(term)) &&
                     (props.MinCapacity == null || x.Capacity >= props.MinCapacity) &&
-                    (props.IsAvailable == null || x.IsOperational == props.IsAvailable));
+                    (props.IsOperational == null || x.IsOperational == props.IsOperational));
 
         var totalCount = await query.CountAsync(ct);
         

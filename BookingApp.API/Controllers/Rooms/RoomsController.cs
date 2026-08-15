@@ -14,7 +14,7 @@ public class RoomsController(
     : ControllerBase
 {
     [HttpGet]
-    [ProducesResponseType(typeof(PageResponse<RoomDto>), StatusCodes.Status200OK)]
+    [ProducesResponseType(typeof(PageResponse<GetRoomsRoomDto>), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status400BadRequest)]
     [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status401Unauthorized)]
     [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status500InternalServerError)]
@@ -23,7 +23,7 @@ public class RoomsController(
         [FromQuery] int pageSize = 5,
         [FromQuery] string? searchTerm = null,
         [FromQuery] int? minCapacity = null,
-        [FromQuery] bool? isAvailable = null,
+        [FromQuery] bool? isOperational = null,
         CancellationToken ct = default)
     {
         var query = new GetRoomsQuery(
@@ -31,7 +31,7 @@ public class RoomsController(
             pageSize, 
             searchTerm,
             minCapacity,
-            isAvailable);
+            isOperational);
         var response = await mediator.Send(query, ct);
 
         return Ok(response);

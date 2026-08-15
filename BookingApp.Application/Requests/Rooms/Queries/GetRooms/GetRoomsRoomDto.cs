@@ -1,9 +1,9 @@
 namespace BookingApp.Application.Requests.Rooms.Queries.GetRooms;
 
-public record RoomDto(
+public record GetRoomsRoomDto(
     Guid RoomId,
     string Name,
     int Floor,
     int Capacity,
     bool IsOperational,
-    RoomTypeDto RoomType);
+    GetRoomsRoomTypeDto GetRoomsRoomType);

@@ -13,8 +13,7 @@ RUN dotnet restore "./BookingApp.API/BookingApp.API.csproj"
 
 COPY . .
 
-WORKDIR /src/BookingApp.API
-RUN dotnet publish "BookingApp.API.csproj" -c Release -o /app/publish --no-restore
+RUN dotnet publish "./BookingApp.API/BookingApp.API.csproj" -c Release -o /app/publish --no-restore
 
 FROM mcr.microsoft.com/dotnet/aspnet:10.0 AS final
 WORKDIR /app

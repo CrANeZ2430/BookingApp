@@ -1,8 +1,8 @@
-export default function NotFound() {
+export default function ErrorPage() {
 
     return (
         <div className="flex flex-col min-h-screen w-full bg-slate-900 text-white">
-            404 Not Found
+            An unexpected error has happened!
         </div>
     );
 }

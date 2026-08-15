@@ -6,9 +6,9 @@ namespace BookingApp.Application.Requests.RoomTypes.Queries.GetRoomTypes;
 
 public class GetRoomTypesQueryHandler(
     IRoomTypesRepository roomTypesRepository)
-    : IRequestHandler<GetRoomTypesQuery, PageResponse<RoomTypeDto>>
+    : IRequestHandler<GetRoomTypesQuery, PageResponse<GetRoomTypesDto>>
 {
-    public async Task<PageResponse<RoomTypeDto>> Handle(
+    public async Task<PageResponse<GetRoomTypesDto>> Handle(
         GetRoomTypesQuery request, 
         CancellationToken cancellationToken = default)
     {
@@ -21,13 +21,13 @@ public class GetRoomTypesQueryHandler(
                 cancellationToken);
 
         var roomTypeDtos = roomTypes.Select(x => 
-            new RoomTypeDto(
+            new GetRoomTypesDto(
                 x.RoomTypeId,
                 x.Name, 
                 x.Description))
             .ToArray();
 
-        return new PageResponse<RoomTypeDto>(
+        return new PageResponse<GetRoomTypesDto>(
             request.Page,
             request.PageSize,
             totalCount,

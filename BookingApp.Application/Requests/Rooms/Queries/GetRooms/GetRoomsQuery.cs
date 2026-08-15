@@ -8,5 +8,5 @@ public record GetRoomsQuery(
     int PageSize,
     string? SearchTerm = null,
     int? MinCapability = null,
-    bool? IsAvailable = null)
-    : IRequest<PageResponse<RoomDto>>;
+    bool? IsOperational = null)
+    : IRequest<PageResponse<GetRoomsRoomDto>>;

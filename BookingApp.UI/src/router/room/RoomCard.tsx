@@ -11,6 +11,7 @@ export default function RoomCard({ room }:RoomCardProps){
                 key={room.roomId}>
             <p className="font-bold">{room.name}</p>
             <p>{room.floor} floor</p>
+            <p>max {room.capacity} {room.capacity === 1 ? "person" : "people"}</p>
             <p>{room.isOperational ? "Operational" : "In repair"}</p>
             <p>{room.roomType.name}</p>
         </div>

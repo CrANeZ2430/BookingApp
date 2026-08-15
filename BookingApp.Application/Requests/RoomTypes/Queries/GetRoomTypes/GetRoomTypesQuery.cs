@@ -7,4 +7,4 @@ public record GetRoomTypesQuery(
     int Page,
     int PageSize,
     string? SearchTerm = null)
-    : IRequest<PageResponse<RoomTypeDto>>;
+    : IRequest<PageResponse<GetRoomTypesDto>>;

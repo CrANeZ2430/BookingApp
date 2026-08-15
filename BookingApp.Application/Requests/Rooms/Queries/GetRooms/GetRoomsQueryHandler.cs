@@ -6,9 +6,9 @@ namespace BookingApp.Application.Requests.Rooms.Queries.GetRooms;
 
 public class GetRoomsQueryHandler(
     IRoomsRepository roomsRepository) 
-    : IRequestHandler<GetRoomsQuery, PageResponse<RoomDto>>
+    : IRequestHandler<GetRoomsQuery, PageResponse<GetRoomsRoomDto>>
 {
-    public async Task<PageResponse<RoomDto>> Handle(
+    public async Task<PageResponse<GetRoomsRoomDto>> Handle(
         GetRoomsQuery request, 
         CancellationToken cancellationToken = default)
     {
@@ -18,22 +18,22 @@ public class GetRoomsQueryHandler(
             new RoomFilterProps(
                 request.SearchTerm,
                 request.MinCapability,
-                request.IsAvailable),
+                request.IsOperational),
             cancellationToken);
 
         var roomDtos = 
             rooms.Select(x =>
-                new RoomDto(
+                new GetRoomsRoomDto(
                     x.RoomId,
                     x.Name,
                     x.Floor,
                     x.Capacity,
                     x.IsOperational,
-                    new RoomTypeDto(
+                    new GetRoomsRoomTypeDto(
                         x.RoomType.Name
                         ))).ToArray();
 
-        return new PageResponse<RoomDto>(
+        return new PageResponse<GetRoomsRoomDto>(
             request.Page,
             request.PageSize,
             totalCount,
