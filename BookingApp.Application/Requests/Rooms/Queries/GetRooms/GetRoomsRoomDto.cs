@@ -6,4 +6,4 @@ public record GetRoomsRoomDto(
     int Floor,
     int Capacity,
     bool IsOperational,
-    GetRoomsRoomTypeDto GetRoomsRoomType);
+    GetRoomsRoomTypeDto RoomType);

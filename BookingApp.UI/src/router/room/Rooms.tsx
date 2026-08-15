@@ -12,14 +12,19 @@ export default function Rooms(){
 
     const [page, setPage] = useState(0);
     const pageSize = 5;
+
     const [search, setSearch] = useState("");
     const debouncedSearch = useDebouncer<string>(
         search,
         "");
-    const [minCap, setMinCap] = useState<number | undefined>(undefined);
-    const debouncedMinCap = useDebouncer<number | undefined>(
-        minCap,
-        undefined);
+    const [minCap, setMinCap] = 
+        useState<number | undefined>(undefined);
+
+    const debouncedMinCap = 
+        useDebouncer<number | undefined>(
+            minCap,
+            undefined);
+
     const [isOp, setIsOp] = useState(true);
     const debouncedIsOp = useDebouncer<boolean>(
         isOp,
@@ -30,12 +35,13 @@ export default function Rooms(){
             debouncedSearch, debouncedMinCap, 
             debouncedIsOp],
         queryFn: async () => {
-            const res = await api.get<PageResponse<Room>>(
+            const pageRes = await api.get<PageResponse<Room>>(
                 `/rooms?page=${page}&pageSize=${pageSize}
                 &searchTerm=${debouncedSearch}
-                &minCapacity=${debouncedMinCap === undefined ? "" : minCap}
-                &isOperational=${debouncedIsOp}`);
-            return res.data;
+                &minCapacity=${debouncedMinCap === 
+                    undefined ? "" : minCap}
+                &isOperational=${debouncedIsOp}`);      
+            return pageRes.data;
         },
         staleTime: 10000,
         refetchOnWindowFocus: false

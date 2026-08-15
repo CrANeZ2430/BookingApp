@@ -20,10 +20,10 @@ export default function RoomTypes(){
     const {data:pageRes, isLoading} = useQuery({
         queryKey: ["roomTypes", page, debouncedSearch],
         queryFn: async () => {
-            const res = await api.get<PageResponse<RoomType>>(
+            const pageRes = await api.get<PageResponse<RoomType>>(
                 `/room-types?page=${page}&pageSize=${pageSize}
                 &searchTerm=${debouncedSearch}`);
-            return res.data;
+            return pageRes.data;
         },
         staleTime: 10000,
         refetchOnWindowFocus: false
