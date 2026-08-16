@@ -6,6 +6,8 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import ErrorPage from "./router/error/ErrorPage";
 import Rooms from "./router/room/Rooms";
 import RoomTypes from "./router/roomType/RoomTypes";
+import Bookings from "./router/booking/Bookings";
+import AddBooking from "./router/addBooking/AddBooking";
 
 export default function App() {
 
@@ -16,7 +18,7 @@ export default function App() {
       errorElement: <ErrorPage />,
       children: [
         {
-          path: "/",
+          path: "",
           element: <Home />
         },
         // {
@@ -24,12 +26,20 @@ export default function App() {
         //   element: <Members />
         // },
         {
-          path: "/rooms",
+          path: "rooms",
           element: <Rooms />
         },
         {
-          path: "/room-types",
+          path: "room-types",
           element: <RoomTypes />
+        },
+        {
+          path: "bookings",
+          element: <Bookings />
+        },
+        {
+          path: "rooms/:id/booking",
+          element: <AddBooking />
         }
       ]
     }

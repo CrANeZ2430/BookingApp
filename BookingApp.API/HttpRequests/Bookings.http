@@ -1,6 +1,6 @@
 @BaseUrl = {{Host}}/bookings
 @BookingId = 409b4c5f-556c-44a8-867c-45aabf0ca83f
-@MemberId = 23d0681e-75de-442f-b2db-9c960d4b24ec
+@MemberId = 5f71b84d-91a9-45a2-b9e8-5676afaa9b03
 @RoomId = 585c8407-57fb-4886-ae7c-733191f65132
 
 ### Get Bookings by Member Id

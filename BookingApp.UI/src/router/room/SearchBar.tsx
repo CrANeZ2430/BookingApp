@@ -48,7 +48,6 @@ export default function SearchBar({
             const newValue = e.target.value === "" ? 
               undefined : Number(e.target.value);
             onMinCapChange(newValue);
-            console.log(newValue);
             e.stopPropagation();
           }}
           className="w-16 rounded border border-slate-600 bg-slate-900 px-2 py-1 text-slate-100 focus:border-blue-500 focus:outline-none"

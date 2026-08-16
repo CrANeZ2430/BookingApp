@@ -64,6 +64,5 @@ export default function RoomTypes(){
                 pageSize={pageRes!.pageSize}
                 totalCount={pageRes!.totalCount}
                 onPageChange={(newPage) => setPage(newPage)}/>
-        </div>
-    );
+        </div>);
 }

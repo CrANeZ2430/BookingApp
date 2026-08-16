@@ -9,6 +9,7 @@ export default function Layout(){
                 <LayoutLink contents={"Home"} navLink={"/"} />
                 <LayoutLink contents={"Rooms"} navLink={"/rooms"} />
                 <LayoutLink contents={"Room types"} navLink={"/room-types"}/>
+                <LayoutLink contents={"Your bookings"} navLink={"/bookings"}/>
             </nav>
             <main className="flex-1 w-full overflow-y-auto p-6">
                 <Outlet />
