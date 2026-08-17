@@ -23,7 +23,7 @@ public class ExceptionMapper : IExceptionMapper
                     .GroupBy(e => e.PropertyName)
                     .ToDictionary(
                         g => g.Key,
-                        g => g.Select(x => x.ErrorCode)
+                        g => g.Select(x => x.ErrorMessage)
                             .ToArray());
                 break;
             case BadRequestException:

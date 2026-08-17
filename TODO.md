@@ -20,7 +20,7 @@
 ### React Frontend (Core Booking Loop)
 - [x] Set up React project (`BookingApp.UI`)
 - [x] Implement Room & RoomType display (Search & List view)
-- [ ] Implement Booking creation UI & Form State
+- [x] Implement Booking creation UI & Form State
 - [ ] Add Basic Loading & Error UI Feedback
 - [ ] Set up Docker Compose orchestration (UI)
 
