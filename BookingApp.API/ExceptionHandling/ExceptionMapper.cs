@@ -26,21 +26,23 @@ public class ExceptionMapper : IExceptionMapper
                         g => g.Select(x => x.ErrorMessage)
                             .ToArray());
                 break;
-            case BadRequestException:
+            case BadRequestException e:
                 statusCode = StatusCodes.Status400BadRequest;
-                title = "Error caused by request";
+                title = "Error caused by request.";
                 type = "https://datatracker.ietf.org/doc/html/rfc9110#section-15.5.1";
+                if (e.Errors.Count != 0)
+                    errors = e.Errors.ToDictionary(pair => pair.Key, pair => pair.Value);
                 break;
 
             case NotFoundException:
                 statusCode = StatusCodes.Status404NotFound;
-                title = "Resource cannot be found";
+                title = "Resource cannot be found.";
                 type = "https://datatracker.ietf.org/doc/html/rfc9110#section-15.5.5";
                 break;
 
             default:
                 statusCode = StatusCodes.Status500InternalServerError;
-                title = "Internal server problem";
+                title = "Internal server problem.";
                 type = "https://datatracker.ietf.org/doc/html/rfc9110#section-15.6.1";
                 break;
         }

@@ -14,13 +14,15 @@ public class CreateBookingCommandValidator : AbstractValidator<CreateBookingComm
             .NotEmpty()
             .WithMessage("Booking start time is required.")
             .GreaterThan(DateTime.UtcNow)
-            .WithMessage("Booking start time cannot be in the past.");;
+            .WithMessage("Booking start time cannot be in the past.");
         
         RuleFor(x => x.EndTime)
             .NotEmpty()
             .WithMessage("Booking end time is required.")
+            .GreaterThan(DateTime.UtcNow)
+            .WithMessage("Booking end time cannot be in the past.")
             .GreaterThan(cbc => cbc.StartTime)
-            .WithMessage("Booking start time must be after the start time.");;
+            .WithMessage("Booking start time must be after the start time.");
         
         RuleFor(x => x.MemberId)
             .NotEmpty()

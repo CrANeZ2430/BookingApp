@@ -1,3 +1,3 @@
 ﻿namespace BookingApp.Core.Exceptions;
 
-public class NotFoundException(string message) : DomainException(message);
+public class NotFoundException(string errorMessage) : BaseException(errorMessage);

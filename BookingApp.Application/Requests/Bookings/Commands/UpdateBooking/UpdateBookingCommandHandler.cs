@@ -28,10 +28,21 @@ public class UpdateBookingCommandHandler(
         if (room is null)
             throw new NotFoundException("Given room was not found.");
         if (!room.IsOperational)
-            throw new BadRequestException("Given room is under renovation.");
+            throw new BadRequestException(
+                "Given room is under renovation.", 
+                new Dictionary<string, string[]>(){
+                    {
+                        nameof(request.Dto.RoomId),
+                        ["Given room is under renovation."]
+                    }});
         if (request.Dto.AttendeeCount > room.Capacity)
             throw new BadRequestException(
-                $"The room capacity is {room.Capacity}, but you requested {request.Dto.AttendeeCount} attendees.");
+                $"The room capacity is {room.Capacity}, but you requested {request.Dto.AttendeeCount} attendees.",
+                new Dictionary<string, string[]>(){
+                {
+                    nameof(request.Dto.AttendeeCount),
+                    [$"The room capacity is {room.Capacity}, but you requested {request.Dto.AttendeeCount} attendees."]
+                }});
         if (await bookingsRepository.HasOverlappingAsync(
                 request.Dto.RoomId, 
                 request.Dto.StartTime, 
@@ -39,7 +50,16 @@ public class UpdateBookingCommandHandler(
                 cancellationToken,
                 request.BookingId))
             throw new BadRequestException(
-                "Booking time isn't available");
+                "Booking time isn't available",
+                new Dictionary<string, string[]>(){
+                {
+                    nameof(request.Dto.StartTime),
+                    ["Booking time isn't available"]
+                },
+                {
+                    nameof(request.Dto.EndTime),
+                    ["Booking time isn't available"]
+                }});
         
         booking.Update(
             request.Dto.AttendeeCount,

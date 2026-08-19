@@ -1,7 +1,7 @@
 @BaseUrl = {{Host}}/bookings
 @BookingId = 409b4c5f-556c-44a8-867c-45aabf0ca83f
-@MemberId = 5f71b84d-91a9-45a2-b9e8-5676afaa9b03
-@RoomId = 585c8407-57fb-4886-ae7c-733191f65132
+@MemberId = b1c3072e-4b1c-4a9b-816b-4ca961c87cf0
+@RoomId = 1d69be82-aaeb-4497-9af7-1558f0efec0e
 
 ### Get Bookings by Member Id
 GET {{Host}}/members/{{MemberId}}/bookings
@@ -19,9 +19,9 @@ Content-Type: application/json
 Authorization: Bearer {{Token}}
 
 {
-  "attendeeCount": 1,
-  "startTime": "2026-08-10T20:00:00Z",
-  "endTime": "2026-08-11T19:35:00Z",
+  "attendeeCount": 56,
+  "startTime": "2026-08-14T20:00:00Z",
+  "endTime": "2026-08-25T19:35:00Z",
   "memberId": "{{MemberId}}",
   "roomId": "{{RoomId}}"
 }
