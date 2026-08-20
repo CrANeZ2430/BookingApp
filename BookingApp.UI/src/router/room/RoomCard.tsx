@@ -18,11 +18,15 @@ export default function RoomCard({ room }:RoomCardProps){
                 <p>{room.roomType.name}</p>
             </div>
             <div className="flex flex-col">
-                <NavLink 
-                    className="border-2 border-slate-500 rounded-md px-4 py-1 bg-slate-800 text-slate-300 hover:bg-slate-700 transition duration-100 ease-in-out active:border-blue-600"
+                {room.isOperational ? 
+                (<NavLink className="border-2 border-slate-500 rounded-md px-4 py-1 bg-slate-800 text-slate-300 hover:bg-slate-700 transition duration-100 ease-in-out active:border-blue-600"
                     to={`/rooms/${room.roomId}/booking`}>
                     Book
-                </NavLink>
+                </NavLink>) :
+                (<button disabled
+                    className="border-2 border-slate-600 rounded-md px-4 py-1 bg-slate-800 text-slate-400">
+                    Book
+                </button>)}
             </div>
         </div>
     );

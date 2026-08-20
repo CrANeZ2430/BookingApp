@@ -4,6 +4,8 @@ import type PageResponse from "../../types/pageResponse";
 import type Member from "../../types/members/member";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useState } from "react";
+import mapApiErrors from "../../utilities/mapApiErrors";
+import { toast } from "sonner";
 
 interface BookingDto {
     attendeeCount:number,
@@ -20,6 +22,7 @@ export default function AddBooking() {
     const [attendees, setAtendees] = useState<number | undefined>(undefined);
     const [startTime, setStartTime] = useState<Date | undefined>(undefined);
     const [endTime, setEndTime] = useState<Date | undefined>(undefined);
+    const [errors, setErrors] = useState<Record<string, string[]>>({});
 
     const queryClient = useQueryClient();
 
@@ -41,11 +44,16 @@ export default function AddBooking() {
             
             await api.post("bookings", payload);
         },
-        onSuccess: () => {
-            queryClient.invalidateQueries({ queryKey: ["bookings"] });
+        onSuccess: async () => {
+            await queryClient.invalidateQueries({ queryKey: ["bookings"] });
+            setErrors({});
+            toast.success("Booking was created successfully!", {toasterId:"info"});
         },
         onError: (error) => {
             console.error("Failed to create booking:", error.response.data);
+            const errors = mapApiErrors(error.response.data.errors as Record<string, string[]>)
+            setErrors(errors);
+            toast.error("You have errors!", {toasterId:"info"});
         }
     });
 
@@ -67,12 +75,16 @@ export default function AddBooking() {
                         const newValue = e.target.value === "" ? 
                             undefined : Number(e.target.value);
                         setAtendees(newValue);
-                        console.log(newValue);
                         e.stopPropagation();
                     }}
                     className="rounded border border-slate-600 bg-slate-900 px-2 py-1 text-slate-100 focus:border-blue-500 focus:outline-none"
                 />
             </div>
+            {errors["attendeeCount"] && 
+            errors["attendeeCount"].map((value) => 
+                <span className="text-red-500">
+                    {value}
+                </span>)}
             <div className="flex items-center gap-2">
                 <label htmlFor="startTime" className="font-medium text-slate-400">Start time:</label>
                 <input
@@ -90,6 +102,11 @@ export default function AddBooking() {
                     className="rounded border border-slate-600 bg-slate-900 px-2 py-1 text-slate-100 focus:border-blue-500 focus:outline-none"
                 />
             </div>
+            {errors["startTime"] && 
+            errors["startTime"].map((value) => 
+                <span className="text-red-500">
+                    {value}
+                </span>)}
             <div className="flex items-center gap-2">
                 <label htmlFor="endTime" className="font-medium text-slate-400">End time:</label>
                 <input
@@ -107,6 +124,11 @@ export default function AddBooking() {
                     className="rounded border border-slate-600 bg-slate-900 px-2 py-1 text-slate-100 focus:border-blue-500 focus:outline-none"
                 />
             </div>
+            {errors["endTime"] && 
+            errors["endTime"].map((value) => 
+                <span className="text-red-500">
+                    {value}
+                </span>)}
             <button
                 className="border-2 border-slate-500 rounded-md px-4 py-1 bg-slate-700 text-slate-300 hover:bg-slate-600 transition duration-100 ease-in-out active:border-blue-600"
                 onClick={(e) => {
