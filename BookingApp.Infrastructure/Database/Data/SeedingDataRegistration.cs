@@ -1,11 +1,8 @@
-using BookingApp.Core.Abstractions;
-using BookingApp.Core.Domain.Members.Models;
 using BookingApp.Core.Domain.Rooms.Models;
 using BookingApp.Core.Domain.RoomTypes.Models;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Infrastructure;
 
-namespace BookingApp.Infrastructure.Data;
+namespace BookingApp.Infrastructure.Database.Data;
 
 public static class SeedingDataRegistration
 {
@@ -29,14 +26,6 @@ public static class SeedingDataRegistration
                         await context.Set<Room>().AddRangeAsync(rooms, ct);
                         await context.SaveChangesAsync(ct);   
                     }
-
-                    if (!await context.Set<Member>().AnyAsync(ct))
-                    {
-                        var members = CreateMembers(context);
-
-                        await context.Set<Member>().AddRangeAsync(members, ct);
-                        await context.SaveChangesAsync(ct);
-                    }
                 });
 
         optionsBuilder
@@ -56,14 +45,6 @@ public static class SeedingDataRegistration
                             
                     context.Set<Room>().AddRange(rooms);
                     context.SaveChanges();   
-                }
-                
-                if (!context.Set<Member>().Any())
-                {
-                    var members = CreateMembers(context);
-
-                    context.Set<Member>().AddRange(members);
-                    context.SaveChanges();
                 }
             });
 
@@ -281,22 +262,6 @@ public static class SeedingDataRegistration
                     Equipment.WhiteBoard,
                     false,
                     conference.RoomTypeId)
-        ];
-    }
-
-    private static Member[] CreateMembers(DbContext context)
-    {
-        var dateTimeProvider = context.GetService<IDateTimeProvider>();
-        
-        return
-        [
-            Member.Create(
-                "Saul",
-                "Goodman",
-                Roles.Customer,
-                "s.goodman@gmail.com",
-                "+1234567891",
-                dateTimeProvider)
         ];
     }
 }

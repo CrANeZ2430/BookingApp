@@ -18,7 +18,7 @@ namespace BookingApp.Infrastructure.Database.Migrations
 #pragma warning disable 612, 618
             modelBuilder
                 .HasDefaultSchema("BookingApp")
-                .HasAnnotation("ProductVersion", "10.0.9")
+                .HasAnnotation("ProductVersion", "10.0.11")
                 .HasAnnotation("Relational:MaxIdentifierLength", 63);
 
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
@@ -66,6 +66,11 @@ namespace BookingApp.Infrastructure.Database.Migrations
                     b.Property<Guid>("MemberId")
                         .HasColumnType("uuid");
 
+                    b.Property<string>("Auth0Id")
+                        .IsRequired()
+                        .HasMaxLength(128)
+                        .HasColumnType("character varying(128)");
+
                     b.Property<string>("Email")
                         .IsRequired()
                         .HasMaxLength(256)
@@ -92,6 +97,9 @@ namespace BookingApp.Infrastructure.Database.Migrations
                         .HasColumnType("character varying(20)");
 
                     b.HasKey("MemberId");
+
+                    b.HasIndex("Auth0Id")
+                        .IsUnique();
 
                     b.ToTable("Members", "BookingApp");
                 });

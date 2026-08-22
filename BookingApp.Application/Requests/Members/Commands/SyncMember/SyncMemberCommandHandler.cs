@@ -1,18 +1,17 @@
-﻿using BookingApp.Core.Abstractions;
+using BookingApp.Core.Abstractions;
 using BookingApp.Core.Domain.Members.Models;
 using BookingApp.Core.Domain.Members.Repositories;
 using MediatR;
 
-namespace BookingApp.Application.Requests.Members.Commands.CreateMember;
+namespace BookingApp.Application.Requests.Members.Commands.SyncMember;
 
-public class CreateMemberCommandHandler(
-    IMembersRepository membersRepository,
-    IUnitOfWork unitOfWork,
-    IDateTimeProvider dateTimeProvider)
-    : IRequestHandler<CreateMemberCommand, Guid>
+public class SyncMemberCommandHandler(
+    IMembersRepository membersRepository, 
+    IUnitOfWork unitOfWork)
+    : IRequestHandler<SyncMemberCommand, Guid>
 {
     public async Task<Guid> Handle(
-        CreateMemberCommand request, 
+        SyncMemberCommand request, 
         CancellationToken cancellationToken = default)
     {
         var member = Member.Create(

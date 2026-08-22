@@ -1,10 +1,10 @@
-﻿using FluentValidation;
+using FluentValidation;
 
-namespace BookingApp.Application.Requests.Members.Commands.CreateMember;
+namespace BookingApp.Application.Requests.Members.Commands.SyncMember;
 
-public class CreateMemberCommandValidator : AbstractValidator<CreateMemberCommand>
+public class SyncMemberCommandValidator : AbstractValidator<SyncMemberCommand>
 {
-    public CreateMemberCommandValidator()
+    public SyncMemberCommandValidator()
     {
         RuleFor(x => x.Auth0Id)
             .NotEmpty()

@@ -4,7 +4,6 @@ using BookingApp.Core.Abstractions;
 using BookingApp.Core.Domain.Bookings.Repositories;
 using BookingApp.Core.Domain.Members.Repositories;
 using BookingApp.Infrastructure.Abstractions;
-using BookingApp.Infrastructure.Data;
 using BookingApp.Infrastructure.Database;
 using BookingApp.Infrastructure.Database.Repositories.Bookings;
 using BookingApp.Infrastructure.Database.Repositories.Members;

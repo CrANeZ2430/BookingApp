@@ -12,7 +12,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace BookingApp.Infrastructure.Database.Migrations
 {
     [DbContext(typeof(BookingAppDbContext))]
-    [Migration("20260615130626_InitialCreate")]
+    [Migration("20260822184742_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
@@ -21,7 +21,7 @@ namespace BookingApp.Infrastructure.Database.Migrations
 #pragma warning disable 612, 618
             modelBuilder
                 .HasDefaultSchema("BookingApp")
-                .HasAnnotation("ProductVersion", "10.0.9")
+                .HasAnnotation("ProductVersion", "10.0.11")
                 .HasAnnotation("Relational:MaxIdentifierLength", 63);
 
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
@@ -69,10 +69,15 @@ namespace BookingApp.Infrastructure.Database.Migrations
                     b.Property<Guid>("MemberId")
                         .HasColumnType("uuid");
 
+                    b.Property<string>("Auth0Id")
+                        .IsRequired()
+                        .HasMaxLength(128)
+                        .HasColumnType("character varying(128)");
+
                     b.Property<string>("Email")
                         .IsRequired()
-                        .HasMaxLength(254)
-                        .HasColumnType("character varying(254)");
+                        .HasMaxLength(256)
+                        .HasColumnType("character varying(256)");
 
                     b.Property<string>("FirstName")
                         .IsRequired()
@@ -95,6 +100,9 @@ namespace BookingApp.Infrastructure.Database.Migrations
                         .HasColumnType("character varying(20)");
 
                     b.HasKey("MemberId");
+
+                    b.HasIndex("Auth0Id")
+                        .IsUnique();
 
                     b.ToTable("Members", "BookingApp");
                 });

@@ -3,7 +3,7 @@ using BookingApp.Core.Domain.Bookings.Models;
 using BookingApp.Core.Domain.Members.Models;
 using BookingApp.Core.Domain.Rooms.Models;
 using BookingApp.Core.Domain.RoomTypes.Models;
-using BookingApp.Infrastructure.Data;
+using BookingApp.Infrastructure.Database.Data;
 using Microsoft.EntityFrameworkCore;
 
 namespace BookingApp.Infrastructure.Database;

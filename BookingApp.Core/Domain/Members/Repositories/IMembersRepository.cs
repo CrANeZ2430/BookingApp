@@ -11,6 +11,9 @@ public interface IMembersRepository
     Task<Member?> GetByIdAsync(
         Guid memberId, 
         CancellationToken ct = default);
+    Task<Member?> GetByAuth0IdAsync(
+        string auth0Id,
+        CancellationToken ct = default);
     Task AddAsync(
         Member member, 
         CancellationToken ct = default);

@@ -3,7 +3,7 @@ using BookingApp.Core.Common;
 using MediatR;
 using Microsoft.EntityFrameworkCore.Diagnostics;
 
-namespace BookingApp.Infrastructure.Data;
+namespace BookingApp.Infrastructure.Database.Data;
 
 public class PublishDomainEventInterceptor(IPublisher publisher) : SaveChangesInterceptor
 {

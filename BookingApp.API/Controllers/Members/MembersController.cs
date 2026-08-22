@@ -1,9 +1,13 @@
-﻿using BookingApp.Application.Common;
+﻿using System.Security.Claims;
+using BookingApp.Application.Common;
 using BookingApp.Application.Requests.Members.Commands.CreateMember;
 using BookingApp.Application.Requests.Members.Commands.DeleteMember;
+using BookingApp.Application.Requests.Members.Commands.SyncMember;
 using BookingApp.Application.Requests.Members.Commands.UpdateMember;
+using BookingApp.Application.Requests.Members.Queries.GetMemberByAuth0Id;
 using BookingApp.Application.Requests.Members.Queries.GetMemberById;
 using BookingApp.Application.Requests.Members.Queries.GetMembers;
+using BookingApp.Core.Domain.Members.Models;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -64,6 +68,44 @@ public class MembersController(
             nameof(GetMemberById), 
             new { memberId = memberId }, 
             memberId);
+    }
+
+    [HttpGet("me")]
+    public async Task<IActionResult> CheckProfileExistence(
+        CancellationToken ct = default)
+    {
+        var auth0Id = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+        var query = new GetMemberByAuth0IdQuery(auth0Id);
+
+        var member = await mediator.Send(query, ct);
+
+        return Ok(member is not null ? new {profileExists = true, member} : new {profileExists = false, member});
+    }
+    
+    [HttpPost("sync")]
+    public async Task<IActionResult> CompleteProfile(
+        [FromBody] SyncMemberRequest request,
+        CancellationToken ct = default)
+    {
+        var auth0Id = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+        var email = User.FindFirst(ClaimTypes.Email)?.Value
+                    ?? User.FindFirst("https://bookingapp.com/email")?.Value;
+        var query = new GetMemberByAuth0IdQuery(auth0Id);
+        
+        var member = await mediator.Send(query, ct);
+        if (member is not null) return BadRequest("Profile already completed.");
+
+        var command = new SyncMemberCommand(
+            auth0Id,
+            request.FirstName,
+            request.LastName,
+            Roles.Customer,
+            email,
+            request.PhoneNumber);
+
+        var memberId = await mediator.Send(command, ct);
+
+        return Ok(new { memberId });
     }
 
     [HttpPut("{memberId:guid}")]

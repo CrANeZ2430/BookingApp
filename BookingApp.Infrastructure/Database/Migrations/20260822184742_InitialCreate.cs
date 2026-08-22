@@ -20,10 +20,11 @@ namespace BookingApp.Infrastructure.Database.Migrations
                 columns: table => new
                 {
                     MemberId = table.Column<Guid>(type: "uuid", nullable: false),
+                    Auth0Id = table.Column<string>(type: "character varying(128)", maxLength: 128, nullable: false),
                     FirstName = table.Column<string>(type: "character varying(100)", maxLength: 100, nullable: false),
                     LastName = table.Column<string>(type: "character varying(100)", maxLength: 100, nullable: false),
                     Role = table.Column<string>(type: "character varying(20)", maxLength: 20, nullable: false),
-                    Email = table.Column<string>(type: "character varying(254)", maxLength: 254, nullable: false),
+                    Email = table.Column<string>(type: "character varying(256)", maxLength: 256, nullable: false),
                     PhoneNumber = table.Column<string>(type: "character varying(15)", maxLength: 15, nullable: false)
                 },
                 constraints: table =>
@@ -114,6 +115,13 @@ namespace BookingApp.Infrastructure.Database.Migrations
                 schema: "BookingApp",
                 table: "Bookings",
                 columns: new[] { "RoomId", "StartTime", "EndTime" });
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Members_Auth0Id",
+                schema: "BookingApp",
+                table: "Members",
+                column: "Auth0Id",
+                unique: true);
 
             migrationBuilder.CreateIndex(
                 name: "IX_Rooms_RoomTypeId",

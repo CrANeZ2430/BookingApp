@@ -32,6 +32,14 @@ public class MembersRepository(BookingAppDbContext dbContext) : IMembersReposito
         return await dbContext.Members
             .FirstOrDefaultAsync(m => m.MemberId == memberId, ct);
     }
+    
+    public async Task<Member?> GetByAuth0IdAsync(
+        string auth0Id, 
+        CancellationToken ct = default)
+    {
+        return await dbContext.Members
+            .FirstOrDefaultAsync(m => m.Auth0Id == auth0Id, ct);
+    }
 
     public async Task AddAsync(
         Member member, 

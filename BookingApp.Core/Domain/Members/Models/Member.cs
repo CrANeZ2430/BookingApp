@@ -12,6 +12,7 @@ public class Member //: AggregateRoot
     private readonly List<Booking> _bookings = new();
     
     public Guid MemberId { get; private set; }
+    public string Auth0Id { get; private set; }
     public string FirstName { get; private set; }
     public string LastName { get; private set; }
     public Roles Role { get; private set; }
@@ -23,6 +24,7 @@ public class Member //: AggregateRoot
     private Member() {}
 
     private Member(
+        string auth0Id,
         string firstName, 
         string lastName, 
         Roles role, 
@@ -30,6 +32,7 @@ public class Member //: AggregateRoot
         string phoneNumber)
     {
         MemberId = Guid.NewGuid();
+        Auth0Id = auth0Id;
         FirstName = firstName;
         LastName = lastName;
         Role = role;
@@ -38,12 +41,12 @@ public class Member //: AggregateRoot
     }
 
     public static Member Create(
+        string auth0Id,
         string firstName, 
         string lastName,
         Roles role,
         string email,
-        string phoneNumber,
-        IDateTimeProvider dateTimeProvider)
+        string phoneNumber)
     {
         if (string.IsNullOrWhiteSpace(firstName))
             throw new BadRequestException("First name is required.");
@@ -58,6 +61,7 @@ public class Member //: AggregateRoot
             throw new BadRequestException("A valid phone number is required.");
         
         var member =  new Member(
+            auth0Id,
             firstName,
             lastName,
             role,

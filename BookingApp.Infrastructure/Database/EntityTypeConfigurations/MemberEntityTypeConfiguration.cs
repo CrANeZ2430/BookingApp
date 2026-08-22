@@ -14,6 +14,13 @@ public class MemberEntityTypeConfiguration : IEntityTypeConfiguration<Member>
         builder.Property(m => m.MemberId)
             .ValueGeneratedNever();
 
+        builder.Property(m => m.Auth0Id)
+            .HasMaxLength(128)
+            .IsRequired();
+
+        builder.HasIndex(m => m.Auth0Id)
+            .IsUnique();
+
         builder.Property(m => m.FirstName)
             .HasMaxLength(100)
             .IsRequired();
