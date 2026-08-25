@@ -1,20 +1,16 @@
 import { useQuery } from "@tanstack/react-query";
-import { api } from "../../api/api";
 import type PageResponse from "../../types/pageResponse";
 import type Booking from "../../types/bookings/booking";
 import BookingCard from "./BookingCard";
 import PagingItem from "../PagingItem";
 import { useState } from "react";
-import type Member from "../../types/members/member";
+import useApiClient from "../../api/api";
 
 export default function Bookings() {
 
-    //temporary
-    let memberId = "";
-    api.get<PageResponse<Member>>("members")
-        .then(data => memberId = data.data.data[0].memberId);
+    const api = useApiClient();
 
-    console.log(memberId);
+    const { data: data } = useQuery({queryKey:["currentMember"]});
 
     const [page, setPage] = useState(0);
     const pageSize = 5;
@@ -23,7 +19,7 @@ export default function Bookings() {
             queryKey: ["bookings"],
             queryFn: async () => {
                 const pageRes = await api.get<PageResponse<Booking>>(
-                    `members/${memberId}/bookings?
+                    `members/${data.member.memberId}/bookings?
                     page=${page}&pageSize=${pageSize}`);
                 return pageRes.data;
             },
@@ -43,7 +39,7 @@ export default function Bookings() {
 
     return (
         <div className="flex flex-col gap-4">
-            {pageRes?.data.map((x:Booking, index) => 
+            {pageRes?.data.map((x:Booking, index:number) => 
                 <BookingCard 
                     index={(page * pageSize) + index + 1} 
                     booking={x} />

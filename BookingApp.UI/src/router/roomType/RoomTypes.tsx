@@ -1,5 +1,4 @@
 import { useQuery } from "@tanstack/react-query";
-import { api } from "../../api/api";
 import RoomTypeCard from "./RoomTypeCard";
 import type RoomType from "../../types/roomTypes/roomType";
 import Pagingitem from "../PagingItem";
@@ -7,9 +6,11 @@ import type PageResponse from "../../types/pageResponse";
 import { useState } from "react";
 import SearchBar from "./SearchBar";
 import useDebouncer from "../../hooks/useDebouncer";
+import useApiClient from "../../api/api";
 
 export default function RoomTypes(){
 
+    const api = useApiClient();
     const [page, setPage] = useState(0);
     const pageSize = 5;
     const [search, setSearch] = useState("");

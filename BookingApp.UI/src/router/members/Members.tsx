@@ -1,5 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
-import { api } from "../../api/api";
+import useApiClient from "../../api/api";
 import MemberCard from "./MemberCard";
 import type Member from "../../types/members/member";
 import PagingItem from "./PagingItem";
@@ -7,6 +7,7 @@ import { useState } from "react";
 
 export default function Members() {
 
+    const api = useApiClient();
     const [page, setPage] = useState(0);
     const pageSize = 5;
 

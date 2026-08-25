@@ -1,10 +1,7 @@
 export default function Home(){
 
     return (
-        <div>
-            <p>
-                Sweat home
-            </p>
-        </div>
-    );
+    <div>
+        <p>Sweat home</p>
+    </div>);
 }

@@ -1,11 +1,9 @@
 import { useParams } from "react-router";
-import { api } from "../../api/api";
-import type PageResponse from "../../types/pageResponse";
-import type Member from "../../types/members/member";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useState } from "react";
 import mapApiErrors from "../../utilities/mapApiErrors";
 import { toast } from "sonner";
+import useApiClient from "../../api/api";
 
 interface BookingDto {
     attendeeCount:number,
@@ -17,7 +15,9 @@ interface BookingDto {
 
 export default function AddBooking() {
 
+    const api = useApiClient();
     const { id:roomId } = useParams();
+    const { data: data } = useQuery({queryKey:["currentMember"]});
 
     const [attendees, setAtendees] = useState<number | undefined>(undefined);
     const [startTime, setStartTime] = useState<Date | undefined>(undefined);
@@ -29,17 +29,13 @@ export default function AddBooking() {
     const createMutation = useMutation({
         mutationFn: async () => {
 
-            //temporary
-            const memberId = (await api.get<PageResponse<Member>>("members"))
-                .data.data[0].memberId;
-
             const payload:BookingDto = {
 
                 attendeeCount: attendees ? attendees : 0,
                 startTime: startTime ? startTime.toISOString() : "",
                 endTime: endTime ? endTime.toISOString() : "",
                 roomId: roomId ? roomId : "",
-                memberId: memberId
+                memberId: data.member.memberId
             };
             
             await api.post("bookings", payload);
@@ -72,17 +68,17 @@ export default function AddBooking() {
                     type="number"
                     value={attendees}
                     onChange={(e) => {
+                        e.stopPropagation();
                         const newValue = e.target.value === "" ? 
                             undefined : Number(e.target.value);
                         setAtendees(newValue);
-                        e.stopPropagation();
                     }}
                     className="rounded border border-slate-600 bg-slate-900 px-2 py-1 text-slate-100 focus:border-blue-500 focus:outline-none"
                 />
             </div>
             {errors["attendeeCount"] && 
             errors["attendeeCount"].map((value) => 
-                <span className="text-red-500">
+                <span className="text-red-500 font-bold">
                     {value}
                 </span>)}
             <div className="flex items-center gap-2">
@@ -93,18 +89,18 @@ export default function AddBooking() {
                     type="datetime-local"
                     value={startTime ? toLocalISOString(startTime) : ""}
                     onChange={(e) => {
+                        e.stopPropagation();
                         const newValue = e.target.value;
                         if (newValue){
                             setStartTime(new Date(newValue));
                         }
-                        e.stopPropagation();
                     }}
                     className="rounded border border-slate-600 bg-slate-900 px-2 py-1 text-slate-100 focus:border-blue-500 focus:outline-none"
                 />
             </div>
             {errors["startTime"] && 
             errors["startTime"].map((value) => 
-                <span className="text-red-500">
+                <span className="text-red-500 font-bold">
                     {value}
                 </span>)}
             <div className="flex items-center gap-2">
@@ -126,14 +122,14 @@ export default function AddBooking() {
             </div>
             {errors["endTime"] && 
             errors["endTime"].map((value) => 
-                <span className="text-red-500">
+                <span className="text-red-500 font-bold">
                     {value}
                 </span>)}
             <button
                 className="border-2 border-slate-500 rounded-md px-4 py-1 bg-slate-700 text-slate-300 hover:bg-slate-600 transition duration-100 ease-in-out active:border-blue-600"
                 onClick={(e) => {
-                    createMutation.mutate();
                     e.stopPropagation();
+                    createMutation.mutate();
                 }}>
                 Make a booking
             </button>

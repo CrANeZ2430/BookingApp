@@ -1,7 +1,7 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import type Member from "../../types/members/member";
 import MemberRole from "./MemberRole";
-import { api } from "../../api/api";
+import useApiClient from "../../api/api";
 
 interface MemberCardProps {
     member: Member
@@ -9,6 +9,7 @@ interface MemberCardProps {
 
 export default function MemberCard({ member }:MemberCardProps) {
 
+    const api = useApiClient();
     const queryClient = useQueryClient();
 
     const deleteMutation = useMutation({

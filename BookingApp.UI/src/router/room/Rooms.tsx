@@ -1,5 +1,4 @@
 import { useQuery } from "@tanstack/react-query";
-import { api } from "../../api/api";
 import type Room from "../../types/rooms/room";
 import RoomCard from "./RoomCard";
 import { useState } from "react";
@@ -7,9 +6,11 @@ import Pagingitem from "../PagingItem";
 import type PageResponse from "../../types/pageResponse";
 import SearchBar from "./SearchBar";
 import useDebouncer from "../../hooks/useDebouncer";
+import useApiClient from "../../api/api";
 
 export default function Rooms(){
 
+    const api = useApiClient();
     const [page, setPage] = useState(0);
     const pageSize = 5;
 
@@ -40,7 +41,8 @@ export default function Rooms(){
                 &searchTerm=${debouncedSearch}
                 &minCapacity=${debouncedMinCap === 
                     undefined ? "" : minCap}
-                &isOperational=${debouncedIsOp}`);      
+                &isOperational=${debouncedIsOp}`);    
+
             return pageRes.data;
         },
         staleTime: 10000,

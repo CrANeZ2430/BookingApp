@@ -8,6 +8,9 @@ import Rooms from "./router/room/Rooms";
 import RoomTypes from "./router/roomType/RoomTypes";
 import Bookings from "./router/booking/Bookings";
 import AddBooking from "./router/addBooking/AddBooking";
+import ProfileSetup from "./router/profileSetup/ProfileSetup";
+import Profile from "./router/profile/Profile";
+import ProtectedRoute from "./layout/ProtectedRoute";
 
 export default function App() {
 
@@ -18,31 +21,40 @@ export default function App() {
       errorElement: <ErrorPage />,
       children: [
         {
-          path: "",
-          element: <Home />
-        },
-        // {
-        //   path: "/member",
-        //   element: <Members />
-        // },
-        {
-          path: "rooms",
-          element: <Rooms />
+          path: "profile-setup",
+          element: <ProfileSetup />,
         },
         {
-          path: "room-types",
-          element: <RoomTypes />
+          element: <ProtectedRoute />,
+          children: [
+            {
+              path: "",
+              element: <Home />,
+            },
+            {
+              path: "profile",
+              element: <Profile />,
+            },
+            {
+              path: "rooms",
+              element: <Rooms />,
+            },
+            {
+              path: "room-types",
+              element: <RoomTypes />,
+            },
+            {
+              path: "bookings",
+              element: <Bookings />,
+            },
+            {
+              path: "rooms/:id/booking",
+              element: <AddBooking />,
+            },
+          ],
         },
-        {
-          path: "bookings",
-          element: <Bookings />
-        },
-        {
-          path: "rooms/:id/booking",
-          element: <AddBooking />
-        }
-      ]
-    }
+      ],
+    },
   ]);
 
   const queryClient = new QueryClient();

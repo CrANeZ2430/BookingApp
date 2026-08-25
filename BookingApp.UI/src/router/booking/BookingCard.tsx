@@ -1,6 +1,6 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import type Booking from "../../types/bookings/booking";
-import { api } from "../../api/api";
+import useApiClient from "../../api/api";
 import { toast } from "sonner";
 
 interface BookingCardProps {
@@ -12,6 +12,7 @@ interface BookingCardProps {
 export default function BookingCard({index, booking}:BookingCardProps) {
 
     const queryClient = useQueryClient();
+    const api = useApiClient();
 
     const deleteMutation = useMutation({
         mutationFn: async (bookingId:string) => {

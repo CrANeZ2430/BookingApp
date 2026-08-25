@@ -1,12 +1,24 @@
+import { useAuth0 } from "@auth0/auth0-react";
 import axios from "axios";
 
-export const api = axios.create(
-    {
-        baseURL: "http://localhost:8080/api",
-        headers: {
-            "Content-Type": "application/json",
-            "Authorization": "Bearer eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCIsImtpZCI6IjNNS1ktTkV0aVZ2MEFXX1libkYtciJ9.eyJpc3MiOiJodHRwczovL2Rldi1jcm4uZXUuYXV0aDAuY29tLyIsInN1YiI6Ikh4V0ZGZFdnOG4xQVZLT05qSGFPZW1MYThyRVU0MHNyQGNsaWVudHMiLCJhdWQiOiJodHRwOi8vbG9jYWxob3N0OjgwODAiLCJpYXQiOjE3ODcxNDg0NzcsImV4cCI6MTc4NzIzNDg3NywiZ3R5IjoiY2xpZW50LWNyZWRlbnRpYWxzIiwiYXpwIjoiSHhXRkZkV2c4bjFBVktPTmpIYU9lbUxhOHJFVTQwc3IifQ.lL_b03xRZAEfaDq4FnXOqf9jXEZ9qb53pxiamVb9Qr2Y3Gpg-EFmUvHQyjnh9LVi-KF9AYUjmqdnfeUY_GWoq5SETbQxPAz2mkyy2bF9yZRRpkCR9bylPoKo1Vx4EKWptFZs7MHR7ber4j-PSCgIHztxscuJ_TMS3BZe9FGHERJgY1SPydrlgarQWfQSOjyhHy_uf1ajuWmKvo0xRiIVCmri6WcVKy6MwkAPY9ptOPMvqUUqieTjeX09ah2ruFOzHeVFi4a9QjAD9OmMnviKqu9DhEdfExGJM4TAVXJVT0Wz5LqnjS6Px0ij0hTS9ycQ7fNDErlDGto7iNyXskg8Kw"
+export default function useApiClient(){
 
+    const {getAccessTokenSilently} = useAuth0();
+
+    const api = axios.create(
+        {
+            baseURL: "http://localhost:8080/api",
+            headers: {
+                "Content-Type": "application/json"
+            }
         }
-    }
-);
+    );
+
+    api.interceptors.request.use(async (config) => {
+        const token = await getAccessTokenSilently();
+        config.headers.Authorization = `Bearer ${token}`;
+        return config;
+    });
+
+    return api;
+}
