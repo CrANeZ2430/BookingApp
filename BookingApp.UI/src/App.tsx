@@ -10,51 +10,58 @@ import Bookings from "./router/booking/Bookings";
 import AddBooking from "./router/addBooking/AddBooking";
 import ProfileSetup from "./router/profileSetup/ProfileSetup";
 import Profile from "./router/profile/Profile";
-import ProtectedRoute from "./layout/ProtectedRoute";
+import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
+import ProfileSetupGuard from "./layout/ProfileSetupGuard";
+import ProtectedTwo from "./layout/RequireAuthGuard";
 
 export default function App() {
 
   const router = createBrowserRouter([
     {
-      path: "/",
-      element: <Layout />,
+      element: <ProfileSetupGuard />,
       errorElement: <ErrorPage />,
       children: [
         {
-          path: "profile-setup",
-          element: <ProfileSetup />,
-        },
-        {
-          element: <ProtectedRoute />,
+          path: "/",
+          element: <Layout />,
           children: [
             {
-              path: "",
-              element: <Home />,
+              index: true,
+              element: <Home />
             },
             {
-              path: "profile",
-              element: <Profile />,
-            },
-            {
-              path: "rooms",
-              element: <Rooms />,
-            },
-            {
-              path: "room-types",
-              element: <RoomTypes />,
-            },
-            {
-              path: "bookings",
-              element: <Bookings />,
-            },
-            {
-              path: "rooms/:id/booking",
-              element: <AddBooking />,
-            },
-          ],
+              element: <ProtectedTwo />,
+              children: [
+                {
+                  path: "profile",
+                  element: <Profile />,
+                },
+                {
+                  path: "rooms",
+                  element: <Rooms />,
+                },
+                {
+                  path: "room-types",
+                  element: <RoomTypes />,
+                },
+                {
+                  path: "bookings",
+                  element: <Bookings />,
+                },
+                {
+                  path: "rooms/:id/booking",
+                  element: <AddBooking />,
+                }
+              ]
+            }
+          ]
         },
-      ],
-    },
+        {
+          path: "/profile-setup",
+          element: <ProfileSetup />
+        }
+      ]
+    }
   ]);
 
   const queryClient = new QueryClient();
@@ -62,6 +69,7 @@ export default function App() {
   return (
     <QueryClientProvider client={queryClient}>
       <RouterProvider router={router}/>
+      <ReactQueryDevtools client={queryClient} initialIsOpen={false} />
     </QueryClientProvider>
   );
 };

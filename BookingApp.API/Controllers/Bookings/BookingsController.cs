@@ -20,10 +20,6 @@ public class BookingsController(
 {
     [HttpGet("/api/members/{memberId:guid}/bookings")]
     [ProducesResponseType(typeof(PageResponse<GetBookingsByMemberIdDto>), StatusCodes.Status200OK)]
-    [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status400BadRequest)]
-    [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status401Unauthorized)]
-    [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status404NotFound)]
-    [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status500InternalServerError)]
     public async Task<IActionResult> GetBookingByMemberId(
         [FromRoute] Guid memberId,
         [FromQuery] int page = 0,
@@ -38,10 +34,6 @@ public class BookingsController(
     
     [HttpGet("{bookingId:guid}")]
     [ProducesResponseType(typeof(GetBookingByIdDto), StatusCodes.Status200OK)]
-    [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status400BadRequest)]
-    [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status401Unauthorized)]
-    [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status404NotFound)]
-    [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status500InternalServerError)]
     public async Task<IActionResult> GetBookingById(
         [FromRoute] Guid bookingId,
         CancellationToken ct = default)
@@ -54,9 +46,6 @@ public class BookingsController(
     
     [HttpPost]
     [ProducesResponseType(typeof(Guid), StatusCodes.Status201Created)]
-    [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status400BadRequest)]
-    [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status401Unauthorized)]
-    [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status500InternalServerError)]
     public async Task<IActionResult> CreateBooking(
         [FromBody] CreateBookingCommand command,
         CancellationToken ct = default)
@@ -71,10 +60,6 @@ public class BookingsController(
 
     [HttpPut("{bookingId:guid}")]
     [ProducesResponseType(StatusCodes.Status204NoContent)]
-    [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status400BadRequest)]
-    [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status401Unauthorized)]
-    [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status404NotFound)]
-    [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status500InternalServerError)]
     public async Task<IActionResult> UpdateBooking(
         [FromRoute] Guid bookingId,
         [FromBody] UpdateBookingDto dto,
@@ -89,10 +74,6 @@ public class BookingsController(
 
     [HttpDelete("{bookingId:guid}")]
     [ProducesResponseType(StatusCodes.Status204NoContent)]
-    [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status400BadRequest)]
-    [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status401Unauthorized)]
-    [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status404NotFound)]
-    [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status500InternalServerError)]
     public async Task<IActionResult> DeleteBooking(
         [FromRoute] Guid bookingId,
         CancellationToken ct = default)

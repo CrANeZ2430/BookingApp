@@ -1,4 +1,4 @@
-import { useParams } from "react-router";
+import { useNavigate, useParams } from "react-router";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useState } from "react";
 import mapApiErrors from "../../utilities/mapApiErrors";
@@ -18,6 +18,7 @@ export default function AddBooking() {
     const api = useApiClient();
     const { id:roomId } = useParams();
     const { data: data } = useQuery({queryKey:["currentMember"]});
+    const navigate = useNavigate();
 
     const [attendees, setAtendees] = useState<number | undefined>(undefined);
     const [startTime, setStartTime] = useState<Date | undefined>(undefined);
@@ -44,6 +45,7 @@ export default function AddBooking() {
             await queryClient.invalidateQueries({ queryKey: ["bookings"] });
             setErrors({});
             toast.success("Booking was created successfully!", {toasterId:"info"});
+            navigate("/bookings", {replace:true});
         },
         onError: (error) => {
             console.error("Failed to create booking:", error.response.data);

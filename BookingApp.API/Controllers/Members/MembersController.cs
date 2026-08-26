@@ -23,9 +23,6 @@ public class MembersController(
 {
     [HttpGet]
     [ProducesResponseType(typeof(PageResponse<GetMembersDto>), StatusCodes.Status200OK)]
-    [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status400BadRequest)]
-    [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status401Unauthorized)]
-    [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status500InternalServerError)]
     public async Task<IActionResult> GetMembers(
         [FromQuery] int page = 0,
         [FromQuery] int pageSize = 5,
@@ -39,10 +36,6 @@ public class MembersController(
 
     [HttpGet("{memberId:guid}")]
     [ProducesResponseType(typeof(GetMemberByIdDto), StatusCodes.Status200OK)]
-    [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status400BadRequest)]
-    [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status401Unauthorized)]
-    [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status404NotFound)]
-    [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status500InternalServerError)]
     public async Task<IActionResult> GetMemberById(
         [FromRoute] Guid memberId,
         CancellationToken ct = default)
@@ -55,9 +48,6 @@ public class MembersController(
 
     [HttpPost]
     [ProducesResponseType(typeof(Guid), StatusCodes.Status201Created)]
-    [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status400BadRequest)]
-    [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status401Unauthorized)]
-    [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status500InternalServerError)]
     public async Task<IActionResult> CreateMember(
         [FromBody] CreateMemberCommand command,
         CancellationToken ct = default)
@@ -71,6 +61,7 @@ public class MembersController(
     }
 
     [HttpGet("me")]
+    [ProducesResponseType(typeof(MemberCheckResponse), StatusCodes.Status200OK)]
     public async Task<IActionResult> CheckProfileExistence(
         CancellationToken ct = default)
     {
@@ -79,15 +70,22 @@ public class MembersController(
 
         var member = await mediator.Send(query, ct);
 
-        return Ok(member is not null ? new {profileExists = true, member} : new {profileExists = false, member});
+        return Ok(new {profileExists = member is not null , member});
     }
     
     [HttpPost("sync")]
+    [ProducesResponseType(typeof(Guid), StatusCodes.Status200OK)]
     public async Task<IActionResult> CompleteProfile(
         [FromBody] SyncMemberRequest request,
         CancellationToken ct = default)
     {
         var auth0Id = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+        
+        if (string.IsNullOrEmpty(auth0Id))
+        {
+            return Unauthorized();
+        }
+        
         var email = User.FindFirst(ClaimTypes.Email)?.Value
                     ?? User.FindFirst("https://bookingapp.com/email")?.Value;
         var query = new GetMemberByAuth0IdQuery(auth0Id);
@@ -110,10 +108,6 @@ public class MembersController(
 
     [HttpPut("{memberId:guid}")]
     [ProducesResponseType(StatusCodes.Status204NoContent)]
-    [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status400BadRequest)]
-    [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status401Unauthorized)]
-    [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status404NotFound)]
-    [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status500InternalServerError)]
     public async Task<IActionResult> UpdateMember(
         [FromRoute] Guid memberId,
         [FromBody] UpdateMemberDto dto,
@@ -128,10 +122,6 @@ public class MembersController(
 
     [HttpDelete("{memberId:guid}")]
     [ProducesResponseType(StatusCodes.Status204NoContent)]
-    [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status400BadRequest)]
-    [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status401Unauthorized)]
-    [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status404NotFound)]
-    [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status500InternalServerError)]
     public async Task<IActionResult> DeleteMember(
         [FromRoute] Guid memberId,
         CancellationToken ct = default)

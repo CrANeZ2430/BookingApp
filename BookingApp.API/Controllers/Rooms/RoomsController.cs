@@ -15,9 +15,6 @@ public class RoomsController(
 {
     [HttpGet]
     [ProducesResponseType(typeof(PageResponse<GetRoomsRoomDto>), StatusCodes.Status200OK)]
-    [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status400BadRequest)]
-    [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status401Unauthorized)]
-    [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status500InternalServerError)]
     public async Task<IActionResult> GetRooms(
         [FromQuery] int page = 0,
         [FromQuery] int pageSize = 5,

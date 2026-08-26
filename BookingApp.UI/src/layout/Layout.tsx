@@ -1,4 +1,4 @@
-import { Outlet, useLocation } from "react-router";
+import { Outlet } from "react-router";
 import LayoutLink from "./LayoutLink";
 import { useAuth0 } from "@auth0/auth0-react";
 import LogoutButton from "./LogoutButton";
@@ -7,16 +7,6 @@ import LoginButton from "./LoginButton";
 export default function Layout(){
 
     const {isAuthenticated} = useAuth0();
-    // const location = useLocation();
-    // const isSettingUpProfile = location.pathname === "/profile-setup";
-
-    // if (isSettingUpProfile) {
-    // return (
-    //     <nav className="p-4 border-b">
-    //     <span className="font-bold">Complete Your Registration</span>
-    //     </nav>
-    // );
-    // }
 
     return (
         <div className="flex flex-col h-screen w-full bg-slate-900 text-slate-300 overflow-hidden">
