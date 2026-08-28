@@ -1,7 +1,7 @@
 import { useAuth0 } from "@auth0/auth0-react";
 import { Outlet } from "react-router";
 
-export default function ProtectedTwo(){
+export default function RequireAuthGuard(){
 
     const { isAuthenticated, isLoading: authLoading } = useAuth0();
 

@@ -12,7 +12,7 @@ import ProfileSetup from "./router/profileSetup/ProfileSetup";
 import Profile from "./router/profile/Profile";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import ProfileSetupGuard from "./layout/ProfileSetupGuard";
-import ProtectedTwo from "./layout/RequireAuthGuard";
+import RequireAuthGuard from "./layout/RequireAuthGuard";
 
 export default function App() {
 
@@ -30,7 +30,7 @@ export default function App() {
               element: <Home />
             },
             {
-              element: <ProtectedTwo />,
+              element: <RequireAuthGuard />,
               children: [
                 {
                   path: "profile",

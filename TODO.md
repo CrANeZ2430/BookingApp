@@ -22,7 +22,7 @@
 - [x] Implement Room & RoomType display (Search & List view)
 - [x] Implement Booking creation UI & Form State
 - [x] Add Basic Loading & Error UI Feedback
-- [ ] Add basic React app authorization
+- [x] Add basic React app authorization
 - [ ] Set up Docker Compose orchestration (UI)
 
 ---
