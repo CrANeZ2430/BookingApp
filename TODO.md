@@ -23,15 +23,14 @@
 - [x] Implement Booking creation UI & Form State
 - [x] Add Basic Loading & Error UI Feedback
 - [x] Add basic React app authorization
-- [ ] Set up Docker Compose orchestration (UI)
+- [x] Set up Docker Compose orchestration (UI)
 
 ---
 
-## v2 — Post-Deployment & Enhancements
+## v2 — Deployment & Enhancements
 
 ### Security & Advanced Auth
 - [ ] Add Role-Based Authorization (RBAC UI Integration)
-- [ ] Integrate React Auth Context / Refresh Token handling
 - [ ] Implement Https into project
 
 ### Advanced API Polishing

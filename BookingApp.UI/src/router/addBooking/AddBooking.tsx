@@ -4,6 +4,9 @@ import { useState } from "react";
 import mapApiErrors from "../../utilities/mapApiErrors";
 import { toast } from "sonner";
 import useApiClient from "../../api/api";
+import type CheckMemberResponse from "../../types/checkMember/checkMemberResponse";
+import type { AxiosError } from "axios";
+import type ErrorData from "../../types/error/errorData";
 
 interface BookingDto {
     attendeeCount:number,
@@ -17,7 +20,7 @@ export default function AddBooking() {
 
     const api = useApiClient();
     const { id:roomId } = useParams();
-    const { data: data } = useQuery({queryKey:["currentMember"]});
+    const { data: data } = useQuery<CheckMemberResponse>({queryKey:["currentMember"]});
     const navigate = useNavigate();
 
     const [attendees, setAtendees] = useState<number | undefined>(undefined);
@@ -36,7 +39,7 @@ export default function AddBooking() {
                 startTime: startTime ? startTime.toISOString() : "",
                 endTime: endTime ? endTime.toISOString() : "",
                 roomId: roomId ? roomId : "",
-                memberId: data.member.memberId
+                memberId: data?.member.memberId ?? ""
             };
             
             await api.post("bookings", payload);
@@ -48,10 +51,16 @@ export default function AddBooking() {
             navigate("/bookings", {replace:true});
         },
         onError: (error) => {
-            console.error("Failed to create booking:", error.response.data);
-            const errors = mapApiErrors(error.response.data.errors as Record<string, string[]>)
-            setErrors(errors);
-            toast.error("You have errors!", {toasterId:"info"});
+
+            const errorData = (error as AxiosError<ErrorData>).response?.data;
+            console.error("Failed to create booking:", errorData);
+
+            if (errorData?.errors) {
+                const errors = mapApiErrors(errorData.errors as Record<string, string[]>);
+                setErrors(errors);
+            }
+            
+            toast.error("You have errors!", { toasterId: "info" });
         }
     });
 

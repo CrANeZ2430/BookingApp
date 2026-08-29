@@ -33,6 +33,19 @@
     depends_on:
       bookingapp.migrator:
         condition: service_completed_successfully
+        
+  bookingapp.ui:
+    container_name: bookingapp.ui
+    image: bookingapp.ui
+    build:
+      context: BookingApp.UI/
+      dockerfile: Dockerfile
+      target: prod
+    ports:
+      - "3000:3000"
+    depends_on:
+      bookingapp.api:
+        condition: service_started
 
 volumes:
   bookingapp_db:

@@ -4,6 +4,8 @@ import { useState } from "react";
 import { toast } from "sonner";
 import { useAuth0 } from "@auth0/auth0-react";
 import mapApiErrors from "../../utilities/mapApiErrors";
+import type { AxiosError } from "axios";
+import type ErrorData from "../../types/error/errorData";
 
 interface SyncMemberRequest{
     firstName:string,
@@ -43,10 +45,16 @@ export default function ProfileSetup(){
           await queryClient.invalidateQueries({ queryKey: ["currentMember"] });
         },
         onError: (error) => {
-          console.error("Failed to create booking:", error.response.data);
-          const errors = mapApiErrors(error.response.data.errors as Record<string, string[]>)
-          setErrors(errors);
-          toast.error("You have errors!", {toasterId:"info"});
+
+          const errorData = (error as AxiosError<ErrorData>).response?.data;
+          console.error("Failed to create profile:", errorData);
+
+          if (errorData?.errors) {
+            const errors = mapApiErrors(errorData.errors as Record<string, string[]>);
+            setErrors(errors);
+          }
+                      
+          toast.error("You have errors!", { toasterId: "info" });
         }
     });
 

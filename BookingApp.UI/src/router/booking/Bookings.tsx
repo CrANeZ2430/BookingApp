@@ -5,12 +5,13 @@ import BookingCard from "./BookingCard";
 import PagingItem from "../PagingItem";
 import { useState } from "react";
 import useApiClient from "../../api/api";
+import type CheckMemberResponse from "../../types/checkMember/checkMemberResponse";
 
 export default function Bookings() {
 
     const api = useApiClient();
 
-    const { data: data } = useQuery({queryKey:["currentMember"]});
+    const { data: data } = useQuery<CheckMemberResponse>({queryKey:["currentMember"]});
 
     const [page, setPage] = useState(0);
     const pageSize = 5;
@@ -19,7 +20,7 @@ export default function Bookings() {
             queryKey: ["bookings"],
             queryFn: async () => {
                 const pageRes = await api.get<PageResponse<Booking>>(
-                    `members/${data.member.memberId}/bookings?
+                    `members/${data?.member.memberId}/bookings?
                     page=${page}&pageSize=${pageSize}`);
                 return pageRes.data;
             },
