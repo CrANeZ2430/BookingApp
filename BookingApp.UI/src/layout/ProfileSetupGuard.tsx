@@ -30,7 +30,7 @@ export default function ProfileSetupGuard() {
         return <Outlet />;
     }
 
-    if (isAuthenticated && data?.profileExists && location.pathname === "/profile-setup") {
+    if ((isAuthenticated && data?.profileExists || !isAuthenticated) && location.pathname === "/profile-setup") {
         return <Navigate to="/" replace />;
     }
 

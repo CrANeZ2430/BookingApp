@@ -13,7 +13,9 @@ createRoot(document.getElementById('root')!).render(
       authorizationParams={{ 
         redirect_uri: window.location.origin, 
         audience: "http://localhost:8080"
-        }}>
+        }}
+      cacheLocation="localstorage"
+      useRefreshTokens={true}>
       <App />
       <Toaster id="info" theme="system" position="bottom-right" richColors/>
       <Toaster id="delete" theme="system" position="top-center" richColors/>
