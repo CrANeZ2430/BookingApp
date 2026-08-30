@@ -6,33 +6,6 @@ namespace BookingApp.Infrastructure.Database.Repositories.Rooms;
 
 public class RoomsRepository(BookingAppDbContext dbContext) : IRoomsRepository
 {
-    public async Task<(IReadOnlyCollection<Room> Items, int TotalCount)> GetAsync(
-        int page, 
-        int pageSize, 
-        RoomFilterProps props,
-        CancellationToken ct = default)
-    {
-        var term = props.SearchTerm?.Trim();
-        
-        var query = dbContext.Rooms
-                .AsNoTracking()
-                .Where(x => 
-                    (props.SearchTerm == null || x.Name.Contains(term)) &&
-                    (props.MinCapacity == null || x.Capacity >= props.MinCapacity) &&
-                    (props.IsOperational == null || x.IsOperational == props.IsOperational));
-
-        var totalCount = await query.CountAsync(ct);
-        
-        var rooms = await query
-            .Include(x => x.RoomType)
-            .OrderBy(x => x.Name)
-            .Skip(page * pageSize)
-            .Take(pageSize)
-            .ToArrayAsync(ct);
-
-        return (rooms, totalCount);
-    }
-
     public async Task<Room?> GetByIdAsync(
         Guid roomId, 
         CancellationToken ct = default)
@@ -40,7 +13,7 @@ public class RoomsRepository(BookingAppDbContext dbContext) : IRoomsRepository
         return await dbContext.Rooms
             .FirstOrDefaultAsync(m => m.RoomId == roomId, ct);
     }
-
+    
     public async Task AddAsync(
         Room room, 
         CancellationToken ct = default)

@@ -4,15 +4,8 @@ namespace BookingApp.Core.Domain.Members.Repositories;
 
 public interface IMembersRepository
 {
-    Task<(IReadOnlyCollection<Member> Items, int TotalCount)> GetAsync(
-        int page, 
-        int pageSize, 
-        CancellationToken ct = default);
     Task<Member?> GetByIdAsync(
         Guid memberId, 
-        CancellationToken ct = default);
-    Task<Member?> GetByAuth0IdAsync(
-        string auth0Id,
         CancellationToken ct = default);
     Task AddAsync(
         Member member, 

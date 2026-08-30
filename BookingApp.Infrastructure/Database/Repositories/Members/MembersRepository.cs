@@ -6,39 +6,12 @@ namespace BookingApp.Infrastructure.Database.Repositories.Members;
 
 public class MembersRepository(BookingAppDbContext dbContext) : IMembersRepository
 {
-    public async Task<(IReadOnlyCollection<Member> Items, int TotalCount)> GetAsync(
-        int page, 
-        int pageSize, 
-        CancellationToken ct = default)
-    {
-        var query = dbContext.Members.AsNoTracking();
-
-        var totalCount = await query.CountAsync(ct);
-        
-        var members = await query
-            .OrderBy(x => x.LastName)
-            .ThenBy(x => x.FirstName)
-            .Skip(page * pageSize)
-            .Take(pageSize)
-            .ToArrayAsync(ct);
-
-        return (members, totalCount);
-    }
-
     public async Task<Member?> GetByIdAsync(
         Guid memberId, 
         CancellationToken ct = default)
     {
         return await dbContext.Members
             .FirstOrDefaultAsync(m => m.MemberId == memberId, ct);
-    }
-    
-    public async Task<Member?> GetByAuth0IdAsync(
-        string auth0Id, 
-        CancellationToken ct = default)
-    {
-        return await dbContext.Members
-            .FirstOrDefaultAsync(m => m.Auth0Id == auth0Id, ct);
     }
 
     public async Task AddAsync(

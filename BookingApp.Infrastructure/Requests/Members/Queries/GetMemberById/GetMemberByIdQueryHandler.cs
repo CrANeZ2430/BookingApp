@@ -1,18 +1,20 @@
-﻿using BookingApp.Core.Domain.Members.Repositories;
+using BookingApp.Application.Requests.Members.Queries.GetMemberById;
 using BookingApp.Core.Exceptions;
+using BookingApp.Infrastructure.Database;
 using MediatR;
+using Microsoft.EntityFrameworkCore;
 
-namespace BookingApp.Application.Requests.Members.Queries.GetMemberById;
+namespace BookingApp.Infrastructure.Requests.Members.Queries.GetMemberById;
 
 public class GetMemberByIdQueryHandler(
-    IMembersRepository membersRepository)
+    BookingAppDbContext dbContext)
     : IRequestHandler<GetMemberByIdQuery, GetMemberByIdDto?>
 {
     public async Task<GetMemberByIdDto?> Handle(GetMemberByIdQuery request, CancellationToken cancellationToken)
     {
-        var member = await membersRepository.GetByIdAsync(
-            request.MemberId, 
-            cancellationToken);
+        var member = await dbContext.Members.AsNoTracking()
+            .FirstOrDefaultAsync(x => x.MemberId == 
+                                      request.MemberId, cancellationToken);
 
         if (member is null)
             throw new NotFoundException("Given member was not found.");

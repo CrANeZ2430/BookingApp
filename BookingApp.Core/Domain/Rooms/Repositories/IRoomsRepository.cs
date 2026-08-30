@@ -4,11 +4,6 @@ namespace BookingApp.Core.Domain.Rooms.Repositories;
 
 public interface IRoomsRepository
 {
-    Task<(IReadOnlyCollection<Room> Items, int TotalCount)> GetAsync(
-        int page, 
-        int pageSize, 
-        RoomFilterProps props,
-        CancellationToken ct = default);
     Task<Room?> GetByIdAsync(
         Guid roomId, 
         CancellationToken ct = default);

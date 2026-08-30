@@ -38,6 +38,9 @@ public static class InfrastructureRegistration
         //services.AddScoped<PublishDomainEventInterceptor>();
 
         services.AddSingleton<IDateTimeProvider, DateTimeProvider>();
+        
+        services.AddMediatR(cfg => 
+            cfg.RegisterServicesFromAssembly(typeof(InfrastructureRegistration).Assembly));
 
         return services;
     }

@@ -6,27 +6,6 @@ namespace BookingApp.Infrastructure.Database.Repositories.Bookings;
 
 public class BookingsRepository(BookingAppDbContext dbContext) : IBookingsRepository
 {
-    public async Task<(IReadOnlyCollection<Booking> Items, int TotalCount)> GetByMemberIdAsync(
-        int page, 
-        int pageSize, 
-        Guid memberId,
-        CancellationToken ct = default)
-    {
-        var query = dbContext.Bookings
-            .AsNoTracking()
-            .Where(b => b.MemberId == memberId);
-
-        var totalCount = await query.CountAsync(ct);
-        
-        var bookings = await query
-            .OrderBy(x => x.StartTime)
-            .Skip(page * pageSize)
-            .Take(pageSize)
-            .ToArrayAsync(ct);
-
-        return (bookings, totalCount);
-    }
-
     public async Task<Booking?> GetByIdAsync(
         Guid bookingId, 
         CancellationToken ct = default)

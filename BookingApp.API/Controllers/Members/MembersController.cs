@@ -61,8 +61,8 @@ public class MembersController(
     }
 
     [HttpGet("me")]
-    [ProducesResponseType(typeof(MemberCheckResponse), StatusCodes.Status200OK)]
-    public async Task<IActionResult> CheckProfileExistence(
+    [ProducesResponseType(typeof(CheckProfileResponse), StatusCodes.Status200OK)]
+    public async Task<IActionResult> CheckProfile(
         CancellationToken ct = default)
     {
         var auth0Id = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
@@ -70,7 +70,9 @@ public class MembersController(
 
         var member = await mediator.Send(query, ct);
 
-        return Ok(new {profileExists = member is not null , member});
+        return Ok(new CheckProfileResponse(
+            ProfileExists: member is not null , 
+            Member: member));
     }
     
     [HttpPost("sync")]
@@ -103,7 +105,7 @@ public class MembersController(
 
         var memberId = await mediator.Send(command, ct);
 
-        return Ok(new { memberId });
+        return Ok(memberId);
     }
 
     [HttpPut("{memberId:guid}")]
