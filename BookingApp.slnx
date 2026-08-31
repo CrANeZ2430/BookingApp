@@ -2,6 +2,7 @@
   <Folder Name="/Solution Items/">
     <File Path=".dockerignore" />
     <File Path="compose.yaml" />
+    <File Path="compose.override.yaml" />
     <File Path="Dockerfile" />
   </Folder>
   <Folder Name="/src/">

@@ -5,8 +5,6 @@ using BookingApp.Application;
 using BookingApp.Infrastructure;
 using Microsoft.AspNetCore.Mvc.ApplicationModels;
 
-var  myAllowSpecificOrigins = "myAllowSpecificOrigins";
-
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.RegisterApplication();
@@ -15,18 +13,6 @@ builder.Services.RegisterInfrastructure(builder.Configuration);
 builder.Services.AddSingleton<IExceptionMapper, ExceptionMapper>();
 builder.Services.AddExceptionHandler<ExceptionHandler>();
 builder.Services.AddProblemDetails();
-
-builder.Services.AddCors(options =>
-{
-    options.AddPolicy(name: myAllowSpecificOrigins,
-        policy  =>
-        {
-            policy.WithOrigins("http://localhost:5173")
-                .WithOrigins("http://localhost:3000")
-                .AllowAnyMethod()
-                .AllowAnyHeader();
-        });
-});
 
 builder.Services.AddAuthentication().AddJwtBearer(options =>
 {
@@ -46,11 +32,11 @@ builder.Services.AddOpenApi();
 
 var app = builder.Build();
 
+app.UseForwardedHeaders();
+
 app.UseExceptionHandler();
 
 app.UseStatusCodePages();
-
-//app.UseHttpsRedirection();
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
@@ -59,8 +45,6 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseRouting();
-
-app.UseCors(myAllowSpecificOrigins);
 
 app.UseAuthentication();
 app.UseAuthorization();

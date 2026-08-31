@@ -7,7 +7,7 @@ RUN --mount=type=cache,target=/root/.npm npm ci
 #dev
 FROM base AS dev
 COPY . .
-EXPOSE 5173
+EXPOSE 3000
 CMD ["npm", "run", "dev", "--", "--host"]
 
 #compile static files

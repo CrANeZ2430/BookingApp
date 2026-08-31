@@ -7,7 +7,7 @@ export default function useApiClient(){
 
     const api = axios.create(
         {
-            baseURL: "http://localhost:8080/api",
+            baseURL: "https://localhost/api",
             headers: {
                 "Content-Type": "application/json"
             }
