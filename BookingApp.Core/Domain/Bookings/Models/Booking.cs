@@ -47,10 +47,15 @@ public class Booking
         Guid roomId)
     {
         if (attendeeCount <= 0)
-            throw new BadRequestException("Room attendees count cannot be 0.");
+            throw new DomainException("Room attendees count cannot be 0.");
+        
+        if (startTime <= createdAt)
+            throw new DomainException("Start time must be after creation time.");
+        if (endTime <= createdAt)
+            throw new DomainException("End time must be after creation time.");
         
         if (startTime >= endTime)
-            throw new BadRequestException("Start time must be before end time.");
+            throw new DomainException("Start time must be before end time.");
         
         return new Booking(
             attendeeCount, 
@@ -68,10 +73,15 @@ public class Booking
         Guid roomId)
     {
         if (attendeeCount <= 0)
-            throw new BadRequestException("Room attendees count cannot be 0.");
+            throw new DomainException("Room attendees count cannot be 0.");
+        
+        if (startTime <= CreatedAt)
+            throw new DomainException("Start time must be after creation time.");
+        if (endTime <= CreatedAt)
+            throw new DomainException("End time must be after creation time.");
         
         if (startTime >= endTime)
-            throw new BadRequestException("Start time must be before end time.");
+            throw new DomainException("Start time must be before end time.");
         
         AttendeeCount = attendeeCount;
         StartTime = startTime;
@@ -82,7 +92,7 @@ public class Booking
     public void Confirm()
     {
         if (Status != BookingStatus.Pending)
-            throw new BadRequestException("Only pending bookings can be confirmed.");
+            throw new DomainException("Only pending bookings can be confirmed.");
         
         Status = BookingStatus.Confirmed;
     }

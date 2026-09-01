@@ -47,13 +47,13 @@ public class Room
         Guid roomTypeId)
     {
         if (string.IsNullOrWhiteSpace(name))
-            throw new BadRequestException("Room name cannot be empty.");
+            throw new DomainException("Room name cannot be empty.");
 
         if (capacity <= 0)
-            throw new BadRequestException("Room capacity must be greater than zero.");
+            throw new DomainException("Room capacity must be greater than zero.");
         
         if (floor < 0)
-            throw new BadRequestException("Floor cannot be negative.");
+            throw new DomainException("Floor cannot be negative.");
         
         return new Room(
             name,
@@ -73,13 +73,13 @@ public class Room
         Guid roomTypeId)
     {
         if (string.IsNullOrWhiteSpace(name))
-            throw new BadRequestException("Room name cannot be empty.");
+            throw new DomainException("Room name cannot be empty.");
 
         if (capacity <= 0)
-            throw new BadRequestException("Room capacity must be greater than zero.");
+            throw new DomainException("Room capacity must be greater than zero.");
         
         if (floor < 0)
-            throw new BadRequestException("Floor cannot be negative.");
+            throw new DomainException("Floor cannot be negative.");
         
         Name = name;
         Floor = floor;
@@ -92,7 +92,7 @@ public class Room
     public void CloseForMaintenance()
     {
         if (!IsOperational)
-            throw new BadRequestException("Room is already closed for maintenance.");
+            throw new DomainException("Room is already closed for maintenance.");
 
         IsOperational = false;
     }
@@ -100,7 +100,7 @@ public class Room
     public void OpenForUse()
     {
         if (IsOperational)
-            throw new BadRequestException("Room is already open and operational.");
+            throw new DomainException("Room is already open and operational.");
 
         IsOperational = true;
     }

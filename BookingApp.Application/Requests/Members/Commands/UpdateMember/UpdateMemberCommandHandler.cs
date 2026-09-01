@@ -1,4 +1,5 @@
-﻿using BookingApp.Core.Abstractions;
+﻿using BookingApp.Application.Exceptions;
+using BookingApp.Core.Abstractions;
 using BookingApp.Core.Domain.Members.Repositories;
 using BookingApp.Core.Exceptions;
 using MediatR;

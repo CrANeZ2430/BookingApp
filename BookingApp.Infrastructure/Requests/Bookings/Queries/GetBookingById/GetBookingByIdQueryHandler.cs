@@ -1,3 +1,4 @@
+using BookingApp.Application.Exceptions;
 using BookingApp.Application.Requests.Bookings.Queries.GetBookingById;
 using BookingApp.Core.Exceptions;
 using BookingApp.Infrastructure.Database;
