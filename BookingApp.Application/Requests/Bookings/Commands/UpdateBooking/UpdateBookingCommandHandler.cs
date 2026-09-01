@@ -1,3 +1,4 @@
+using BookingApp.Application.Exceptions;
 using BookingApp.Core.Abstractions;
 using BookingApp.Core.Domain.Bookings.Repositories;
 using BookingApp.Core.Domain.Rooms.Repositories;

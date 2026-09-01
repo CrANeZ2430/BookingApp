@@ -1,8 +1,5 @@
 ﻿using System.Text.RegularExpressions;
-using BookingApp.Core.Abstractions;
-using BookingApp.Core.Common;
 using BookingApp.Core.Domain.Bookings.Models;
-using BookingApp.Core.Domain.Members.DomainEvents;
 using BookingApp.Core.Exceptions;
 
 namespace BookingApp.Core.Domain.Members.Models;
@@ -49,16 +46,16 @@ public class Member //: AggregateRoot
         string phoneNumber)
     {
         if (string.IsNullOrWhiteSpace(firstName))
-            throw new BadRequestException("First name is required.");
+            throw new DomainException("First name is required.");
 
         if (string.IsNullOrWhiteSpace(lastName))
-            throw new BadRequestException("Last name is required.");
+            throw new DomainException("Last name is required.");
 
         if (string.IsNullOrWhiteSpace(email) || !Regex.IsMatch(email, @"^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$"))
-            throw new BadRequestException("A valid email is required.");
+            throw new DomainException("A valid email is required.");
         
         if (string.IsNullOrWhiteSpace(phoneNumber) || !Regex.IsMatch(phoneNumber, @"^\+[1-9]\d{1,14}$"))
-            throw new BadRequestException("A valid phone number is required.");
+            throw new DomainException("A valid phone number is required.");
         
         var member =  new Member(
             auth0Id,
@@ -81,16 +78,16 @@ public class Member //: AggregateRoot
         string phoneNumber)
     {
         if (string.IsNullOrWhiteSpace(firstName))
-            throw new BadRequestException("First name is required.");
+            throw new DomainException("First name is required.");
 
         if (string.IsNullOrWhiteSpace(lastName))
-            throw new BadRequestException("Last name is required.");
+            throw new DomainException("Last name is required.");
 
         if (string.IsNullOrWhiteSpace(email) || !Regex.IsMatch(email, @"^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$"))
-            throw new BadRequestException("A valid email is required.");
+            throw new DomainException("A valid email is required.");
         
         if (string.IsNullOrWhiteSpace(phoneNumber) || !Regex.IsMatch(phoneNumber, @"^\+[1-9]\d{1,14}$"))
-            throw new BadRequestException("A valid phone number is required.");
+            throw new DomainException("A valid phone number is required.");
         
         FirstName = firstName;
         LastName = lastName;

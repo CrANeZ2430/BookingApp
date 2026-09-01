@@ -1,8 +1,8 @@
 <Solution>
-  <Folder Name="/Solution Items/">
+  <Folder Name="/items/">
     <File Path=".dockerignore" />
-    <File Path="compose.yaml" />
     <File Path="compose.override.yaml" />
+    <File Path="compose.yaml" />
     <File Path="Dockerfile" />
   </Folder>
   <Folder Name="/src/">
@@ -10,5 +10,8 @@
     <Project Path="BookingApp.Application/BookingApp.Application.csproj" />
     <Project Path="BookingApp.Core/BookingApp.Core.csproj" />
     <Project Path="BookingApp.Infrastructure/BookingApp.Infrastructure.csproj" />
+  </Folder>
+  <Folder Name="/tests/">
+    <Project Path="BookingApp.UnitTests/BookingApp.UnitTests.csproj" />
   </Folder>
 </Solution>

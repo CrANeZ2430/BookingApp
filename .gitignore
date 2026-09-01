@@ -27,3 +27,6 @@ bld/
 BookingApp.UI/node_modules/
 BookingApp.UI/dist/
 BookingApp.UI/*.local
+
+## Nginx
+nginx/certs/**

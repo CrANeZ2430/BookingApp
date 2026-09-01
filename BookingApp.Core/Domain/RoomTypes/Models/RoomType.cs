@@ -29,7 +29,7 @@ public class RoomType
         string? description)
     {
         if (string.IsNullOrWhiteSpace(name))
-            throw new BadRequestException("Name cannot be empty.");
+            throw new DomainException("Name cannot be empty.");
         
         return new RoomType(
             name,
@@ -41,7 +41,7 @@ public class RoomType
         string? description)
     {
         if (string.IsNullOrWhiteSpace(name))
-            throw new BadRequestException("Name cannot be empty.");
+            throw new DomainException("Name cannot be empty.");
         
         Name = name;
         Description = description;

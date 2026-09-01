@@ -1,4 +1,5 @@
-﻿using BookingApp.Core.Exceptions;
+﻿using BookingApp.Application.Exceptions;
+using BookingApp.Core.Exceptions;
 using FluentValidation;
 using Microsoft.AspNetCore.Mvc;
 

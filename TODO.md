@@ -31,13 +31,12 @@
 
 ### Security & Advanced Auth
 - [ ] Add Role-Based Authorization (RBAC UI Integration)
-- [ ] Implement Https into project
-
-### Advanced API Polishing
-- [ ] Integration of Domain Events
+- [x] Implement Https into project
 
 ### Testing & Infrastructure
 - [ ] Add Unit Tests (xUnit for CQRS Handlers & Domain Rules)
 - [ ] Add Integration Tests (Testcontainers for PostgreSQL & EF Core)
-- [ ] Set up Docker Compose orchestration (UI Containerization)
 - [ ] GitHub Actions CI/CD Pipeline
+
+### Advanced API Polishing
+- [ ] Integration of Domain Events
