@@ -21,10 +21,6 @@
     </ItemGroup>
 
     <ItemGroup>
-      <Folder Include="Application\Bookings\" />
-    </ItemGroup>
-
-    <ItemGroup>
       <ProjectReference Include="..\BookingApp.Application\BookingApp.Application.csproj" />
       <ProjectReference Include="..\BookingApp.Core\BookingApp.Core.csproj" />
     </ItemGroup>

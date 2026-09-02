@@ -5,7 +5,7 @@ using FluentAssertions;
 
 namespace BookingApp.UnitTests.Core.Bookings;
 
-public class BookingsTests
+public class CreateBookingTests
 {
     private Guid MemberId { get; set; } = Guid.NewGuid();
     private Guid RoomId { get; set; } = Guid.NewGuid();

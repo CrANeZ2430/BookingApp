@@ -37,9 +37,9 @@ public class BookingsRepository(BookingAppDbContext dbContext) : IBookingsReposi
         return await dbContext.Bookings
             .AsNoTracking()
             .AnyAsync(b =>
-                (bookingId == null || b.BookingId != bookingId) &&
                 b.RoomId == roomId &&
                 b.StartTime < endTime &&
-                b.EndTime > startTime, ct);
+                b.EndTime > startTime &&
+                (bookingId == null || b.BookingId != bookingId), ct);
     }
 }

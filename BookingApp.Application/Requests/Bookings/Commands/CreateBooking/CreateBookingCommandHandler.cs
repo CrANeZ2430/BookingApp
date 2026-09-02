@@ -47,15 +47,15 @@ public class CreateBookingCommandHandler(
                 request.EndTime,
                 cancellationToken))
             throw new BadRequestException(
-                "Booking time isn't available",
+                "Booking time isn't available.",
                 new Dictionary<string, string[]>(){
                 {
                     nameof(request.StartTime),
-                    ["Booking time isn't available"]
+                    ["Booking time isn't available."]
                 },
                 {
                     nameof(request.EndTime),
-                    ["Booking time isn't available"]
+                    ["Booking time isn't available."]
                 }});
 
         var booking = Booking.Create(

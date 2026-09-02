@@ -29,4 +29,4 @@ BookingApp.UI/dist/
 BookingApp.UI/*.local
 
 ## Nginx
-nginx/certs/**
+nginx/certs/

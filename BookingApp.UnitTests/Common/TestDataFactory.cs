@@ -15,6 +15,7 @@ public static class TestDataFactory
             0, 
             0, 
             DateTimeKind.Utc);
+        
         var dateTimeProvider = new Mock<IDateTimeProvider>();
         dateTimeProvider.Setup(x => x.GetCurrentDateTime())
             .Returns(utcNow);
