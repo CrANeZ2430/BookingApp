@@ -11,7 +11,7 @@ using BookingApp.UnitTests.Common;
 using FluentAssertions;
 using Moq;
 
-namespace BookingApp.UnitTests.Application.Bookings;
+namespace BookingApp.UnitTests.Application.Bookings.CreateBooking;
 
 public class CreateBookingCommandHandlerTests
 {
@@ -20,6 +20,7 @@ public class CreateBookingCommandHandlerTests
     private readonly Mock<IBookingsRepository> _bookingsRepoMock = new Mock<IBookingsRepository>();
     private readonly Mock<IUnitOfWork> _unitOfWorkMock = new Mock<IUnitOfWork>();
     private readonly Mock<IDateTimeProvider> _dateTimeProvider = TestDataFactory.GetDateTimeProvider();
+    private readonly DateTime _utcNow = TestDataFactory.GetUtcNow();
     private readonly CreateBookingCommandHandler _handler;
 
     public CreateBookingCommandHandlerTests()
@@ -36,9 +37,8 @@ public class CreateBookingCommandHandlerTests
     public async Task Handle_Should_ReturnBookingId_WhenDataIsValid()
     {
         // Arrange
-        var now = _dateTimeProvider.Object.GetCurrentDateTime();
-        var startTime = now.AddDays(1);
-        var endTime = now.AddDays(2);
+        var startTime = _utcNow.AddDays(1);
+        var endTime = _utcNow.AddDays(2);
     
         var room = Room.Create(
             "Auditory 103.", 
@@ -90,10 +90,8 @@ public class CreateBookingCommandHandlerTests
     public async Task Handle_Should_ReturnNotFound_WhenMemberDoesNotExist()
     {
         // Arrange
-        var dateTimeProvider = _dateTimeProvider.Object;
-        var now = dateTimeProvider.GetCurrentDateTime();
-        var startTime = now.AddDays(1);
-        var endTime = now.AddDays(2);
+        var startTime = _utcNow.AddDays(1);
+        var endTime = _utcNow.AddDays(2);
         
         var room = Room.Create(
             "Auditory 103.", 
@@ -115,7 +113,8 @@ public class CreateBookingCommandHandlerTests
             room.RoomId);
         
         //Act
-        var act = async () => await _handler.Handle(command, CancellationToken.None);
+        var act = () => 
+            _handler.Handle(command, CancellationToken.None);
 
         //Assert
         await act.Should().ThrowAsync<NotFoundException>()
@@ -126,10 +125,8 @@ public class CreateBookingCommandHandlerTests
     public async Task Handle_Should_ReturnNotFound_WhenRoomDoesNotExist()
     {
         // Arrange
-        var dateTimeProvider = _dateTimeProvider.Object;
-        var now = dateTimeProvider.GetCurrentDateTime();
-        var startTime = now.AddDays(1);
-        var endTime = now.AddDays(2);
+        var startTime = _utcNow.AddDays(1);
+        var endTime = _utcNow.AddDays(2);
         
         var member = Member.Create(
             "example",
@@ -151,7 +148,8 @@ public class CreateBookingCommandHandlerTests
             Guid.NewGuid());
         
         //Act
-        var act = async () => await _handler.Handle(command, CancellationToken.None);
+        var act = () => 
+            _handler.Handle(command, CancellationToken.None);
 
         //Assert
         await act.Should().ThrowAsync<NotFoundException>()
@@ -162,9 +160,8 @@ public class CreateBookingCommandHandlerTests
     public async Task Handle_Should_ReturnBadRequest_WhenAttendeeCountExceedsRoomCapacity()
     {
         //Arrange
-        var now = _dateTimeProvider.Object.GetCurrentDateTime();
-        var startTime = now.AddDays(1);
-        var endTime = now.AddDays(2);
+        var startTime = _utcNow.AddDays(1);
+        var endTime = _utcNow.AddDays(2);
     
         var room = Room.Create(
             "Auditory 103.", 
@@ -202,10 +199,8 @@ public class CreateBookingCommandHandlerTests
             room.RoomId);
         
         //Act
-        var act = async () => 
-            await _handler.Handle(
-                command, 
-                CancellationToken.None);
+        var act = () => 
+            _handler.Handle(command, CancellationToken.None);
 
         //Assert
         await act.Should().ThrowAsync<BadRequestException>()
@@ -219,9 +214,8 @@ public class CreateBookingCommandHandlerTests
     public async Task Handle_Should_ThrowBadRequest_WhenRoomIsNotOperational()
     {
         //Arrange
-        var now = _dateTimeProvider.Object.GetCurrentDateTime();
-        var startTime = now.AddDays(1);
-        var endTime = now.AddDays(2);
+        var startTime = _utcNow.AddDays(1);
+        var endTime = _utcNow.AddDays(2);
     
         var room = Room.Create(
             "Auditory 103.", 
@@ -259,10 +253,8 @@ public class CreateBookingCommandHandlerTests
             room.RoomId);
         
         //Act
-        var act = async () =>
-            await _handler.Handle(
-                command, 
-                CancellationToken.None);
+        var act = () =>
+            _handler.Handle(command, CancellationToken.None);
 
         //Assert
         await act.Should().ThrowAsync<BadRequestException>()
@@ -275,9 +267,8 @@ public class CreateBookingCommandHandlerTests
     public async Task Handle_Should_ThrowBadRequest_WhenBookingTimeOverlaps()
     {
         // Arrange
-        var now = _dateTimeProvider.Object.GetCurrentDateTime();
-        var startTime = now.AddDays(1);
-        var endTime = now.AddDays(2);
+        var startTime = _utcNow.AddDays(1);
+        var endTime = _utcNow.AddDays(2);
     
         var room = Room.Create(
             "Auditory 103.", 
@@ -322,10 +313,8 @@ public class CreateBookingCommandHandlerTests
             room.RoomId);
 
         // Act
-        var act = async () => 
-            await _handler.Handle(
-                command, 
-                CancellationToken.None);
+        var act = () => 
+            _handler.Handle(command, CancellationToken.None);
 
         // Assert
         await act.Should().ThrowAsync<BadRequestException>()

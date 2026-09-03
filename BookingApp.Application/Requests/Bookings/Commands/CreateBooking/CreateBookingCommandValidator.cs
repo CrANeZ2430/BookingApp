@@ -1,10 +1,11 @@
-﻿using FluentValidation;
+﻿using BookingApp.Core.Abstractions;
+using FluentValidation;
 
 namespace BookingApp.Application.Requests.Bookings.Commands.CreateBooking;
 
 public class CreateBookingCommandValidator : AbstractValidator<CreateBookingCommand>
 {
-    public CreateBookingCommandValidator()
+    public CreateBookingCommandValidator(IDateTimeProvider dateTimeProvider)
     {
         RuleFor(x => x.AttendeeCount)
             .GreaterThanOrEqualTo(1)
@@ -13,16 +14,16 @@ public class CreateBookingCommandValidator : AbstractValidator<CreateBookingComm
         RuleFor(x => x.StartTime)
             .NotEmpty()
             .WithMessage("Booking start time is required.")
-            .GreaterThan(DateTime.UtcNow)
+            .GreaterThan(dateTimeProvider.GetCurrentDateTime())
             .WithMessage("Booking start time cannot be in the past.");
         
         RuleFor(x => x.EndTime)
             .NotEmpty()
             .WithMessage("Booking end time is required.")
-            .GreaterThan(DateTime.UtcNow)
+            .GreaterThan(dateTimeProvider.GetCurrentDateTime())
             .WithMessage("Booking end time cannot be in the past.")
-            .GreaterThan(cbc => cbc.StartTime)
-            .WithMessage("Booking start time must be after the start time.");
+            .GreaterThan(x => x.StartTime)
+            .WithMessage("Booking end time must be after the start time.");
         
         RuleFor(x => x.MemberId)
             .NotEmpty()
