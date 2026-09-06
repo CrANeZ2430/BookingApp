@@ -34,9 +34,10 @@
 - [x] Implement Https into project
 
 ### Testing & Infrastructure
-- [ ] Add Unit Tests (xUnit for CQRS Handlers & Domain Rules)
-- [ ] Add Integration Tests (Testcontainers for PostgreSQL & EF Core)
+- [x] Add Unit Tests (xUnit for CQRS Handlers & Domain Rules)
+- [x] Add Integration Tests (Testcontainers for PostgreSQL & EF Core)
 - [ ] GitHub Actions CI/CD Pipeline
+- [ ] Deploy the project
 
 ### Advanced API Polishing
 - [ ] Integration of Domain Events

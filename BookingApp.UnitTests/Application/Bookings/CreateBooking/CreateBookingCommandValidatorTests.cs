@@ -1,6 +1,6 @@
 using BookingApp.Application.Requests.Bookings.Commands.CreateBooking;
 using BookingApp.Core.Abstractions;
-using BookingApp.UnitTests.Common;
+using BookingApp.UnitTests.Mocks;
 using FluentAssertions;
 using Moq;
 

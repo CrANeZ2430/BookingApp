@@ -1,7 +1,7 @@
 using BookingApp.Core.Abstractions;
 using Moq;
 
-namespace BookingApp.UnitTests.Common;
+namespace BookingApp.UnitTests.Mocks;
 
 public static class TestDataFactory
 {

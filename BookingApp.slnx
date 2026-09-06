@@ -12,6 +12,7 @@
     <Project Path="BookingApp.Infrastructure/BookingApp.Infrastructure.csproj" />
   </Folder>
   <Folder Name="/tests/">
+    <Project Path="BookingApp.IntegrationTests/BookingApp.IntegrationTests.csproj" />
     <Project Path="BookingApp.UnitTests/BookingApp.UnitTests.csproj" />
   </Folder>
 </Solution>
