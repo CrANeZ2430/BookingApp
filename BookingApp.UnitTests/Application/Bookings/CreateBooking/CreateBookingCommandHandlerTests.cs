@@ -7,7 +7,7 @@ using BookingApp.Core.Domain.Members.Models;
 using BookingApp.Core.Domain.Members.Repositories;
 using BookingApp.Core.Domain.Rooms.Models;
 using BookingApp.Core.Domain.Rooms.Repositories;
-using BookingApp.UnitTests.Mocks;
+using BookingApp.UnitTests.Fakes;
 using FluentAssertions;
 using Moq;
 
