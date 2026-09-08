@@ -1,6 +1,6 @@
 using BookingApp.Core.Domain.Bookings.Models;
 using BookingApp.Core.Exceptions;
-using BookingApp.UnitTests.Mocks;
+using BookingApp.UnitTests.Fakes;
 using FluentAssertions;
 
 namespace BookingApp.UnitTests.Core.Bookings;
