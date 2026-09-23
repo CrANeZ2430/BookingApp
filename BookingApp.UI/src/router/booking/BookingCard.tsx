@@ -1,7 +1,7 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import type Booking from "../../types/bookings/booking";
-import useApiClient from "../../api/api";
 import { toast } from "sonner";
+import useApiClient from "../../api/useApiClient";
 
 interface BookingCardProps {
 

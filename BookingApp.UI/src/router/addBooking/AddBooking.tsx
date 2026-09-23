@@ -3,10 +3,10 @@ import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useState } from "react";
 import mapApiErrors from "../../utilities/mapApiErrors";
 import { toast } from "sonner";
-import useApiClient from "../../api/api";
 import type CheckMemberResponse from "../../types/checkMember/checkMemberResponse";
 import type { AxiosError } from "axios";
 import type ErrorData from "../../types/error/errorData";
+import useApiClient from "../../api/useApiClient";
 
 interface BookingDto {
     attendeeCount:number,

@@ -1,5 +1,5 @@
 @BaseUrl = {{Host}}/members
-@MemberId = 5fe7afa0-121f-40d2-90ac-bee14d4916c5
+@MemberId = f1da0f1a-a9b8-44ed-a579-a727b46d78c8
 
 ### Get all Members
 GET {{BaseUrl}}

@@ -1,6 +1,7 @@
 using System.Text.Json.Serialization;
 using BookingApp.API.Conventions;
 using BookingApp.API.ExceptionHandling;
+using BookingApp.API.Permissions;
 using BookingApp.Application;
 using BookingApp.Infrastructure;
 using Microsoft.AspNetCore.Mvc.ApplicationModels;
@@ -20,7 +21,11 @@ builder.Services.AddAuthentication().AddJwtBearer(options =>
     options.Audience = builder.Configuration["Auth0:Audience"];
 });
 
-builder.Services.AddAuthorization();
+builder.Services.AddAuthorization(options =>
+{
+    options.AddPolicy("CanReadMembers", policy => 
+        policy.RequireClaim("permissions", Permissions.ReadMembers));
+});
 
 builder.Services.AddControllers(options =>
         options.Conventions.Add(new RouteTokenTransformerConvention(new KebabCaseParameterTransformer())))

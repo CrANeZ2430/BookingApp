@@ -22,6 +22,7 @@ public class MembersController(
     : ControllerBase
 {
     [HttpGet]
+    [Authorize(Policy = "CanReadMembers")]
     [ProducesResponseType(typeof(PageResponse<GetMembersDto>), StatusCodes.Status200OK)]
     public async Task<IActionResult> GetMembers(
         [FromQuery] int page = 0,
@@ -66,6 +67,8 @@ public class MembersController(
         CancellationToken ct = default)
     {
         var auth0Id = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+        if (auth0Id is null) return Unauthorized();
+        
         var query = new GetMemberByAuth0IdQuery(auth0Id);
 
         var member = await mediator.Send(query, ct);

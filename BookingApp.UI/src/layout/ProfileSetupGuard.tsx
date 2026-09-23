@@ -1,7 +1,7 @@
 import { useAuth0 } from "@auth0/auth0-react";
-import useApiClient from "../api/api";
 import { useQuery } from "@tanstack/react-query";
 import { Navigate, Outlet, useLocation } from "react-router";
+import useApiClient from "../api/useApiClient";
 
 export default function ProfileSetupGuard() {
 

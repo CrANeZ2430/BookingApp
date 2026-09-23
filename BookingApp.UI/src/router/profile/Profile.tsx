@@ -5,7 +5,10 @@ import type CheckMemberResponse from "../../types/checkMember/checkMemberRespons
 export default function Profile(){
 
     const {user, isAuthenticated} = useAuth0();
-    const {data:data} = useQuery<CheckMemberResponse>({queryKey: ["currentMember"]});
+    const {data:data} = useQuery<CheckMemberResponse>(
+        {
+            queryKey: ["currentMember"]
+        });
 
     return (isAuthenticated ? (<div>
         <img className="rounded-full border-3 border-slate-100"
