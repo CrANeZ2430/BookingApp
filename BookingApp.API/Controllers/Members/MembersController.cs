@@ -1,4 +1,5 @@
 ﻿using System.Security.Claims;
+using BookingApp.API.Policies;
 using BookingApp.Application.Common;
 using BookingApp.Application.Requests.Members.Commands.CreateMember;
 using BookingApp.Application.Requests.Members.Commands.DeleteMember;
@@ -57,7 +58,7 @@ public class MembersController(
 
         return CreatedAtAction(
             nameof(GetMemberById), 
-            new { memberId = memberId }, 
+            new { memberId }, 
             memberId);
     }
 
@@ -73,8 +74,35 @@ public class MembersController(
 
         var member = await mediator.Send(query, ct);
 
+        if (member is null)
+            return Ok(new CheckProfileResponse(
+                ProfileExists: false,
+                Member: null));
+
+        var permissions = User.Claims
+            .Where(c => c.Type == "permissions")
+            .Select(c => c.Value);
+
+        var role = permissions.Contains(Permissions.ReadMembers) ? Roles.Staff : Roles.Customer;
+
+        if (member.Role != role)
+        {
+            var command = new UpdateMemberCommand(
+                member.MemberId,
+                new UpdateMemberDto(
+                    member.FirstName,
+                    member.LastName,
+                    role,
+                    member.Email,
+                    member.PhoneNumber));
+            
+            await mediator.Send(command, ct);
+
+            member = member with { Role = role };
+        }
+
         return Ok(new CheckProfileResponse(
-            ProfileExists: member is not null , 
+            ProfileExists: true, 
             Member: member));
     }
     
@@ -86,13 +114,12 @@ public class MembersController(
     {
         var auth0Id = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
         
-        if (string.IsNullOrEmpty(auth0Id))
-        {
-            return Unauthorized();
-        }
+        if (string.IsNullOrEmpty(auth0Id)) return Unauthorized();
         
         var email = User.FindFirst(ClaimTypes.Email)?.Value
                     ?? User.FindFirst("https://bookingapp.com/email")?.Value;
+        if (email is null) return BadRequest("Email address not provided.");
+        
         var query = new GetMemberByAuth0IdQuery(auth0Id);
         
         var member = await mediator.Send(query, ct);
@@ -102,7 +129,7 @@ public class MembersController(
             auth0Id,
             request.FirstName,
             request.LastName,
-            Roles.Customer,
+            request.Role,
             email,
             request.PhoneNumber);
 

@@ -1,7 +1,7 @@
 using System.Text.Json.Serialization;
 using BookingApp.API.Conventions;
 using BookingApp.API.ExceptionHandling;
-using BookingApp.API.Permissions;
+using BookingApp.API.Policies;
 using BookingApp.Application;
 using BookingApp.Infrastructure;
 using Microsoft.AspNetCore.Mvc.ApplicationModels;

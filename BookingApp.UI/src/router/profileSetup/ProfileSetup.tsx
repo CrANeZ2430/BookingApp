@@ -7,10 +7,12 @@ import type { AxiosError } from "axios";
 import type ErrorData from "../../types/error/errorData";
 import LogoutButton from "../../layout/LogoutButton";
 import useApiClient from "../../api/useApiClient";
+import usePermissions from "../../hooks/usePermissions";
 
 interface SyncMemberRequest{
     firstName:string,
     lastName:string,
+    role:string,
     phoneNumber:string
 }
 
@@ -18,12 +20,15 @@ export default function ProfileSetup(){
 
     const queryClient = useQueryClient();
     const api = useApiClient();
-    const {user} = useAuth0();
+    const { user } = useAuth0();
 
     const [fName, setFName] = useState("");
     const [lName, setLName] = useState("");
     const [phone, setPhone] = useState("");
     const [errors, setErrors] = useState<Record<string, string[]>>({});
+    
+    const { permissions } = usePermissions();
+    const role = permissions.includes("read:members") ? "Staff" : "Customer";
 
     const createMutation = useMutation({
         mutationFn: async () => {
@@ -31,6 +36,7 @@ export default function ProfileSetup(){
             const request:SyncMemberRequest = {
               firstName: fName,
               lastName: lName,
+              role: role,
               phoneNumber: phone
             };
 
@@ -41,11 +47,11 @@ export default function ProfileSetup(){
 
           queryClient.setQueryData(["currentMember"], {profileExists:true, 
             member:{
-              firstName:fName, 
-              lastName:lName, 
-              role:"Customer", 
-              email:user?.email, 
-              phoneNumber:phone}});
+              firstName: fName, 
+              lastName: lName, 
+              role: role, 
+              email: user?.email, 
+              phoneNumber: phone}});
           toast.success("The profile was created successfully!", {toasterId:"info"});
           await queryClient.invalidateQueries({ queryKey: ["currentMember"] });
         },

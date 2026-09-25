@@ -3,7 +3,7 @@ import { Outlet } from "react-router";
 
 export default function RequireAuthGuard(){
 
-    const { isAuthenticated, isLoading: authLoading } = useAuth0();
+    const { isAuthenticated, isLoading:authLoading } = useAuth0();
 
     if (authLoading) {
         return <div className="p-4 text-slate-300">Loading account...</div>;

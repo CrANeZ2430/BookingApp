@@ -20,7 +20,7 @@ export default function AddBooking() {
 
     const api = useApiClient();
     const { id:roomId } = useParams();
-    const { data: data } = useQuery<CheckMemberResponse>({queryKey:["currentMember"]});
+    const { data } = useQuery<CheckMemberResponse>({queryKey:["currentMember"]});
     const navigate = useNavigate();
 
     const [attendees, setAtendees] = useState<number | undefined>(undefined);

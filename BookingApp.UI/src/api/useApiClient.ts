@@ -8,11 +8,11 @@ export default function useApiClient(){
 
     const api = useMemo(() => {
         const instance = axios.create({
-                baseURL: "https://localhost/api",
-                headers: {
-                    "Content-Type": "application/json"
-                }
-            });
+            baseURL: "https://localhost/api",
+            headers: {
+                "Content-Type": "application/json"
+            }
+        });
 
         instance.interceptors.request.use(async (config) => {
             const token = await getAccessTokenSilently();
@@ -20,6 +20,16 @@ export default function useApiClient(){
             config.headers.Authorization = `Bearer ${token}`;
             return config;
         });
+
+        instance.interceptors.response.use(
+            (response) => response,
+            async (error) => {
+                if (error.response?.status === 403) {
+                    console.warn("Permission denied. Session claims may be stale.");
+                }
+
+                return Promise.reject(error);
+            });
 
         return instance;
     }, [getAccessTokenSilently]);

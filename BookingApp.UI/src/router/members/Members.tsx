@@ -26,6 +26,7 @@ export default function Members() {
             return pageRes.data;
         },
         staleTime: 10000,
+        retry: false,
         refetchOnWindowFocus: false,
         throwOnError: (error: AxiosError) => error.response?.status === 403
     });

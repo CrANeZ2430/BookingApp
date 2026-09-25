@@ -30,7 +30,7 @@
 ## v2 — Deployment & Enhancements
 
 ### Security & Advanced Auth
-- [ ] Add Role-Based Authorization (RBAC UI Integration)
+- [x] Add Role-Based Authorization (RBAC UI Integration)
 - [x] Implement Https into project
 
 ### Testing & Infrastructure

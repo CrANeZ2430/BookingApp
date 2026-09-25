@@ -1,4 +1,4 @@
-﻿namespace BookingApp.API.Permissions;
+﻿namespace BookingApp.API.Policies;
 
 public static class Permissions
 {
