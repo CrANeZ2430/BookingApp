@@ -54,7 +54,7 @@ public class BookingsController(
 
         return CreatedAtAction(
             nameof(GetBookingById), 
-            new { bookingId = bookingId }, 
+            new { bookingId }, 
             bookingId);
     }
 

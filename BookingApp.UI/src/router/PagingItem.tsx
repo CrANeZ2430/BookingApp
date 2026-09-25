@@ -5,7 +5,7 @@ interface PagingItemProps {
     onPageChange: (newPage:number) => void
 }
 
-export default function Pagingitem({page, pageSize, totalCount, onPageChange}:PagingItemProps) {
+export default function PagingItem({page, pageSize, totalCount, onPageChange}:PagingItemProps) {
 
     return (
         <div className="items-center flex w-fit border rounded-md">

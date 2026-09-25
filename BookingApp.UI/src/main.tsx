@@ -17,8 +17,8 @@ createRoot(document.getElementById('root')!).render(
       cacheLocation="localstorage"
       useRefreshTokens={true}>
       <App />
-      <Toaster id="info" theme="system" position="bottom-right" richColors/>
-      <Toaster id="delete" theme="system" position="top-center" richColors/>
+      <Toaster id="info" theme="system" position="bottom-right" richColors />
+      <Toaster id="delete" theme="system" position="top-center" richColors />
     </Auth0Provider>
   </StrictMode>
 );

@@ -1,15 +1,18 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import useApiClient from "../../api/api";
 import { useState } from "react";
 import { toast } from "sonner";
 import { useAuth0 } from "@auth0/auth0-react";
 import mapApiErrors from "../../utilities/mapApiErrors";
 import type { AxiosError } from "axios";
 import type ErrorData from "../../types/error/errorData";
+import LogoutButton from "../../layout/LogoutButton";
+import useApiClient from "../../api/useApiClient";
+import usePermissions from "../../hooks/usePermissions";
 
 interface SyncMemberRequest{
     firstName:string,
     lastName:string,
+    role:string,
     phoneNumber:string
 }
 
@@ -17,37 +20,45 @@ export default function ProfileSetup(){
 
     const queryClient = useQueryClient();
     const api = useApiClient();
-    const {user} = useAuth0();
+    const { user } = useAuth0();
 
     const [fName, setFName] = useState("");
     const [lName, setLName] = useState("");
     const [phone, setPhone] = useState("");
     const [errors, setErrors] = useState<Record<string, string[]>>({});
+    
+    const { permissions } = usePermissions();
+    const role = permissions.includes("read:members") ? "Staff" : "Customer";
 
     const createMutation = useMutation({
         mutationFn: async () => {
+
             const request:SyncMemberRequest = {
               firstName: fName,
               lastName: lName,
+              role: role,
               phoneNumber: phone
             };
-            await api.post("members/sync", request);
+
+            const response = await api.post("members/sync", request);
+            return response.data;
         },
         onSuccess: async () => {
+
           queryClient.setQueryData(["currentMember"], {profileExists:true, 
             member:{
-              firstName:fName, 
-              lastName:lName, 
-              role:"Customer", 
-              email:user?.email, 
-              phoneNumber:phone}});
+              firstName: fName, 
+              lastName: lName, 
+              role: role, 
+              email: user?.email, 
+              phoneNumber: phone}});
           toast.success("The profile was created successfully!", {toasterId:"info"});
           await queryClient.invalidateQueries({ queryKey: ["currentMember"] });
         },
         onError: (error) => {
-
+          
           const errorData = (error as AxiosError<ErrorData>).response?.data;
-          console.error("Failed to create profile:", errorData);
+          console.error("Failed to create profile:", error);
 
           if (errorData?.errors) {
             const errors = mapApiErrors(errorData.errors as Record<string, string[]>);
@@ -136,6 +147,8 @@ export default function ProfileSetup(){
             className="border-2 border-slate-500 rounded-md px-4 py-1 bg-slate-700 text-slate-300 hover:bg-slate-600 transition duration-100 ease-in-out active:border-blue-600">            
             Add
         </button>
+
+        <LogoutButton />
       </div>
     </div>);
 }

@@ -2,11 +2,11 @@ import { useQuery } from "@tanstack/react-query";
 import type Room from "../../types/rooms/room";
 import RoomCard from "./RoomCard";
 import { useState } from "react";
-import Pagingitem from "../PagingItem";
+import PagingItem from "../PagingItem";
 import type PageResponse from "../../types/pageResponse";
 import SearchBar from "./SearchBar";
 import useDebouncer from "../../hooks/useDebouncer";
-import useApiClient from "../../api/api";
+import useApiClient from "../../api/useApiClient";
 
 export default function Rooms(){
 
@@ -88,7 +88,7 @@ export default function Rooms(){
             {pageRes?.data.map((x:Room) => 
                 <RoomCard room={x} />
                 )}
-            <Pagingitem 
+            <PagingItem 
                 page={pageRes!.page} 
                 pageSize={pageRes!.pageSize}
                 totalCount={pageRes!.totalCount}

@@ -13,13 +13,13 @@ import Profile from "./router/profile/Profile";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import ProfileSetupGuard from "./layout/ProfileSetupGuard";
 import RequireAuthGuard from "./layout/RequireAuthGuard";
+import Members from "./router/members/Members";
 
 export default function App() {
 
   const router = createBrowserRouter([
     {
       element: <ProfileSetupGuard />,
-      errorElement: <ErrorPage />,
       children: [
         {
           path: "/",
@@ -27,10 +27,12 @@ export default function App() {
           children: [
             {
               index: true,
+              errorElement: <ErrorPage />,
               element: <Home />
             },
             {
               element: <RequireAuthGuard />,
+              errorElement: <ErrorPage />,
               children: [
                 {
                   path: "profile",
@@ -51,6 +53,10 @@ export default function App() {
                 {
                   path: "rooms/:id/booking",
                   element: <AddBooking />,
+                },
+                {
+                  path: "members",
+                  element: <Members />
                 }
               ]
             }
@@ -58,6 +64,7 @@ export default function App() {
         },
         {
           path: "/profile-setup",
+          errorElement: <ErrorPage />,
           element: <ProfileSetup />
         }
       ]

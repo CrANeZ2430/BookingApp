@@ -1,5 +1,5 @@
 @BaseUrl = {{Host}}/members
-@MemberId = 5fe7afa0-121f-40d2-90ac-bee14d4916c5
+@MemberId = e1ffe403-dfe2-44b0-88ad-ff4d94001251
 
 ### Get all Members
 GET {{BaseUrl}}
@@ -17,6 +17,7 @@ Content-Type: application/json
 Authorization: Bearer {{Token}}
 
 {
+  "auth0Id": "auth0id-123",
   "firstName": "Dean",
   "lastName": "Winchester",
   "role": "Customer",
@@ -32,6 +33,7 @@ Authorization: Bearer {{Token}}
 {
   "firstName": "Sam",
   "lastName": "Winchester",
+  "role": "Staff",
   "email": "s.winchester@gmail.com",
   "phoneNumber": "+11234567890"
 }

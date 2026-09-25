@@ -1,12 +1,14 @@
 import { Outlet } from "react-router";
 import LayoutLink from "./LayoutLink";
-import { useAuth0 } from "@auth0/auth0-react";
 import LogoutButton from "./LogoutButton";
 import LoginButton from "./LoginButton";
+import { useAuth0 } from "@auth0/auth0-react";
+import usePermissions from "../hooks/usePermissions";
 
 export default function Layout(){
 
-    const {isAuthenticated} = useAuth0();
+    const { isAuthenticated } = useAuth0();
+    const { permissions } = usePermissions();
 
     return (
         <div className="flex flex-col h-screen w-full bg-slate-900 text-slate-300 overflow-hidden">
@@ -16,6 +18,8 @@ export default function Layout(){
                     <LayoutLink contents={"Rooms"} navLink={"/rooms"} />
                     <LayoutLink contents={"Room types"} navLink={"/room-types"}/>
                     <LayoutLink contents={"Your bookings"} navLink={"/bookings"}/>
+                    {permissions.includes("read:members") &&
+                        <LayoutLink contents={"Members"} navLink={"/members"}/>}
                 </div>
                 <div className="flex gap-4 items-center">
                     <LayoutLink contents={"Profile"} navLink={"/profile"} />

@@ -5,4 +5,5 @@ namespace BookingApp.Application.Requests.Members.Commands.SyncMember;
 public record SyncMemberRequest(
     string FirstName,
     string LastName,
+    Roles Role,
     string PhoneNumber);

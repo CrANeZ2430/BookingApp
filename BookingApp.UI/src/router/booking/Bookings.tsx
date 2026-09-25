@@ -4,8 +4,8 @@ import type Booking from "../../types/bookings/booking";
 import BookingCard from "./BookingCard";
 import PagingItem from "../PagingItem";
 import { useState } from "react";
-import useApiClient from "../../api/api";
 import type CheckMemberResponse from "../../types/checkMember/checkMemberResponse";
+import useApiClient from "../../api/useApiClient";
 
 export default function Bookings() {
 

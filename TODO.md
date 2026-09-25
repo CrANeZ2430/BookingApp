@@ -30,13 +30,13 @@
 ## v2 — Deployment & Enhancements
 
 ### Security & Advanced Auth
-- [ ] Add Role-Based Authorization (RBAC UI Integration)
+- [x] Add Role-Based Authorization (RBAC UI Integration)
 - [x] Implement Https into project
 
 ### Testing & Infrastructure
 - [x] Add Unit Tests (xUnit for CQRS Handlers & Domain Rules)
 - [x] Add Integration Tests (Testcontainers for PostgreSQL & EF Core)
-- [ ] GitHub Actions CI/CD Pipeline
+- [x] GitHub Actions CI/CD Pipeline
 - [ ] Deploy the project
 
 ### Advanced API Polishing
