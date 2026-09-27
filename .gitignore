@@ -30,3 +30,8 @@ BookingApp.UI/*.local
 
 ## Nginx
 nginx/certs/
+
+## Environment
+.env
+.env.local
+.env.*.local
