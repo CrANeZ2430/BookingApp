@@ -5,11 +5,11 @@
     ports:
       - "5432:5432"
     environment:
-      POSTGRES_DB: "BookingAppDb"
-      POSTGRES_USER: "postgres"
-      POSTGRES_PASSWORD: "postgres"
+      POSTGRES_DB: ${POSTGRES_DB}
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
     volumes:
-      - bookingapp_db:/var/lib/posgresql
+      - database:/var/lib/posgresql
   
   migrator:
     container_name: migrator
@@ -17,6 +17,8 @@
       context: .
       dockerfile: Dockerfile
       target: migrator
+    environment:
+      ConnectionStrings__BookingApp: "Host=database;Port=5432;Database=${POSTGRES_DB};Username=${POSTGRES_USER};Password=${POSTGRES_PASSWORD}"
     depends_on:
       - database
   
@@ -29,6 +31,9 @@
       target: final
     environment:
       ASPNETCORE_ENVIRONMENT: "Development"
+      ConnectionStrings__BookingApp: "Host=database;Port=5432;Database=${POSTGRES_DB};Username=${POSTGRES_USER};Password=${POSTGRES_PASSWORD}"
+      Auth0__Domain: "https://${AUTH0_DOMAIN}/"
+      Auth0__Audience: ${AUTH0_AUDIENCE}
     depends_on:
       migrator:
         condition: service_completed_successfully
@@ -40,6 +45,10 @@
       context: BookingApp.UI/
       dockerfile: Dockerfile
       target: prod
+      args:
+        VITE_AUTH0_DOMAIN: ${AUTH0_DOMAIN}
+        VITE_AUTH0_CLIENT_ID: ${AUTH0_CLIENT_ID}
+        VITE_AUTH0_AUDIENCE: ${AUTH0_AUDIENCE}
     depends_on:
       - backend
     
@@ -57,4 +66,4 @@
       - frontend
 
 volumes:
-  bookingapp_db:
+  database:
