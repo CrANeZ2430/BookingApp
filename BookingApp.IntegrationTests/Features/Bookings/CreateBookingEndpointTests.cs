@@ -8,6 +8,7 @@ using BookingApp.Infrastructure.Database;
 using BookingApp.IntegrationTests.Fakes;
 using BookingApp.IntegrationTests.Fixtures;
 using FluentAssertions;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -48,11 +49,6 @@ public class CreateBookingEndpointTests(
             await context.Members.AddAsync(member);
             await context.SaveChangesAsync();
             
-            _client.DefaultRequestHeaders.Authorization = 
-                new AuthenticationHeaderValue(
-                    TestAuthHandler.DefaultScheme, 
-                    "default-ticket");
-            
             roomId = room.RoomId;
             memberId = member.MemberId;
             now = dateTimeProvider.GetCurrentDateTime();
@@ -64,6 +60,13 @@ public class CreateBookingEndpointTests(
             now.AddDays(2),
             memberId, 
             roomId);
+        
+        var token = TestJwtGenerator.GenerateToken();
+            
+        _client.DefaultRequestHeaders.Authorization = 
+            new AuthenticationHeaderValue(
+                JwtBearerDefaults.AuthenticationScheme, 
+                token);
 
         // Act
         var response = await _client.PostAsJsonAsync("/api/bookings", command);
@@ -97,11 +100,6 @@ public class CreateBookingEndpointTests(
             await context.Members.AddAsync(member);
             await context.SaveChangesAsync();
             
-            _client.DefaultRequestHeaders.Authorization = 
-                new AuthenticationHeaderValue(
-                    TestAuthHandler.DefaultScheme, 
-                    "default-ticket");
-            
             memberId = member.MemberId;
             now = dateTimeProvider.GetCurrentDateTime();
         }
@@ -112,6 +110,13 @@ public class CreateBookingEndpointTests(
             now.AddDays(2),
             memberId, 
             Guid.NewGuid());
+        
+        var token = TestJwtGenerator.GenerateToken();
+            
+        _client.DefaultRequestHeaders.Authorization = 
+            new AuthenticationHeaderValue(
+                JwtBearerDefaults.AuthenticationScheme, 
+                token);
 
         // Act
         var response = await _client.PostAsJsonAsync("/api/bookings", command);
@@ -135,11 +140,6 @@ public class CreateBookingEndpointTests(
             var room = await context.Rooms
                 .FirstAsync(x => x.Name == "Turing Room 101");
             
-            _client.DefaultRequestHeaders.Authorization = 
-                new AuthenticationHeaderValue(
-                    TestAuthHandler.DefaultScheme, 
-                    "default-ticket");
-            
             roomId = room.RoomId;
             now = dateTimeProvider.GetCurrentDateTime();
         }
@@ -150,6 +150,13 @@ public class CreateBookingEndpointTests(
             now.AddDays(2),
             Guid.NewGuid(), 
             roomId);
+        
+        var token = TestJwtGenerator.GenerateToken();
+            
+        _client.DefaultRequestHeaders.Authorization = 
+            new AuthenticationHeaderValue(
+                JwtBearerDefaults.AuthenticationScheme, 
+                token);
 
         // Act
         var response = await _client.PostAsJsonAsync("/api/bookings", command);

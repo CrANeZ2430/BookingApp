@@ -1,12 +1,15 @@
+using System.IdentityModel.Tokens.Jwt;
+using System.Text;
 using BookingApp.Core.Abstractions;
 using BookingApp.Infrastructure.Database;
 using BookingApp.IntegrationTests.Fakes;
-using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
+using Microsoft.IdentityModel.Tokens;
 using Testcontainers.PostgreSql;
 
 namespace BookingApp.IntegrationTests.Fixtures;
@@ -51,13 +54,23 @@ public class CustomWebApplicationFactory : WebApplicationFactory<Program>, IAsyn
             services.RemoveAll<IDateTimeProvider>();
             services.AddSingleton<IDateTimeProvider, TestDateTimeProvider>();
             
-            services.AddAuthentication(options =>
+            services.PostConfigure<JwtBearerOptions>(JwtBearerDefaults.AuthenticationScheme, options =>
+            {
+                options.Authority = null;
+                options.MetadataAddress = null;
+                options.RequireHttpsMetadata = false;
+
+                var key = TestJwtGenerator.SecurityKey;
+
+                options.TokenValidationParameters = new TokenValidationParameters
                 {
-                    options.DefaultAuthenticateScheme = TestAuthHandler.DefaultScheme;
-                    options.DefaultChallengeScheme = TestAuthHandler.DefaultScheme;
-                })
-                .AddScheme<AuthenticationSchemeOptions, TestAuthHandler>(
-                    TestAuthHandler.DefaultScheme, options => { });
+                    ValidateIssuer = false,
+                    ValidateAudience = false,
+                    ValidateLifetime = false,
+                    ValidateIssuerSigningKey = true,
+                    IssuerSigningKey = key
+                };
+            });
         });
     }
     

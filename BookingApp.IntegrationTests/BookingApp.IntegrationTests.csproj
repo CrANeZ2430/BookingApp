@@ -25,8 +25,4 @@
       <ProjectReference Include="..\BookingApp.API\BookingApp.API.csproj" />
     </ItemGroup>
 
-    <ItemGroup>
-      <Folder Include="Features\" />
-    </ItemGroup>
-
 </Project>
