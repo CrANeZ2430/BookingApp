@@ -15,10 +15,10 @@ namespace BookingApp.UnitTests.Application.Bookings.CreateBooking;
 
 public class CreateBookingCommandHandlerTests
 {
-    private readonly Mock<IRoomsRepository> _roomsRepoMock = new Mock<IRoomsRepository>();
-    private readonly Mock<IMembersRepository> _membersRepoMock = new Mock<IMembersRepository>();
-    private readonly Mock<IBookingsRepository> _bookingsRepoMock = new Mock<IBookingsRepository>();
-    private readonly Mock<IUnitOfWork> _unitOfWorkMock = new Mock<IUnitOfWork>();
+    private readonly Mock<IRoomsRepository> _roomsRepoMock = new();
+    private readonly Mock<IMembersRepository> _membersRepoMock = new();
+    private readonly Mock<IBookingsRepository> _bookingsRepoMock = new();
+    private readonly Mock<IUnitOfWork> _unitOfWorkMock = new();
     private readonly Mock<IDateTimeProvider> _dateTimeProvider = TestDataFactory.GetDateTimeProvider();
     private readonly DateTime _utcNow = TestDataFactory.GetUtcNow();
     private readonly CreateBookingCommandHandler _handler;

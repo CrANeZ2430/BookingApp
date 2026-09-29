@@ -1,6 +1,8 @@
+using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text.Encodings.Web;
 using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 
@@ -12,27 +14,32 @@ public class TestAuthHandler(
     UrlEncoder encoder)
     : AuthenticationHandler<AuthenticationSchemeOptions>(options, logger, encoder)
 {
-    public const string DefaultScheme = "TestScheme";
-
     protected override Task<AuthenticateResult> HandleAuthenticateAsync()
     {
-        if (!Request.Headers.ContainsKey("Authorization"))
+        if (!Request.Headers.TryGetValue("Authorization", out var authHeader))
         {
-            return Task.FromResult(AuthenticateResult.Fail("No Authorization header provided."));
+            return Task.FromResult(AuthenticateResult.Fail("No Authorization header"));
         }
         
-        var claims = new[]
-        {
-            new Claim(ClaimTypes.NameIdentifier, "auth0|test-user-id-123"),
-            new Claim(ClaimTypes.Email, "testuser@bookingapp.com"),
-            /*new Claim("permissions", "bookings:create"),
-            new Claim("permissions", "bookings:read")*/
-        };
+        var token = authHeader.ToString().Replace(
+            $"{JwtBearerDefaults.AuthenticationScheme} ", 
+            "", StringComparison.OrdinalIgnoreCase).Trim();
+        var handler = new JwtSecurityTokenHandler();
 
-        var identity = new ClaimsIdentity(claims, DefaultScheme);
+        if (!handler.CanReadToken(token))
+        {
+            return Task.FromResult(AuthenticateResult.Fail("Invalid token format"));
+        }
+
+        var jwtToken = handler.ReadJwtToken(token);
+        var identity = new ClaimsIdentity(
+            jwtToken.Claims, 
+            JwtBearerDefaults.AuthenticationScheme);
         var principal = new ClaimsPrincipal(identity);
-        var ticket = new AuthenticationTicket(principal, DefaultScheme);
-        
+        var ticket = new AuthenticationTicket(
+            principal, 
+            JwtBearerDefaults.AuthenticationScheme);
+
         return Task.FromResult(AuthenticateResult.Success(ticket));
     }
 }

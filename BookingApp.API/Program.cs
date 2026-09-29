@@ -28,8 +28,11 @@ builder.Services.AddAuthorization(options =>
 });
 
 builder.Services.AddControllers(options =>
-        options.Conventions.Add(new RouteTokenTransformerConvention(new KebabCaseParameterTransformer())))
-    .AddJsonOptions(options => options.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter()));
+        options.Conventions
+            .Add(
+                new RouteTokenTransformerConvention(new KebabCaseParameterTransformer())))
+            .AddJsonOptions(options => 
+                options.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter()));
 
 // Add services to the container.
 // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
