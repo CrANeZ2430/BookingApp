@@ -27,7 +27,8 @@ public class CreateBookingTests
             endTime,
             _utcNow,
             _memberId,
-            _roomId);
+            _roomId,
+            "random.email@gmail.com");
 
         // Assert
         booking.Status.Should().Be(BookingStatus.Pending);
@@ -51,7 +52,8 @@ public class CreateBookingTests
             endTime,
             _utcNow,
             _memberId,
-            _roomId);
+            _roomId,
+            "random.email@gmail.com");
         
         //Assert
         act.Should().Throw<DomainException>()
@@ -74,10 +76,35 @@ public class CreateBookingTests
             endTime,
             _utcNow,
             _memberId,
-            _roomId);
+            _roomId,
+            "random.email@gmail.com");
         
         //Assert
         act.Should().Throw<DomainException>()
             .WithMessage("Room attendees count cannot be 0.");
+    }
+
+    [Theory]
+    [InlineData("")]
+    [InlineData("hddjdhfdjfhd")]
+    public void Create_Should_ThrowDomainException_WhenEmailIsInvalid(string email)
+    {
+        //Arrange
+        var startTime = _utcNow.AddDays(1);
+        var endTime = _utcNow.AddDays(2);
+        
+        //Act
+        var act = () => Booking.Create(
+            20,
+            startTime,
+            endTime,
+            _utcNow,
+            _memberId,
+            _roomId,
+            email);
+        
+        //Assert
+        act.Should().Throw<DomainException>()
+            .WithMessage("A valid email is required.");
     }
 }

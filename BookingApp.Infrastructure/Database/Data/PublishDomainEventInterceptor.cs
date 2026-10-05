@@ -5,7 +5,9 @@ using Microsoft.EntityFrameworkCore.Diagnostics;
 
 namespace BookingApp.Infrastructure.Database.Data;
 
-public class PublishDomainEventInterceptor(IPublisher publisher) : SaveChangesInterceptor
+public class PublishDomainEventInterceptor(
+    IPublisher publisher) 
+    : SaveChangesInterceptor
 {
     public override async ValueTask<InterceptionResult<int>> SavingChangesAsync(
         DbContextEventData eventData, 

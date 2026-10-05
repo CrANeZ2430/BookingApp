@@ -3,4 +3,5 @@
 public interface IDomainEvent
 {
     DateTime OccurredAt { get; }
+    string Email { get; }
 }

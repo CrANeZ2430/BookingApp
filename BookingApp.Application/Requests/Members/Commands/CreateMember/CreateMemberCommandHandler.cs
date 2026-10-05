@@ -21,7 +21,8 @@ public class CreateMemberCommandHandler(
             request.LastName,
             request.Role,
             request.Email,
-            request.PhoneNumber);
+            request.PhoneNumber,
+            dateTimeProvider);
 
         await membersRepository.AddAsync(member, cancellationToken);
         await unitOfWork.SaveChangesAsync(cancellationToken);

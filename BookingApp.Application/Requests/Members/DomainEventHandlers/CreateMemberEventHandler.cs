@@ -1,22 +1,22 @@
 ﻿using BookingApp.Application.Common;
+using BookingApp.Core.Abstractions;
 using BookingApp.Core.Domain.Members.DomainEvents;
 using MediatR;
-using Microsoft.Extensions.Logging;
 
 namespace BookingApp.Application.Requests.Members.DomainEventHandlers;
 
 public class CreateMemberEventHandler(
-    ILogger<CreateMemberEventHandler> logger) 
+    IEmailService emailService) 
     : INotificationHandler<DomainNotification<CreateMemberEvent>>
 {
-    public Task Handle(
+    public async Task Handle(
         DomainNotification<CreateMemberEvent> notification, 
         CancellationToken cancellationToken = default)
     {
-        logger.LogInformation("Member with id: {MemberId} was just created at {OccurredAt}", 
-            notification.DomainEvent.MemberId, 
-            notification.DomainEvent.OccurredAt);
-        
-        return Task.CompletedTask;
+        await emailService.SendMemberCreationEmailAsync(
+            notification.DomainEvent.MemberId,
+            notification.DomainEvent.OccurredAt,
+            notification.DomainEvent.Email,
+            cancellationToken);
     }
 }

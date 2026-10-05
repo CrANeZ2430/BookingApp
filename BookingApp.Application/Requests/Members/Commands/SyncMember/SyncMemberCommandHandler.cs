@@ -7,7 +7,8 @@ namespace BookingApp.Application.Requests.Members.Commands.SyncMember;
 
 public class SyncMemberCommandHandler(
     IMembersRepository membersRepository, 
-    IUnitOfWork unitOfWork)
+    IUnitOfWork unitOfWork,
+    IDateTimeProvider dateTimeProvider)
     : IRequestHandler<SyncMemberCommand, Guid>
 {
     public async Task<Guid> Handle(
@@ -20,7 +21,8 @@ public class SyncMemberCommandHandler(
             request.LastName,
             request.Role,
             request.Email,
-            request.PhoneNumber);
+            request.PhoneNumber,
+            dateTimeProvider);
 
         await membersRepository.AddAsync(member, cancellationToken);
         await unitOfWork.SaveChangesAsync(cancellationToken);

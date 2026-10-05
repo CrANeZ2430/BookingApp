@@ -44,7 +44,8 @@ public class CreateBookingEndpointTests(
                 "Doe",
                 Roles.Customer,
                 "j.doe@gmail.com",
-                "+48374465923");
+                "+48374465923",
+                dateTimeProvider);
 
             await context.Members.AddAsync(member);
             await context.SaveChangesAsync();
@@ -95,7 +96,8 @@ public class CreateBookingEndpointTests(
                 "Doe",
                 Roles.Customer,
                 "j.doe@gmail.com",
-                "+48374465923");
+                "+48374465923",
+                dateTimeProvider);
 
             await context.Members.AddAsync(member);
             await context.SaveChangesAsync();
@@ -189,7 +191,8 @@ public class CreateBookingEndpointTests(
                 "Doe",
                 Roles.Customer,
                 "j.doe@gmail.com",
-                "+48374465923");
+                "+48374465923",
+                dateTimeProvider);
 
             await context.Members.AddAsync(member);
             await context.SaveChangesAsync();
