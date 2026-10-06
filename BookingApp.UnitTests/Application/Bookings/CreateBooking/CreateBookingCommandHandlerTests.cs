@@ -54,7 +54,8 @@ public class CreateBookingCommandHandlerTests
             "Alex",
             Roles.Customer,
             "a.alex@gmail.com",
-            "+48123456789");
+            "+48123456789",
+            _dateTimeProvider.Object);
 
         _roomsRepoMock
             .Setup(x => x.GetByIdAsync(room.RoomId, It.IsAny<CancellationToken>()))
@@ -134,7 +135,8 @@ public class CreateBookingCommandHandlerTests
             "Alex",
             Roles.Customer,
             "a.alex@gmail.com",
-            "+48123456789");
+            "+48123456789",
+            _dateTimeProvider.Object);
 
         _membersRepoMock
             .Setup(x => x.GetByIdAsync(member.MemberId, It.IsAny<CancellationToken>()))
@@ -177,7 +179,8 @@ public class CreateBookingCommandHandlerTests
             "Alex",
             Roles.Customer,
             "a.alex@gmail.com",
-            "+48123456789");
+            "+48123456789",
+            _dateTimeProvider.Object);
 
         _roomsRepoMock
             .Setup(x => x.GetByIdAsync(
@@ -231,7 +234,8 @@ public class CreateBookingCommandHandlerTests
             "Alex",
             Roles.Customer,
             "a.alex@gmail.com",
-            "+48123456789");
+            "+48123456789",
+            _dateTimeProvider.Object);
 
         _roomsRepoMock
             .Setup(x => x.GetByIdAsync(
@@ -284,7 +288,8 @@ public class CreateBookingCommandHandlerTests
             "Alex",
             Roles.Customer,
             "a.alex@gmail.com",
-            "+48123456789");
+            "+48123456789",
+            _dateTimeProvider.Object);
 
         _roomsRepoMock
             .Setup(x => x.GetByIdAsync(

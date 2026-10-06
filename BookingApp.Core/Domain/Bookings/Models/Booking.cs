@@ -1,10 +1,14 @@
-﻿using BookingApp.Core.Domain.Members.Models;
+﻿using System.Text.RegularExpressions;
+using BookingApp.Core.Abstractions;
+using BookingApp.Core.Common;
+using BookingApp.Core.Domain.Bookings.DomainEvents;
+using BookingApp.Core.Domain.Members.Models;
 using BookingApp.Core.Domain.Rooms.Models;
 using BookingApp.Core.Exceptions;
 
 namespace BookingApp.Core.Domain.Bookings.Models;
 
-public class Booking
+public class Booking : AggregateRoot
 {
     public Guid BookingId { get; private set; }
     public int AttendeeCount { get; private set; }
@@ -42,10 +46,13 @@ public class Booking
         int attendeeCount,
         DateTime startTime,
         DateTime endTime,
-        DateTime createdAt,
         Guid memberId,
-        Guid roomId)
+        Guid roomId,
+        IDateTimeProvider dateTimeProvider,
+        string email)
     {
+        var createdAt = dateTimeProvider.GetCurrentDateTime();
+        
         if (attendeeCount <= 0)
             throw new DomainException("Room attendees count cannot be 0.");
         
@@ -56,14 +63,25 @@ public class Booking
         
         if (startTime >= endTime)
             throw new DomainException("Start time must be before end time.");
+
+        if (string.IsNullOrWhiteSpace(email) || 
+            !Regex.IsMatch(email, @"^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$"))
+            throw new DomainException("A valid email is required.");
         
-        return new Booking(
+        var booking = new Booking(
             attendeeCount, 
             startTime, 
             endTime, 
             createdAt,
             memberId, 
             roomId);
+        
+        booking.RaiseDomainEvent(new CreateBookingEvent(
+            booking.CreatedAt,
+            email,
+            booking.BookingId));
+
+        return booking;
     }
 
     public void Update(

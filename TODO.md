@@ -1,6 +1,6 @@
 ﻿# BookingApp Roadmap:
 
-## v1 — Core Production Release (Current Focus)
+## v1 — Core Production Release
 
 ### Architecture & Core Backend
 - [x] Add project's Core Entities
@@ -40,4 +40,4 @@
 - [ ] Deploy the project
 
 ### Advanced API Polishing
-- [ ] Integration of Domain Events
+- [x] Integration of Domain Events

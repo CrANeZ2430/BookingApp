@@ -22,7 +22,9 @@ public class CreateBookingCommandHandler(
         CancellationToken cancellationToken = default)
     {
         var room = await roomsRepository.GetByIdAsync(request.RoomId, cancellationToken);
-        if ((await membersRepository.GetByIdAsync(request.MemberId, cancellationToken)) is null)
+        var member = await membersRepository.GetByIdAsync(request.MemberId, cancellationToken);
+        
+        if (member is null)
             throw new NotFoundException("Given member was not found.");
         if (room is null)
             throw new NotFoundException("Given room was not found.");
@@ -41,6 +43,7 @@ public class CreateBookingCommandHandler(
                     nameof(request.AttendeeCount),
                     [$"The room capacity is {room.Capacity}, but you requested {request.AttendeeCount} attendees."]
                 }});
+        
         if (await bookingsRepository.HasOverlappingAsync(
                 request.RoomId, 
                 request.StartTime, 
@@ -62,9 +65,10 @@ public class CreateBookingCommandHandler(
             request.AttendeeCount,
             request.StartTime,
             request.EndTime,
-            dateTimeProvider.GetCurrentDateTime(),
             request.MemberId,
-            request.RoomId);
+            request.RoomId,
+            dateTimeProvider,
+            member.Email);
 
         await bookingsRepository.AddAsync(booking, cancellationToken);
         await unitOfWork.SaveChangesAsync(cancellationToken);

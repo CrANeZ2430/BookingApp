@@ -1,10 +1,13 @@
 ﻿using System.Text.RegularExpressions;
+using BookingApp.Core.Abstractions;
+using BookingApp.Core.Common;
 using BookingApp.Core.Domain.Bookings.Models;
+using BookingApp.Core.Domain.Members.DomainEvents;
 using BookingApp.Core.Exceptions;
 
 namespace BookingApp.Core.Domain.Members.Models;
 
-public class Member //: AggregateRoot
+public class Member : AggregateRoot
 {
     private readonly List<Booking> _bookings = new();
     
@@ -43,7 +46,8 @@ public class Member //: AggregateRoot
         string lastName,
         Roles role,
         string email,
-        string phoneNumber)
+        string phoneNumber,
+        IDateTimeProvider dateTimeProvider)
     {
         if (string.IsNullOrWhiteSpace(firstName))
             throw new DomainException("First name is required.");
@@ -51,10 +55,12 @@ public class Member //: AggregateRoot
         if (string.IsNullOrWhiteSpace(lastName))
             throw new DomainException("Last name is required.");
 
-        if (string.IsNullOrWhiteSpace(email) || !Regex.IsMatch(email, @"^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$"))
+        if (string.IsNullOrWhiteSpace(email) || 
+            !Regex.IsMatch(email, @"^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$"))
             throw new DomainException("A valid email is required.");
         
-        if (string.IsNullOrWhiteSpace(phoneNumber) || !Regex.IsMatch(phoneNumber, @"^\+[1-9]\d{1,14}$"))
+        if (string.IsNullOrWhiteSpace(phoneNumber) || 
+            !Regex.IsMatch(phoneNumber, @"^\+[1-9]\d{1,14}$"))
             throw new DomainException("A valid phone number is required.");
         
         var member =  new Member(
@@ -65,7 +71,10 @@ public class Member //: AggregateRoot
             email,
             phoneNumber);
         
-        //member.RaiseDomainEvent(new CreateMemberEvent(dateTimeProvider.GetCurrentDateTime(), member.MemberId));
+        member.RaiseDomainEvent(new CreateMemberEvent(
+            dateTimeProvider.GetCurrentDateTime(),
+            member.Email,
+            member.MemberId));
 
         return member;
     }
@@ -83,10 +92,12 @@ public class Member //: AggregateRoot
         if (string.IsNullOrWhiteSpace(lastName))
             throw new DomainException("Last name is required.");
 
-        if (string.IsNullOrWhiteSpace(email) || !Regex.IsMatch(email, @"^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$"))
+        if (string.IsNullOrWhiteSpace(email) || 
+            !Regex.IsMatch(email, @"^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$"))
             throw new DomainException("A valid email is required.");
         
-        if (string.IsNullOrWhiteSpace(phoneNumber) || !Regex.IsMatch(phoneNumber, @"^\+[1-9]\d{1,14}$"))
+        if (string.IsNullOrWhiteSpace(phoneNumber) || 
+            !Regex.IsMatch(phoneNumber, @"^\+[1-9]\d{1,14}$"))
             throw new DomainException("A valid phone number is required.");
         
         FirstName = firstName;

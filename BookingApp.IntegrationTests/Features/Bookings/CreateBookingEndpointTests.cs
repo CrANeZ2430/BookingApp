@@ -30,12 +30,12 @@ public class CreateBookingEndpointTests(
         
         using (var scope = factory.Services.CreateScope())
         {
-            var context = scope.ServiceProvider
+            var dbContext = scope.ServiceProvider
                 .GetRequiredService<BookingAppDbContext>();
             var dateTimeProvider = scope.ServiceProvider
                 .GetRequiredService<IDateTimeProvider>();
 
-            var room = await context.Rooms
+            var room = await dbContext.Rooms
                 .FirstAsync(x => x.Name == "Turing Room 101");
             
             var member = Member.Create(
@@ -44,10 +44,11 @@ public class CreateBookingEndpointTests(
                 "Doe",
                 Roles.Customer,
                 "j.doe@gmail.com",
-                "+48374465923");
+                "+48374465923",
+                dateTimeProvider);
 
-            await context.Members.AddAsync(member);
-            await context.SaveChangesAsync();
+            await dbContext.Members.AddAsync(member);
+            await dbContext.SaveChangesAsync();
             
             roomId = room.RoomId;
             memberId = member.MemberId;
@@ -84,7 +85,7 @@ public class CreateBookingEndpointTests(
         
         using (var scope = factory.Services.CreateScope())
         {
-            var context = scope.ServiceProvider
+            var dbContext = scope.ServiceProvider
                 .GetRequiredService<BookingAppDbContext>();
             var dateTimeProvider = scope.ServiceProvider
                 .GetRequiredService<IDateTimeProvider>();
@@ -95,10 +96,11 @@ public class CreateBookingEndpointTests(
                 "Doe",
                 Roles.Customer,
                 "j.doe@gmail.com",
-                "+48374465923");
+                "+48374465923",
+                dateTimeProvider);
 
-            await context.Members.AddAsync(member);
-            await context.SaveChangesAsync();
+            await dbContext.Members.AddAsync(member);
+            await dbContext.SaveChangesAsync();
             
             memberId = member.MemberId;
             now = dateTimeProvider.GetCurrentDateTime();
@@ -134,10 +136,10 @@ public class CreateBookingEndpointTests(
         
         using (var scope = factory.Services.CreateScope())
         {
-            var context = scope.ServiceProvider.GetRequiredService<BookingAppDbContext>();
+            var dbContext = scope.ServiceProvider.GetRequiredService<BookingAppDbContext>();
             var dateTimeProvider = scope.ServiceProvider.GetRequiredService<IDateTimeProvider>();
 
-            var room = await context.Rooms
+            var room = await dbContext.Rooms
                 .FirstAsync(x => x.Name == "Turing Room 101");
             
             roomId = room.RoomId;
@@ -175,12 +177,12 @@ public class CreateBookingEndpointTests(
         
         using (var scope = factory.Services.CreateScope())
         {
-            var context = scope.ServiceProvider
+            var dbContext = scope.ServiceProvider
                 .GetRequiredService<BookingAppDbContext>();
             var dateTimeProvider = scope.ServiceProvider
                 .GetRequiredService<IDateTimeProvider>();
 
-            var room = await context.Rooms
+            var room = await dbContext.Rooms
                 .FirstAsync(x => x.Name == "Turing Room 101");
             
             var member = Member.Create(
@@ -189,10 +191,11 @@ public class CreateBookingEndpointTests(
                 "Doe",
                 Roles.Customer,
                 "j.doe@gmail.com",
-                "+48374465923");
+                "+48374465923",
+                dateTimeProvider);
 
-            await context.Members.AddAsync(member);
-            await context.SaveChangesAsync();
+            await dbContext.Members.AddAsync(member);
+            await dbContext.SaveChangesAsync();
             
             roomId = room.RoomId;
             memberId = member.MemberId;
