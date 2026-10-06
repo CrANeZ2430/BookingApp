@@ -46,11 +46,13 @@ public class Booking : AggregateRoot
         int attendeeCount,
         DateTime startTime,
         DateTime endTime,
-        DateTime createdAt,
         Guid memberId,
         Guid roomId,
+        IDateTimeProvider dateTimeProvider,
         string email)
     {
+        var createdAt = dateTimeProvider.GetCurrentDateTime();
+        
         if (attendeeCount <= 0)
             throw new DomainException("Room attendees count cannot be 0.");
         

@@ -16,6 +16,7 @@ public class GetMembersEndpointTests(
     [Fact]
     public async Task GetMembers_Should_ReturnOk_WhenHasReadMembersPermission()
     {
+        //Arrange
         var page = 0;
         var pageSize = 5;
 
@@ -26,27 +27,33 @@ public class GetMembersEndpointTests(
                 JwtBearerDefaults.AuthenticationScheme, 
                 token);
         
+        //Act
         var response = await _client.GetAsync(
             $"/api/members?page={page}&pageSize={pageSize}");
 
+        //Assert
         response.StatusCode.Should().Be(HttpStatusCode.OK);
     }
     
     [Fact]
     public async Task GetMembers_Should_ReturnUnauthorized_WhenUnAuthorised()
     {
+        //Arrange
         var page = 0;
         var pageSize = 5;
         
+        //Act
         var response = await _client.GetAsync(
             $"/api/members?page={page}&pageSize={pageSize}");
 
+        //Assert
         response.StatusCode.Should().Be(HttpStatusCode.Unauthorized);
     }
 
     [Fact]
     public async Task GetMembers_Should_ReturnForbidden_WhenDoesNotHaveReadMembersPermission()
     {
+        //Arrange
         var page = 0;
         var pageSize = 5;
 
@@ -57,9 +64,11 @@ public class GetMembersEndpointTests(
                 JwtBearerDefaults.AuthenticationScheme, 
                 token);
         
+        //Act
         var response = await _client.GetAsync(
             $"/api/members?page={page}&pageSize={pageSize}");
-
+        
+        //Assert
         response.StatusCode.Should().Be(HttpStatusCode.Forbidden);
     }
 }

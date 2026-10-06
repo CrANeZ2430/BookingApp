@@ -65,9 +65,9 @@ public class CreateBookingCommandHandler(
             request.AttendeeCount,
             request.StartTime,
             request.EndTime,
-            dateTimeProvider.GetCurrentDateTime(),
             request.MemberId,
             request.RoomId,
+            dateTimeProvider,
             member.Email);
 
         await bookingsRepository.AddAsync(booking, cancellationToken);
