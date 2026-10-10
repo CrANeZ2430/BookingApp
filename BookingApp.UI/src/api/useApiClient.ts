@@ -8,7 +8,7 @@ export default function useApiClient(){
 
     const api = useMemo(() => {
         const instance = axios.create({
-            baseURL: "https://localhost/api",
+            baseURL: `${import.meta.env.VITE_API_URL}/api`,
             headers: {
                 "Content-Type": "application/json"
             }
