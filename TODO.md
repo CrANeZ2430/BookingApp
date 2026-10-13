@@ -37,7 +37,7 @@
 - [x] Add Unit Tests (xUnit for CQRS Handlers & Domain Rules)
 - [x] Add Integration Tests (Testcontainers for PostgreSQL & EF Core)
 - [x] GitHub Actions CI/CD Pipeline
-- [ ] Deploy the project
+- [x] Deploy the project
 
 ### Advanced API Polishing
 - [x] Integration of Domain Events

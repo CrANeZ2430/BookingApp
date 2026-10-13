@@ -43,11 +43,9 @@ export default function Members() {
 
     return (
         <div className="flex flex-col gap-4">
-            <div>
-                {pageRes?.data.map(x => 
-                    <MemberCard member={x} />
-                )}
-            </div>
+            {pageRes?.data.map(x => 
+                <MemberCard member={x} />
+            )}
             <PagingItem 
                 page={pageRes!.page} 
                 pageSize={pageRes!.pageSize}

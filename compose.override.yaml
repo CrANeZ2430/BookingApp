@@ -1,7 +1,29 @@
 services:
-  frontend:
+  migrator:
+    image: migrator
     build:
+      context: .
+      dockerfile: Dockerfile
+      target: migrator
+    
+  backend:
+    image: backend
+    build:
+      context: .
+      dockerfile: Dockerfile
+      target: final
+  
+  frontend:
+    image: frontend
+    build:
+      context: BookingApp.UI/
+      dockerfile: Dockerfile
       target: dev
+      args:
+        VITE_AUTH0_DOMAIN: ${AUTH0_DOMAIN}
+        VITE_AUTH0_CLIENT_ID: ${AUTH0_CLIENT_ID}
+        VITE_AUTH0_AUDIENCE: ${AUTH0_AUDIENCE}
+        VITE_API_URL: ${API_URL}
     environment:
       - CHOKIDAR_USEPOLLING=true
     volumes:
