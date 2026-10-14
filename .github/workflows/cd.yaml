@@ -71,23 +71,23 @@ jobs:
         with:
           context: .
           file: Dockerfile
-          target: migratorw
+          target: migrator
           platforms: linux/amd64,linux/arm64
           push: true
           tags: crnz2008/migrator:latest
 
       - name: Deploy via SSH & Docker Compose
-        uses: appleboy/ssh-action@v1.0.3
-        with:
-          host: ${{ secrets.SSH_HOST }}
-          username: ${{ vars.SSH_USER }}
-          key: ${{ secrets.SSH_PRIVATE_KEY }}
-          script: |
-            cd ~/BookingApp
-            docker compose pull
-            POSTGRES_DB="${{ secrets.POSTGRES_DB }}" \
-            POSTGRES_USER="${{ secrets.POSTGRES_USER }}" \
-            POSTGRES_PASSWORD="${{ secrets.POSTGRES_PASSWORD }}" \
-            AUTH0_DOMAIN="${{ secrets.AUTH0_DOMAIN }}" \
-            AUTH0_AUDIENCE="${{ secrets.AUTH0_AUDIENCE }}" \
-            docker compose up -d --remove-orphans
+          uses: appleboy/ssh-action@v1.0.3
+          with:
+            host: ${{ secrets.SSH_HOST }}
+            username: ${{ vars.SSH_USER }}
+            key: ${{ secrets.SSH_PRIVATE_KEY }}
+            script: |
+              cd ~/BookingApp
+              docker compose pull
+              POSTGRES_DB="${{ secrets.POSTGRES_DB }}" \
+              POSTGRES_USER="${{ secrets.POSTGRES_USER }}" \
+              POSTGRES_PASSWORD="${{ secrets.POSTGRES_PASSWORD }}" \
+              AUTH0_DOMAIN="${{ secrets.AUTH0_DOMAIN }}" \
+              AUTH0_AUDIENCE="${{ secrets.AUTH0_AUDIENCE }}" \
+              docker compose up -d --remove-orphans
