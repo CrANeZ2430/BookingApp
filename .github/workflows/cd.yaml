@@ -1,0 +1,93 @@
+﻿name: CD Pipeline
+on:
+  workflow_run:
+    workflows: [ "CI pipeline" ]
+    types:
+      - completed
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    if: ${{ github.event.workflow_run.conclusion == 'success' && github.event.workflow_run.head_branch == 'main' }}
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        
+      - name: Login to Docker Hub
+        uses: docker/login-action@v4
+        with:
+          username: ${{ vars.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+          
+      - name: Set up QEMU
+        uses: docker/setup-qemu-action@v4
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v4
+
+      - name: Build and push backend
+        uses: docker/build-push-action@v7
+        with:
+          context: .
+          file: Dockerfile
+          target: final
+          platforms: linux/amd64,linux/arm64
+          push: true
+          tags: crnz2008/backend:latest
+          
+      - name: Build and push frontend
+        uses: docker/build-push-action@v7
+        with:
+          context: ./BookingApp.UI
+          file: ./BookingApp.UI/Dockerfile
+          target: prod
+          build-args: |
+            VITE_AUTH0_DOMAIN=${{ secrets.AUTH0_DOMAIN }}
+            VITE_AUTH0_CLIENT_ID=${{ secrets.AUTH0_CLIENT_ID }}
+            VITE_AUTH0_AUDIENCE=${{ secrets.AUTH0_AUDIENCE }}
+            VITE_API_URL=${{ secrets.API_URL }}
+          platforms: linux/amd64,linux/arm64
+          push: true
+          tags: crnz2008/frontend:latest
+
+      - name: Build and push frontend (hot reload)
+        uses: docker/build-push-action@v7
+        with:
+          context: ./BookingApp.UI
+          file: ./BookingApp.UI/Dockerfile
+          target: dev
+          build-args: |
+            VITE_AUTH0_DOMAIN=${{ secrets.AUTH0_DOMAIN }}
+            VITE_AUTH0_CLIENT_ID=${{ secrets.AUTH0_CLIENT_ID }}
+            VITE_AUTH0_AUDIENCE=${{ secrets.AUTH0_AUDIENCE }}
+            VITE_API_URL=${{ vars.API_URL }}
+          platforms: linux/amd64,linux/arm64
+          push: true
+          tags: crnz2008/frontend-dev:latest
+
+      - name: Build and push migrator
+        uses: docker/build-push-action@v7
+        with:
+          context: .
+          file: Dockerfile
+          target: migrator
+          platforms: linux/amd64,linux/arm64
+          push: true
+          tags: crnz2008/migrator:latest
+
+      - name: Deploy via SSH & Docker Compose
+          uses: appleboy/ssh-action@v1.0.3
+          with:
+            host: ${{ secrets.SSH_HOST }}
+            username: ${{ vars.SSH_USER }}
+            key: ${{ secrets.SSH_PRIVATE_KEY }}
+            script: |
+              cd ~/BookingApp
+              docker compose pull
+              POSTGRES_DB="${{ secrets.POSTGRES_DB }}" \
+              POSTGRES_USER="${{ secrets.POSTGRES_USER }}" \
+              POSTGRES_PASSWORD="${{ secrets.POSTGRES_PASSWORD }}" \
+              AUTH0_DOMAIN="${{ secrets.AUTH0_DOMAIN }}" \
+              AUTH0_AUDIENCE="${{ secrets.AUTH0_AUDIENCE }}" \
+              docker compose up -d --remove-orphans

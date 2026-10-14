@@ -13,10 +13,7 @@
   
   migrator:
     container_name: migrator
-    build:
-      context: .
-      dockerfile: Dockerfile
-      target: migrator
+    image: crnz2008/migrator:latest
     environment:
       ConnectionStrings__BookingApp: "Host=database;Port=5432;Database=${POSTGRES_DB};Username=${POSTGRES_USER};Password=${POSTGRES_PASSWORD}"
     depends_on:
@@ -24,11 +21,7 @@
   
   backend:
     container_name: backend
-    image: backend
-    build:
-      context: .
-      dockerfile: Dockerfile
-      target: final
+    image: crnz2008/backend:latest
     environment:
       ASPNETCORE_ENVIRONMENT: "Development"
       ConnectionStrings__BookingApp: "Host=database;Port=5432;Database=${POSTGRES_DB};Username=${POSTGRES_USER};Password=${POSTGRES_PASSWORD}"
@@ -37,22 +30,13 @@
     depends_on:
       migrator:
         condition: service_completed_successfully
-        
+  
   frontend:
     container_name: frontend
-    image: frontend
-    build:
-      context: BookingApp.UI/
-      dockerfile: Dockerfile
-      target: prod
-      args:
-        VITE_AUTH0_DOMAIN: ${AUTH0_DOMAIN}
-        VITE_AUTH0_CLIENT_ID: ${AUTH0_CLIENT_ID}
-        VITE_AUTH0_AUDIENCE: ${AUTH0_AUDIENCE}
-        VITE_API_URL: ${API_URL}
+    image: crnz2008/frontend:latest
     depends_on:
       - backend
-    
+  
   proxy:
     container_name: proxy
     image: nginx:alpine

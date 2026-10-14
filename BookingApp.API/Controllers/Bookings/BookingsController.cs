@@ -1,4 +1,3 @@
-using System.ComponentModel.DataAnnotations;
 using BookingApp.Application.Common;
 using BookingApp.Application.Requests.Bookings.Commands.CreateBooking;
 using BookingApp.Application.Requests.Bookings.Commands.DeleteBooking;

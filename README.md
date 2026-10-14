@@ -2,7 +2,7 @@
 A full-stack web application (ASP.NET Core + React) for managing and booking rooms.
 
 # Preview
-### Room Booking Dashboard
+### Rooms Dashboard
 ![img2.png](./docs/images/img2.png)
 ### Profile Dashboard
 ![img1.png](./docs/images/img1.png)
@@ -10,6 +10,8 @@ A full-stack web application (ASP.NET Core + React) for managing and booking roo
 ![img.png](./docs/images/img.png)
 ### Booking Addition Page
 ![img3.png](./docs/images/img3.png)
+### User Bookings Dashboard
+![img5.png](./docs/images/img5.png)
 ### Members Listing Page (restricted permission)
 ![img4.png](./docs/images/img4.png)
 
