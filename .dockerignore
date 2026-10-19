@@ -1,6 +1,7 @@
 **/.dockerignore
 **/.env
 **/.git
+**/.github
 **/.gitignore
 **/.project
 **/.settings
@@ -27,4 +28,5 @@
 LICENSE
 README.md
 TODO.md
+/docs
 .env*

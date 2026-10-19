@@ -13,5 +13,9 @@
     <ItemGroup>
       <ProjectReference Include="..\BookingApp.Application\BookingApp.Application.csproj" />
     </ItemGroup>
+
+    <ItemGroup>
+      <Folder Include="Database\Migrations\" />
+    </ItemGroup>
     
 </Project>

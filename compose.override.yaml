@@ -5,6 +5,10 @@ services:
       context: .
       dockerfile: Dockerfile
       target: migrator
+      args:
+        POSTGRES_DB: ${POSTGRES_DB}
+        POSTGRES_USER: ${POSTGRES_USER}
+        POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
     
   backend:
     image: backend
