@@ -66,13 +66,13 @@ jobs:
           tags: crnz2008/migrator:latest
           
       - name: Copy compose.yaml to remote server
-          uses: appleboy/scp-action@v0.1.7
-          with:
-            host: ${{ secrets.SSH_HOST }}
-            username: ${{ vars.SSH_USER }}
-            key: ${{ secrets.SSH_PRIVATE_KEY }}
-            source: "compose.yaml"
-            target: "~/BookingApp"
+        uses: appleboy/scp-action@v0.1.7
+        with:
+          host: ${{ secrets.SSH_HOST }}
+          username: ${{ vars.SSH_USER }}
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          source: "compose.yaml"
+          target: "~/BookingApp"
 
       - name: Deploy via SSH & Docker Compose
         uses: appleboy/ssh-action@v1.0.3
