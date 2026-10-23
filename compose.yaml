@@ -45,7 +45,7 @@
   
   proxy:
     container_name: proxy
-    image: nginx:alpine
+    image: nginx:alpine-slim
     ports:
       - "80:80"
       - "443:443"

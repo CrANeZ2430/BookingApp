@@ -1,4 +1,3 @@
-#install dependencies and env variables
 FROM node:22-alpine AS base
 WORKDIR /app
 COPY package.json package-lock.json ./
@@ -14,23 +13,21 @@ ENV VITE_AUTH0_CLIENT_ID=$VITE_AUTH0_CLIENT_ID
 ENV VITE_AUTH0_AUDIENCE=$VITE_AUTH0_AUDIENCE
 ENV VITE_API_URL=$VITE_API_URL
 
-#dev
 FROM base AS dev
 COPY . .
 EXPOSE 3000
 CMD ["npm", "run", "dev", "--", "--host"]
 
-#compile static files
 FROM base AS builder
 COPY . .
 RUN npm run build
 
-#serve the app
-FROM node:22-alpine AS prod
-ENV NODE_ENV=production
+FROM nginx:alpine-slim AS prod
 WORKDIR /app
 COPY --link --from=builder /app/dist ./dist
-RUN --mount=type=cache,target=/root/.npm npm install serve@^14.2.4 --omit=dev
-USER node
+
+COPY ./nginx/nginx.conf /etc/nginx/nginx.conf
+
 EXPOSE 3000
-CMD ["npx", "serve", "-s", "dist", "-l", "3000"]
+
+CMD ["nginx", "-g", "daemon off;"]
