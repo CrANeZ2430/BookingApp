@@ -31,16 +31,8 @@ RUN dotnet ef migrations bundle -s "./BookingApp.API/BookingApp.API.csproj" -p "
 
 FROM mcr.microsoft.com/dotnet/aspnet:10.0 AS migrator
 
-ARG POSTGRES_DB
-ARG POSTGRES_USER
-ARG POSTGRES_PASSWORD
-
-ENV POSTGRES_DB=${POSTGRES_DB}
-ENV POSTGRES_USER=${POSTGRES_USER}
-ENV POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
-
 WORKDIR /app
 COPY --from=migrator-build "/src/EFBundle/efbundle" "./efbundle"
 RUN chmod +x ./efbundle
 
-ENTRYPOINT exec "./efbundle" "--connection" "Host=database;Port=5432;Database=${POSTGRES_DB};Username=${POSTGRES_USER};Password=${POSTGRES_PASSWORD}"
+ENTRYPOINT ./efbundle --connection "$ConnectionStrings__BookingApp"
