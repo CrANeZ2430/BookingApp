@@ -62,10 +62,6 @@ jobs:
           context: .
           file: Dockerfile
           target: migrator
-          build-args: |
-            POSTGRES_DB=${{ secrets.POSTGRES_DB }}
-            POSTGRES_USER=${{ secrets.POSTGRES_USER }}
-            POSTGRES_PASSWORD=${{ secrets.POSTGRES_PASSWORD }}
           platforms: linux/amd64,linux/arm64
           push: true
           tags: crnz2008/migrator:latest
